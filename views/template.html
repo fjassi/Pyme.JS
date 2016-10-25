@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEMPLATE</title>
+    <!-- <link rel="stylesheet" href="css/materialize.min.css"> -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- SmartMenus core CSS (required) -->
+    <link href="/css/sm-core-css.css" rel="stylesheet" type="text/css" />
+    <!-- "sm-blue" menu theme (optional, you can use your own CSS, too) -->
+    <link href="/css/sm-blue.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<style>    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    nav {
+        background-color: white !important;
+        box-shadow: none !important;
+    }
+    #main-nav {
+        border-radius: none !important;
+        border: none !important;
+    }
+    #main-menu{
+        border-radius: none !important;
+        border: none !important;
+    }
+    ul.sm{
+        border: none !important;
+    }
+</style>
+<nav id="main-nav" role="navigation">
+  <!-- Sample menu definition -->
+    <ul id="main-menu" class="sm sm-blue">
+        <li><h2><a href="#">Home</a></h2></li>
+        <!-- ADMINISTRACION -->
+        <li><h2><a href="#">Administracion</a></h2>
+            <ul>
+                <li><a href="#">Ventas</a></li>
+                <li><a href="#">Clientes</a>
+                    <ul>
+                        <li><a href="#">Base de Datos</a></li>
+                        <li><a href="#">Cuenta Corriente 1 Cliente</a></li>
+                        <li><a href="#">Mayor de Ctas. Ctes.</a></li>
+                        <li><a href="#">Recibos / Cobranzas</a>
+                            <ul>
+                                <li><a href="#">Nuevos Recibos</a></li>
+                                <li><a href="#">Listados / Consultas / Bajas</a></li>
+                                <li><a href="#">Retenciones en Recibos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Proveedores</a>
+                    <ul>
+                        <li><a href="#">Base de Datos</a></li>
+                        <li><a href="#">Comprobantes</a>
+                            <ul>
+                                <li><a href="#">Alta (Fact/N.D/N.C/Remito/N.Pedido)</a></li>
+                                <li><a href="#">Listar / Eliminar / Modificar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Ordenes de Pago</a>
+                            <ul>
+                                <li><a href="#">Nueva Orden de Pago</a></li>
+                                <li><a href="#">Consultar / Anular</a></li>
+                                <li><a href="#">Conciliacion de Anticipos</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Cuentas Corrientes</a>
+                            <ul>
+                                <li><a href="#">Cta. Cte. Un Proveedor</a></li>
+                                <li><a href="#">Mayor de Proveedores</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Determinacion de Codigos de Comprobantes</a></li>
+                        <li><a href="#">Retenciones de IIBB</a>
+                            <ul>
+                                <li><a href="#">Padron de Alicuotas Ret y Perc. IIBB</a></li>
+                                <li><a href="#">Alicuotas de Ret. y Perc. (por concepto)</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Articulos</a>
+                    <ul>
+                        <li><a href="#">Archivo Articulos</a></li>
+                        <li><a href="#">Media, Hormigon</a></li>
+                        <li><a href="#">Caracteristicas, Hormigon</a></li>
+                        <li><a href="#">Asentamientos, Hormigon</a></li>
+                        <li><a href="#">Agregados Gruesos, Hormigon</a></li>
+                        <li><a href="#">Rubros</a></li>
+                        <li><a href="#">Sub-Grupos</a></li>
+                        <li><a href="#">Formulas</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Comprobantes (Consulta, Anulacion)</a></li>
+                <li><a href="#">Consultar Comprobante en AFIP</a></li>
+                <li>
+                    <a href="#">Tablas Comunes</a>
+                    <ul>
+                        <li><a href="#">Centro de Costos</a></li>
+                        <li><a href="#">Tipos de Costos</a></li>
+                        <li><a href="#">Talonarios</a></li>
+                        <li><a href="#">Condiciones de Venta</a></li>
+                        <li><a href="#">Medios de Pago</a></li>
+                        <li><a href="#">Vendedores</a></li>
+                        <li><a href="#">Empleados</a></li>
+                        <li><a href="#">Categorias de Empleados</a></li>
+                        <li><a href="#">Tipos de Horas</a></li>
+                        <li><a href="#">Choferes</a></li>
+                        <li><a href="#">Camiones</a></li>
+                        <li><a href="#">Observaciones</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Presupuestos</a>
+                    <ul>
+                        <li><a href="#">Presupuestos ABM</a></li>
+                        <li><a href="#">Sub-Items ABM</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Horas en Obras</a>
+                    <ul>
+                        <li><a href="#">Horas ABM y Consultas</a></li>
+                        <li><a href="#">Reporte x Obras</a></li>
+                        <li><a href="#">Reporte x Empleados</a></li>
+                        <li><a href="#">Reporte x Empleados / Obras</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Modulo Compras</a></li>
+                <li><a href="#">Modulo Ventas</a></li>
+                <li><a href="#">Menu Balanza</a></li>
+            </ul>
+        </li>
+        <!-- FIN ADMINISTRACION -->
+        <!-- GESTION -->
+        <li><h2><a href="#">Gestion</a></h2>
+            <ul>
+                <li><a href="#">Caja</a>
+                    <ul>
+                        <li><a href="#">Planilla de Caja</a></li>
+                        <li><a href="#">Listar N° de Cajas</a></li>
+                        <li><a href="#">Reporte de Movimientos</a></li>
+                        <li><a href="#">Codigos de Ingresos</a></li>
+                        <li><a href="#">Codigos de Egresos</a></li>
+                        <li><a href="#">Mayor de Ingresos</a></li>
+                        <li><a href="#">Mayor de Egresos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Bancos</a>
+                    <ul>
+                        <li><a href="#">ABM Cuentas</a></li>
+                        <li><a href="#">Libro Bancos</a></li>
+                        <li><a href="#">Depositos</a></li>
+                        <li><a href="#">Transferencias</a></li>
+                        <li><a href="#">Chequeras</a></li>
+                        <li><a href="#">Codigos de Ingresos</a></li>
+                        <li><a href="#">Codigos de Egresos</a></li>
+                        <li><a href="/bancos/lista">Tablas de Referencias de Bancos</a></li>
+                        <li><a href="#">Reporte de Cheques</a></li>
+                        <li><a href="#">Reporte de Cheques No Debitados</a></li>
+                        <li><a href="#">Flujo de Cheques</a></li>
+                        <li><a href="#">Imprimir Cheques</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Subdiarios IVA</a>
+                    <ul>
+                        <li><a href="#">Compras</a></li>
+                        <li><a href="#">Exportar COMPRAS a Aplicativo Regimen de Informacion Compras y Ventas</a></li>
+                        <li><a href="#">Ventas</a></li>
+                        <li><a href="#">Exportar VENTAS a Aplicativo Regimen de Informacion Compras y Ventas</a></li>
+                        <li><a href="#">Posicion IVA</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Cash Flow</a>
+                    <ul>
+                        <li><a href="#">Calcular Cash Flow</a></li>
+                        <li><a href="#">Codigos de Ingresos/Egresos</a></li>
+                        <li><a href="#">Egresos/Ingresos Programados</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Exportar Datos a SIAP a SIAP/Convenio</a></li>
+                <li><a href="#">Reporte Financiero</a></li>
+            </ul>
+        </li>
+        <!-- FIN GESTION -->
+        <!-- CONTABILIDAD -->
+        <li><h2><a href="#">Contabilidad</a></h2>
+            <ul>
+                <li><a href="#">Asientos</a></li>
+                <li><a href="#">Plan de Cuentas</a></li>
+                <li><a href="#">Periodos Contables</a></li>
+                <li><a href="#">Mayores</a></li>
+                <li><a href="#">Libro Diario</a></li>
+                <li><a href="#">Libro Diario Totalizador Mensual</a></li>
+                <li><a href="#">Balances</a></li>
+                <li><a href="#">Ajustes x Inflacion</a></li>
+                <li><a href="#">Errores de Partida Doble</a></li>
+                <li><a href="#">Configurar Cuentas Fijas</a></li>
+                <li><a href="#">Importar Asientos</a>
+                    <ul>
+                        <li><a href="#">Generar Asientos Contables</a></li>
+                        <li><a href="#">Listar Importaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Cerrar/Abrir Periodos</a></li>
+            </ul>
+        </li>
+        <!-- FIN CONTABILIDAD -->
+        <!-- ESTADISTICAS -->
+        <li><h2><a href="#">Estadisticas</a></h2>
+            <ul>
+                <li><a href="#">Ventas</a>
+                    <ul>
+                        <li><a href="#">Ventas Mensuales</a></li>
+                        <li><a href="#">Ventas x Centros de Costos</a></li>
+                        <li><a href="#">Ventas x Tipos de Costos</a></li>
+                        <li><a href="#">Ventas x Provincias</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Compras</a>
+                    <ul>
+                        <li><a href="#">Compras Mensuales/Diarias</a></li>
+                        <li><a href="#">Compras de Articulos</a></li>
+                        <li><a href="#">Compras de 1 Articulo</a></li>
+                        <li><a href="#">Compras x Centros de Costos</a></li>
+                        <li><a href="#">Compras x Tipos de Costos</a></li>
+                        <li><a href="#">Compras x Descripcion</a></li>
+                        <li><a href="#">Reporte a SQLPs</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Costos</a>
+                    <ul>
+                        <li><a href="#">Reporte Centros vs Tipos de Costos</a></li>
+                        <li><a href="#">Deteccion de Errores</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Stock</a></li>
+                <li><a href="#">Obras</a>
+                    <ul>
+                        <li><a href="#">Notas de Pedido vs. Gastos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <!-- FIN ESTADISTICAS -->
+        <!-- MISCELANEAS -->
+        <li><h2><a href="#">Miscelaneas</a></h2>
+            <ul>
+                <li><a href="#">Claves de Acceso</a></li>
+                <li><a href="#">Cambio de Usuario</a></li>
+                <li><a href="#">Datos de la Empresa</a></li>
+                <li><a href="#">Configurar Factura Electronica</a></li>
+                <li><a href="#">Registro de Versiones</a></li>
+                <li><a href="#">Importar Datos Sistema Anterior</a></li>
+                <li><a href="#">Manual del Usuario</a></li>
+                <li><a href="#">Registro de Operaciones</a></li>
+                <li><a href="#">Mantenimiento BD [Achicar Log]</a></li>
+                <li><a href="#">Exportar Tablas</a></li>
+                <li><a href="#">Soporte Remoto</a></li>
+            </ul>
+        </li>
+        <!-- FIN MISCELANEAS -->
+    </ul>
+</nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" src="/js/jquery.js"></script>
+<!-- SmartMenus jQuery plugin -->
+<script type="text/javascript" src="/js/jquery.smartmenus.js"></script>
+<!-- SmartMenus jQuery Keyboard Addon -->
+<script type="text/javascript" src="/js/jquery.smartmenus.keyboard.js"></script>
+<!-- SmartMenus jQuery init -->
+<script type="text/javascript">
+    $(function() {
+        $('#main-menu').smartmenus({
+            subMenusSubOffsetX: 1,
+            subMenusSubOffsetY: -8
+        });
+        $('#main-menu').smartmenus('keyboardSetHotkey', '123', 'shiftKey');
+    });
+</script>
+</body>
+</html>

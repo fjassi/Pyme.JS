@@ -1,0 +1,8 @@
+.brand-logo{
+	left: 10px;
+}
+
+.collapsible-header.active {
+	background: teal;
+	color: white;
+}
