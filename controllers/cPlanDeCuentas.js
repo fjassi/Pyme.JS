@@ -1,6 +1,8 @@
 var mPlanDeCuentas = require('../models/mPlanDeCuentas');
 var mLuke = require('../models/mLuke');
 
+var nodeExcel = require('excel-export');
+
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
@@ -8,7 +10,8 @@ module.exports = {
 	getModificar: getModificar,
 	postModificar: postModificar,
 	getEliminar: getEliminar,
-	getAjax_CantDigitosPorNivel: getAjax_CantDigitosPorNivel
+	getAjax_CantDigitosPorNivel: getAjax_CantDigitosPorNivel,
+	getExport: getExport
 }
 
 function getLista(req, res) {
@@ -28,9 +31,10 @@ function getAlta(req, res){
 
 function postAlta(req, res){
 	const params = req.body;
-	console.log(params);
+	// console.log(params);
 	const codigo = params.codigo;
-	const nombre = params.nombre;
+	var nombre = params.nombre;
+	nombre = nombre.toUpperCase();
 	var imputable = params.imputable;
 	var ajustable = params.ajustable;
 	const nivel = params.nivel;
@@ -109,4 +113,58 @@ function getAjax_CantDigitosPorNivel(req, res){
 	mLuke.getCantDigitosPorNivel(function(cantdigitos){
 		res.send(cantdigitos);
 	});
+}
+
+function getExport(req, res){
+	console.log("go!")
+	//var cellData = "Give me something to believe";
+
+	mPlanDeCuentas.getAll(function (plandecuentas){
+		var conf = {};
+
+		//este tiene una url acá pero en el server es otra....
+		conf.stylesXmlFile = "D:/Proyectos/Pyme.JS/style.xml";
+			// conf.stylesXmlFile = "C:/Users/Administrador/Documents/Proyectos/Maresa/style.xml";
+
+	    conf.cols = [{caption:'Codigo', type:'string'},
+	    {caption:'Denominacion', type:'string'},
+	    {caption:'Imputable', type:'string'},
+	    {caption:'Ajustable', type:'string'},
+	    {caption:'Nivel', type:'string'}];
+	
+		var arrPlan = [];
+
+		for (var x = 0 ; x < plandecuentas.length ; x++){
+	    	const cuenta = plandecuentas[x].cuenta;
+	    	const nombre = plandecuentas[x].nombre;
+	    	var impu = plandecuentas[x].impu;
+	    	if (impu == 'S')
+	    		impu = 'Si';
+	    	else
+	    		impu = 'No';
+	    	var ajus = plandecuentas[x].ajus;
+	    	if (ajus == 'S')
+	    		ajus = 'Si';
+	    	else
+	    		ajus = 'No';
+	    	const nivel = plandecuentas[x].nivel;
+
+	    	var plan = [];
+
+	    	plan.push(cuenta);
+	    	plan.push(nombre);
+	    	plan.push(impu);
+	    	plan.push(ajus);
+	    	plan.push(nivel);
+
+	    	arrPlan.push(plan);
+	    }
+
+	   	conf.rows = arrPlan;
+	    var result = nodeExcel.execute(conf);
+	    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+	    res.setHeader("Content-Disposition", "attachment; filename=" + "PlanDeCuentas.xlsx");
+	    res.end(result, 'binary');
+	});    
+    console.log("finished")
 }

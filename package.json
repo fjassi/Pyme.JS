@@ -11,6 +11,7 @@
     "body-parser": "^1.2.0",
     "consolidate": "^0.10.0",
     "cookie-parser": "^1.1.0",
+    "excel-export": "^0.5.1",
     "express": "^3.5.1",
     "express-session": "^1.1.0",
     "logfmt": "^1.1.2",
@@ -20,6 +21,7 @@
     "mongoose": "^4.6.1",
     "mssql": "^3.3.0",
     "mysql": "^2.4.3",
+    "excel-export": "^0.5.1",
     "swig": "^1.4.2",
     "toastr": "^2.1.2",
     "validator": "^3.17.1"

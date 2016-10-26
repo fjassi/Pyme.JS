@@ -33,13 +33,13 @@
                         <div class="two wide field">
                             <label>Codigo</label> 
                             <div class="field">
-                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required>
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required onKeyPress="return soloNumeros(event)">
                             </div>
                         </div>
                         <div class="four wide field">
                             <label>Nombre</label>
                             <div class="field">
-                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;">
                             </div>
                         </div>
                         <div class="two wide field">                            
