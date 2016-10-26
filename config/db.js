@@ -5,6 +5,7 @@ function conn(query, cb){
       user: 'sa',
       password: 'ironman',
       server: '138.97.200.246',
+      port: 1433,
       database: 'GESTIONJS',
       options: {
           tdsVersion: '7_1'
@@ -21,7 +22,7 @@ function conn(query, cb){
           //res.end(JSON.stringify(recordset));
           request.on('recordset', function(columns) {
           // Emitted once for each recordset in a query
-          console.log(columns.length)
+          // console.log(columns)
           });
 
           request.on('row', function(row) {
