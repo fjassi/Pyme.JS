@@ -12,12 +12,16 @@ function conn(query, cb){
   }
    
   var connection = new sql.Connection(config, function (err) {
+      if (err) throw err;
       var request = new sql.Request(connection);
+      console.log("--------- DEBUG ---------")
+      console.log(query)
+      console.log("--------- DEBUG ---------")
       request.query(query, function (err, recordset) {
           //res.end(JSON.stringify(recordset));
           request.on('recordset', function(columns) {
           // Emitted once for each recordset in a query
-          console.log(columns)
+          console.log(columns.length)
           });
 
           request.on('row', function(row) {
@@ -26,13 +30,14 @@ function conn(query, cb){
 
           request.on('error', function(err) {
               // May be emitted multiple times
+              console.log(err)
           });
 
           request.on('done', function(returnValue) {
               // Always emitted as the last one
-              console.log(returnValue)
+              // console.log(returnValue)
           });
-          console.log(err, recordset)
+          // console.log(err, recordset)
           cb(recordset);
       });
   });
