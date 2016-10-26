@@ -1,9 +1,60 @@
 {% extends 'template.html' %}
-
 {% block title %}
 	{{ pagename }}
 {% endblock %}
-
 {% block content %}
-	<h1>Bancos</h1>
+
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">Bancos: Tablas de Referencia</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons center aligned">
+            <a href="/bancos/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>	
+	
+<table id="tabla" class="ui right aligned blue striped celled table" cellspacing="0" width="100%">
+	<thead class="center aligned">
+    	<tr>
+	    	<th>Acciones</th>
+	    	<th>Codigo</th>
+	    	<th>Nombre</th>
+	    	<th>CUIT</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+{% for b in bancos %}
+	<tr>
+		<td class="center aligned">
+  			<div class="ui icon buttons">
+  				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui red icon button" data-tooltip="Eliminar">
+  					<i class="trash icon large"></i>
+  				</a>
+  				<a id="modificar{{ b.codigo }}" class="ui orange icon button modificar" data-tooltip="Modificar" data-codigo="{{ b.codigo }}">
+  					<i class="large edit icon"></i>
+  				</a>
+  			</div>
+  		</td>
+  		<td>{{ b.codigo }}</td>
+  		<td>{{ b.nombre }}</td>
+  		<td>{{ b.cuit }}</td>
+	</tr>
+{% endfor %}
+
+
+	</tbody>
+</table>
+    <!-- asd -->
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#cuit').mask('99-99999999-9');
+        $('.ui.checkbox').checkbox();
+        $('#tabla').DataTable();
+    });
+</script> 
 {% endblock %}
