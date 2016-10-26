@@ -38,7 +38,7 @@
             	<td style="text-align: center !important;">
                     <div class="ui icon buttons">                        
                         <a href="/plandecuentas/modificar/{{ p.cuenta }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
-                        <a href="/plandecuentas/eliminar/{{ p.cuenta }}" class="mini ui red icon button inverted" data-tooltip="Eliminar"><i class="trash icon"></i></a>
+                        <a href="/plandecuentas/eliminar/{{ p.cuenta }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
                     </div>
                 </td>              
                 <td>{{ p.cuenta }}</td>
