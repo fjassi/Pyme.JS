@@ -1,5 +1,6 @@
 const cIndex = require('./controllers/cIndex');
 const cBancos = require('./controllers/cBancos');
+const cPlanDeCuentas = require('./controllers/cPlanDeCuentas');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -18,4 +19,7 @@ module.exports = function(app) {
 		app.post('/plandecuentas/modificar', cPlanDeCuentas.postModificar);
 		app.get('/plandecuentas/eliminar/:cuenta', cPlanDeCuentas.getEliminar);
 	 	app.get("/plandecuentas/digitos", cPlanDeCuentas.getAjax_CantDigitosPorNivel);
+	 	app.get("/plandecuentas/export", cPlanDeCuentas.getExport);
+	// CODIGOS DE EGRESOS
+		
 }

@@ -3,7 +3,6 @@
 	{{ pagename }}
 {% endblock %}
 {% block content %}
-
 <div class="ui grid">
     <div class="left floated left aligned ten wide column">
         <h1 class="ui dividing blue header">Bancos: Tablas de Referencia</h1>
@@ -26,25 +25,23 @@
   		</tr>
   	</thead>
   	<tbody>
-{% for b in bancos %}
-	<tr>
-		<td class="center aligned">
-  			<div class="ui icon buttons">
-  				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui red icon button" data-tooltip="Eliminar">
-  					<i class="trash icon large"></i>
-  				</a>
-  				<a id="modificar{{ b.codigo }}" class="ui orange icon button modificar" data-tooltip="Modificar" data-codigo="{{ b.codigo }}">
-  					<i class="large edit icon"></i>
-  				</a>
-  			</div>
-  		</td>
-  		<td>{{ b.codigo }}</td>
-  		<td>{{ b.nombre }}</td>
-  		<td>{{ b.cuit }}</td>
-	</tr>
-{% endfor %}
-
-
+      {% for b in bancos %}
+      	<tr>
+      		<td class="center aligned">
+        			<div class="ui icon buttons">
+        				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui red icon button" data-tooltip="Eliminar">
+        					<i class="trash icon large"></i>
+        				</a>
+        				<a id="modificar{{ b.codigo }}" class="ui orange icon button modificar" data-tooltip="Modificar" data-codigo="{{ b.codigo }}">
+        					<i class="large edit icon"></i>
+        				</a>
+        			</div>
+        		</td>
+        		<td>{{ b.codigo }}</td>
+        		<td>{{ b.nombre }}</td>
+        		<td>{{ b.cuit }}</td>
+      	</tr>
+      {% endfor %}
 	</tbody>
 </table>
     <!-- asd -->
