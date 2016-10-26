@@ -1,0 +1,103 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<!-- <div class="ui basic segment">
+    <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+</div>  --> 
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/plandecuentas/alta" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required>
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Nombre</label>
+                            <div class="field">
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Imputable</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="imputable" id="imputable">
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Ajustable</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="ajustable" id="ajustable">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Nivel</label>
+                            <div class="field">
+                                <input type="text" name="nivel" id="nivel" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    // $("#codigo").mask("9999999999");
+    $("#codigo").on("change", function(){
+        var codigo = $(this).val();
+        var codigo_length = codigo.length;
+        var faltan = 10 - parseInt(codigo_length);
+        var resto = Array(faltan+1).join("0");
+        $("#codigo").val(codigo+resto);
+        $.getJSON("/plandecuentas/digitos", function(cantdigitos){
+            // console.log(cantdigitos)
+            if(codigo_length<=cantdigitos[0].cant1){
+                $("#nivel").val("1");
+            }else if(codigo_length<=cantdigitos[0].cant2){
+                $("#nivel").val("2");
+            }else if(codigo_length<=cantdigitos[0].cant3){
+                $("#nivel").val("3");
+            }else if(codigo_length<=cantdigitos[0].cant4){
+                $("#nivel").val("4");
+            }else if(codigo_length<=cantdigitos[0].cant5){
+                $("#nivel").val("5");
+            }else if(codigo_length<=cantdigitos[0].cant6){
+                $("#nivel").val("6");
+            }            
+        });        
+
+        //agregar ceros que faltan
+        //clasificar en nivel
+
+        //menor igual
+    });
+</script>
+{% endblock %}

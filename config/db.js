@@ -5,15 +5,19 @@ function conn(query, cb){
       user: 'sa',
       password: 'ironman',
       server: '138.97.200.246',
-      database: 'gestionjs',
       port: 1433,
+      database: 'GESTIONJS',
       options: {
           tdsVersion: '7_1'
       }
   }
    
   var connection = new sql.Connection(config, function (err) {
+      if (err) throw err;
       var request = new sql.Request(connection);
+      console.log("--------- DEBUG ---------")
+      console.log(query)
+      console.log("--------- DEBUG ---------")
       request.query(query, function (err, recordset) {
           //res.end(JSON.stringify(recordset));
           request.on('recordset', function(columns) {
@@ -27,7 +31,7 @@ function conn(query, cb){
 
           request.on('error', function(err) {
               // May be emitted multiple times
-              console.log(err);
+              console.log(err)
           });
 
           request.on('done', function(returnValue) {

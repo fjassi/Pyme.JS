@@ -11,7 +11,7 @@ var session = require('express-session');
 var methodoverride = require('method-override');
 var validator = require("validator");
 // var mongoose = require('mongoose');
-
+var swig = require('swig');
 
 
 app.use(logfmt.requestLogger());
@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static(__dirname+'/public'));
-
+// swig.init({ root: __dirname + '/public/views' });
 routes(app);
 
 var port = Number(process.env.PORT || 5000);

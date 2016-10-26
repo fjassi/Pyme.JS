@@ -4,6 +4,7 @@ const cBancos = require('./controllers/cBancos');
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
 	app.get('/error', cIndex.getError);
+	// BANCOS
 	app.get('/bancos/lista', cBancos.getLista);
 	app.post('/bancos/nuevo', cBancos.postAlta);
 	app.get('/bancos/modificar/:codigo', cBancos.getModificar);

@@ -1,0 +1,53 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div>
+</div>
+<!-- <div class="ui blue divider"></div> -->
+<table class="ui sortable celled striped table" id="tabla_empresas">
+    <thead>
+        <tr>
+        	<th><a class="ui ribbon label">Opciones</a></th>       
+            <th>Codigo</th>
+            <th>Denominacion</th>
+            <th>Imputable</th>
+            <th>Ajustable</th>
+            <th>Nivel</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in plandecuentas %}
+        	{% if p.imputxt == 'No' %}
+        		<tr class="active">
+        	{% else %}
+            	<tr>
+            {% endif %}
+            	<td style="text-align: center !important;">
+                    <div class="ui icon buttons">                        
+                        <a href="/plandecuentas/modificar/{{ p.cuenta }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/plandecuentas/eliminar/{{ p.cuenta }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                    </div>
+                </td>              
+                <td>{{ p.cuenta }}</td>
+                <td>{% if p.nivel == '1' %}{% elseif p.nivel == '2' %}&nbsp;&nbsp;{% elseif p.nivel == '3' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% elseif p.nivel == '4' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% elseif p.nivel == '5' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% elseif p.nivel == '6' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{ p.nombre }}</td>
+                <td style="text-align: center;">{{ p.imputxt }}</td>
+                <td style="text-align: center;">{{ p.ajustxt }}</td>
+                <td>{{ p.nivel }}</td>                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
