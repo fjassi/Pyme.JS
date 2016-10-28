@@ -1,0 +1,107 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<!-- <div class="ui basic segment">
+    <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+</div>  --> 
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/mediosdepago/modificar" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required onKeyPress="return soloNumeros(event)" value="{{ mediodepago.codigo }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Nombre</label>
+                            <div class="field">
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;" value="{{ mediodepago.nombretxt }}"><div class="aviso">Quedan <span id="charsLeftNombre"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Cotizacion</label>
+                            <div class="field">
+                                <input type="text" name="cotizacion" id="cotizacion" placeholder="Cotizacion" required onKeyPress="return Validate5EntY2Dec(event,this)" value="{{ mediodepago.cotiza }}">
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Mueve Caja</label>
+                            <div class="ui toggle checkbox">
+                                {% if mediodepago.caja == 'S' %}
+                                    <input type="checkbox" name="caja" id="caja" checked>
+                                {% else %}
+                                    <input type="checkbox" name="caja" id="caja">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Se Usa en P.Venta</label>
+                            <div class="ui toggle checkbox">
+                                {% if mediodepago.usa_punto == 'S' %}
+                                    <input type="checkbox" name="usa_punto" id="usa_punto" checked>
+                                {% else %}
+                                    <input type="checkbox" name="usa_punto" id="usa_punto">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <div class="grouped fields">
+                                <label>Tipo de Pago</label>
+                                <div class="field">
+                                    <select class="ui dropdown" name="tipo" id="tipo" style="width: auto !important;">
+                                        {% if mediodepago.tipo == 'M' %}
+                                            <option value="M" selected>Moneda</option>
+                                            <option value="C">Cheque</option>
+                                            <option value="R">Retencion</option>
+                                        {% elseif mediodepago.tipo == 'C' %}
+                                            <option value="M">Moneda</option>
+                                            <option value="C" selected>Cheque</option>
+                                            <option value="R">Retencion</option>
+                                        {% else %}
+                                            <option value="M">Moneda</option>
+                                            <option value="C">Cheque</option>
+                                            <option value="R" selected>Retencion</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    // $("#codigo").mask("9999999999");
+    $('#nombre').limit('25','#charsLeftNombre');    
+</script>
+{% endblock %}

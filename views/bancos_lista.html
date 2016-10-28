@@ -14,8 +14,7 @@
         </div>
     </div>
 </div>	
-	
-<table id="tabla" class="ui right aligned blue striped celled table" cellspacing="0" width="100%">
+<table id="tabla" class="ui blue striped celled table" cellspacing="0" width="100%">
 	<thead class="center aligned">
     	<tr>
 	    	<th>Acciones</th>
@@ -44,14 +43,13 @@
       {% endfor %}
 	</tbody>
 </table>
-    <!-- asd -->
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
-    $(function() {
-        $('#cuit').mask('99-99999999-9');
+    $(function() {        
         $('.ui.checkbox').checkbox();
         $('#tabla').DataTable();
+        $('#cuit').mask('99-99999999-9');
     });
 </script> 
 {% endblock %}
