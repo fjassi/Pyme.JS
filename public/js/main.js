@@ -35,7 +35,7 @@ function Numy1Punto(e, field) {
 	}
 	// other key
 	return false
-}//onkeypress="return Numy1Punto(event, this)"
+}//onKeyPress="return Numy1Punto(event, this)"
 
 function checkDec(el){
 	var ex = /^[0-9]+\.?[0-9]*$/;
@@ -53,7 +53,7 @@ function validate(evt) {
     theEvent.returnValue = false;
     if(theEvent.preventDefault) theEvent.preventDefault();
   }
-}// onkeypress='validate(event)'
+}// onKeyPress='validate(event)'
 
 function Validate5EntY2Dec(e, field) {
     key = e.keyCode ? e.keyCode : e.which
@@ -88,4 +88,39 @@ function Validate5EntY2Dec(e, field) {
     }
     // other key
     return false
-}//onkeypress="return Validate5EntY2Dec(event,this)"
+}//onKeyPress="return Validate5EntY2Dec(event,this)"
+
+function Validate3EntY3Dec(e, field) {
+    key = e.keyCode ? e.keyCode : e.which
+    // backspace
+    if (key == 8) return true
+ 
+    // 0-9 a partir del .decimal  
+    if (field.value != "") {
+        if ((field.value.indexOf(".")) > 0) {
+            //si tiene un punto valida dos digitos en la parte decimal
+            if (key > 47 && key < 58) {
+                if (field.value == "") return true
+                //regexp = /[0-9]{1,10}[\.][0-9]{1,3}$/
+                // dos decimales
+                regexp = /[0-9]{3}$/
+                return !(regexp.test(field.value))
+            }
+        }
+    }
+    // 0-9 
+    if (key > 47 && key < 58) {
+        if (field.value == "") return true
+        // 10 enteros?
+        regexp = /[0-9]{3}/
+        return !(regexp.test(field.value))
+    }
+    // .
+    if (key == 46) {
+        if (field.value == "") return false
+        regexp = /^[0-9]+$/
+        return regexp.test(field.value)
+    }
+    // other key
+    return false
+}//onKeyPress="return Validate3EntY3Dec(event,this)"

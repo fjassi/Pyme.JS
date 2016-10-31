@@ -1,0 +1,60 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/talonarios/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/talonarios/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+<table class="ui blue striped celled table" id="tabla_talonarios">
+    <thead>
+        <tr>
+        	<th><a class="ui ribbon label">Opciones</a></th>       
+            <th>Tipo</th>
+            <th>Desde N°</th>
+            <th>Hasta N°</th>
+            <th>Ultimo N°</th>
+            <th>Alta</th>
+            <th>Usa Caja</th>
+            <th>Vence</th>
+            <th style="text-align: center;">Activo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in talonarios %}
+            <tr>
+            	<td style="text-align: center !important;">
+                    <div class="ui icon buttons">                        
+                        <a href="/talonarios/modificar/{{ t.ta_id }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/talonarios/eliminar/{{ t.ta_id }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                    </div>
+                </td>              
+                <td>{{ t.ta_tipo }}</td>
+                <td>{{ t.ta_desde }}</td>
+                <td>{{ t.ta_hasta }}</td>
+                <td>{{ t.ta_actual}}</td>
+                <td>{{ t.altaf }}</td>
+                <td>{{ t.ta_user }}</td>
+                <td>{{ t.vencef }}</td>
+                <td style="text-align: center;">{{ t.activotxt }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla_talonarios').DataTable();
+</script>
+{% endblock %}

@@ -25,30 +25,18 @@
     <tbody>
         <tr>
             <td>
-                <form class="ui form" id="formalta" method="post" action="/codigosegreso/alta" style="text-align: center !important;">
+                <form class="ui form" id="formalta" method="post" action="/codigoscomprobantes/alta" style="text-align: center !important;">
                     <div class="fields">
                         <div class="two wide field">
-                            <label>Codigo</label> 
+                            <label>Numero</label>
                             <div class="field">
-                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
+                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextnumero }}">
                             </div>
                         </div>
-                        <div class="four wide field">
-                            <label>Nombre</label>
+                        <div class="six wide field">
+                            <label>Denominacion</label>
                             <div class="field">
-                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftNombre"></span> caraceteres.</div>
-                            </div>
-                        </div>
-                        <!-- listar solo cuentas imputables -->
-                        <div class="six wide field">                            
-                            <label>Cuenta Contable</label>
-                            <div class="field">
-                                <select id="cuenta" name="cuenta" class="ui search dropdown" style="width: auto !important;" max-length="10">
-                                    <option value="">Cuenta</option>
-                                    {% for i in imputables %}
-                                        <option value="{{ i.cuenta }}">{{ i.cuenta }} - {{ i.nombre }}</option>
-                                    {% endfor %}
-                                </select>
+                                <input type="text" name="denominacion" id="denominacion" placeholder="Denominacion" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftDenominacion"></span> caraceteres.</div>
                             </div>
                         </div>
                     </div>
@@ -63,7 +51,7 @@
 <script src="/js/jquery.limit-1.2.js"></script>
 <script type="text/javascript">
     // $("#codigo").mask("9999999999");
-    $('#nombre').limit('15','#charsLeftNombre');
+    $('#denominacion').limit('40','#charsLeftDenominacion');
     
 </script>
 {% endblock %}

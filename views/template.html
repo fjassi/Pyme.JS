@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- SmartMenus core CSS (required) -->
+    <link rel="shortcut icon" type="image/png" href="/uploads/favicon.ico"/>
     <link href="/css/sm-core-css.css" rel="stylesheet" type="text/css" />
     <!-- "sm-blue" menu theme (optional, you can use your own CSS, too) -->
     <link href="/css/sm-blue.css" rel="stylesheet" type="text/css" />
@@ -24,9 +25,10 @@
     <link rel="stylesheet" type="text/css" href="/css/components/segment.css">
     <link rel="stylesheet" type="text/css" href="/css/components/dropdown.css">
     <link rel="stylesheet" type="text/css" href="/css/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="/css/components/popup.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css">
-
+    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
 <nav id="main-nav" role="navigation">
   <!-- Sample menu definition -->
     <ul id="main-menu" class="sm sm-blue">
-        <li><h2><a href="/">Home</a></h2></li>
+        <li><a href="/"><i class="large bar chart icon"></i>GestioN.js<!-- GesT1oN.js --></a></li>
         <!-- ADMINISTRACION -->
         <li><h2><a href="#">Administracion</a></h2>
             <ul>
@@ -100,7 +102,7 @@
                                 <li><a href="#">Mayor de Proveedores</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Determinacion de Codigos de Comprobantes</a></li>
+                        <li><a href="/codigoscomprobantes/lista">Determinacion de Codigos de Comprobantes</a></li>
                         <li><a href="#">Retenciones de IIBB</a>
                             <ul>
                                 <li><a href="#">Padron de Alicuotas Ret y Perc. IIBB</a></li>
@@ -129,8 +131,8 @@
                     <ul>
                         <li><a href="/tablas_comunes/lista">Centro de Costos</a></li>
                         <li><a href="#">Tipos de Costos</a></li>
-                        <li><a href="#">Talonarios</a></li>
-                        <li><a href="#">Condiciones de Venta</a></li>
+                        <li><a href="/talonarios/lista">Talonarios</a></li>
+                        <li><a href="/condicionesdeventa/lista">Condiciones de Venta</a></li>
                         <li><a href="/mediosdepago/lista">Medios de Pago</a></li>
                         <li><a href="#">Vendedores</a></li>
                         <li><a href="#">Empleados</a></li>
@@ -214,7 +216,7 @@
                 <li><a href="#">Reporte Financiero</a></li>
             </ul>
         </li>
-        <!-- FIN GESTION a-->
+        <!-- FIN GESTION -->
 
         <!-- CONTABILIDAD -->
         <li><h2><a href="#">Contabilidad</a></h2>

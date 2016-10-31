@@ -1,0 +1,253 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/bower_components/semantic-ui-calendar/dist/calendar.min.css" />
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<table class="ui blue celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/talonarios/modificar" style="text-align: center !important;">
+                    <input hidden name="id" id="id" value="{{ talonario.ta_id }}">
+                    <div class="fields">
+                        <div class="three wide field">
+                            <label>Tipo</label> 
+                            <div class="field">
+                                <select name="tipo" id="tipo" class="ui search dropdown" style="width: auto;">
+                                    {% if talonario.tipo == 'A' %}
+                                        <option value="A" selected>Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B" selected>Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E" selected>Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R" selected>Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X" selected>Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I" selected>Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% elseif talonario.tipo == 'B' %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T" selected>Tique</option>
+                                        <option value="N">Notas de Pedido</option>
+                                    {% else %}
+                                        <option value="A">Facturas A</option>
+                                        <option value="B">Facturas B</option>
+                                        <option value="E">Facturas E</option>
+                                        <option value="R">Recibos</option>
+                                        <option value="X">Remitos</option>
+                                        <option value="I">Internos</option>
+                                        <option value="T">Tique</option>
+                                        <option value="N" selected>Notas de Pedido</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Desde N°</label> 
+                            <div class="field">
+                                <input type="text" name="desde" id="desde" placeholder="Desde" required onKeyPress="return soloNumeros(event)" maxlength="12" value="{{ talonario.ta_desde }}">
+                            </div>
+                        </div>
+                        <input hidden name="ultimo" id="ultimo" value="000000000000">
+                        <!-- <div class="two wide field">
+                            <label>Ultimo Emitido</label> 
+                            <div class="field">
+                                <input type="text" name="ultimo" id="ultimo" placeholder="Ultimo Emitido" required onKeyPress="return soloNumeros(event)" maxlength="12">
+                            </div>
+                        </div> -->
+                        <div class="two wide field">
+                            <label>Hasta N°</label> 
+                            <div class="field">
+                                <input type="text" name="hasta" id="hasta" placeholder="Hasta" required onKeyPress="return soloNumeros(event)" maxlength="12" value="{{ talonario.ta_hasta }}">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Fecha Alta</label>                             
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="alta" name="alta" placeholder="dd/mm/yyyy" style="width: 110px !important;" value="{{ talonario.altaf }}">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Fecha Vence</label>                             
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="vence" name="vence" placeholder="dd/mm/yyyy" style="width: 110px !important;" value="{{ talonario.vencef }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Activo</label> 
+                            <div class="field">
+                                <select name="activo" id="activo" class="ui search dropdown" style="width: auto !important;">
+                                    {% if talonario.ta_activo == 'S' %}
+                                        <option value="S" selected>Si</option>
+                                        <option value="N">No</option>
+                                        <option value="E">Fact. Elect.</option>
+                                    {% elseif talonario.ta_activo == 'N' %}
+                                        <option value="S">Si</option>
+                                        <option value="N" selected>No</option>
+                                        <option value="E">Fact. Elect.</option>
+                                    {% else %}
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                        <option value="E" selected>Fact. Elect.</option>
+                                    {% endif %}                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Graba en Caja N°</label> 
+                            <div class="field">
+                                <input hidden name="graba" id="graba" value="Caja-">
+                                <input type="text" name="caja" id="caja" placeholder="Caja" required onKeyPress="return soloNumeros(event)" maxlength="2" value="{{ talonario.nro_caja }}">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript" src="/bower_components/semantic-ui-calendar/dist/calendar.min.js"></script>
+<script type="text/javascript">
+    $("#alta").mask("99/99/9999");
+    $("#vence").mask("99/99/9999");
+    // $('#nombre').limit('15','#charsLeftNombre');
+    // $('#fecha_alta').calendar();
+    $("#desde").on("change", function(){
+        var desde = $("#desde").val();
+        if (desde.length >= 4){
+            $("#hasta").val($("#desde").val().substring(0, 4));
+        }
+    });
+
+    $("#formalta").submit(function (){
+        var desde = $("#desde").val();
+        var hasta = $("#hasta").val();
+
+        if (desde.length == 12){
+            if (hasta.length == 12){
+                //si
+            }else{
+                console.log("codigo1 length menor a 4 y/o codigo2 length menor a 3");
+                Command: toastr["error"]("El campo hasta debe tener 12 digitos", "Error")
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "3000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                event.preventDefault();
+                $("#hasta").focusin();
+            }
+        }else{
+            console.log("codigo1 length menor o igual a 0");
+            Command: toastr["error"]("El campo desde debe tener 12 digitos", "Error")
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $("desde").focusin();
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

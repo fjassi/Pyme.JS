@@ -4,12 +4,15 @@ const cPlanDeCuentas = require('./controllers/cPlanDeCuentas');
 const cCodigosEgreso = require("./controllers/cCodigosEgreso");
 const cCodigosIngreso = require("./controllers/cCodigosIngreso");
 const cMediosDePago = require('./controllers/cMediosDePago');
+const cCodigosComprobantes = require('./controllers/cCodigosComprobantes');
+const cCondicionesDeVenta = require('./controllers/cCondicionesDeVenta');
+const cTalonarios = require('./controllers/cTalonarios');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
 	app.get('/error', cIndex.getError);
 	// BANCOS
-		app.get('/bancos/lista', cBancos.getLista);
+		app.get('/bancos/lista', cBancos.getLista); // falta getAlta
 		app.post('/bancos/nuevo', cBancos.postAlta);
 		app.get('/bancos/modificar/:codigo', cBancos.getModificar);
 		app.post('/bancos/modificar', cBancos.postModificar);
@@ -44,4 +47,26 @@ module.exports = function(app) {
 		app.get("/mediosdepago/modificar/:codigo", cMediosDePago.getModificar);
 		app.post("/mediosdepago/modificar", cMediosDePago.postModificar);
 		app.get("/mediosdepago/eliminar/:codigo", cMediosDePago.getEliminar);
+	// DETERMINACION CODIGOS DE COMPROBANTES
+		app.get("/codigoscomprobantes/lista", cCodigosComprobantes.getLista);
+		app.get("/codigoscomprobantes/alta", cCodigosComprobantes.getAlta);
+		app.post("/codigoscomprobantes/alta", cCodigosComprobantes.postAlta);
+		app.get("/codigoscomprobantes/modificar/:numero", cCodigosComprobantes.getModificar);
+		app.post("/codigoscomprobantes/modificar", cCodigosComprobantes.postModificar);
+		app.get("/codigoscomprobantes/eliminar/:numero", cCodigosComprobantes.getEliminar);
+	// CONDICIONES DE VENTA
+		app.get("/condicionesdeventa/lista", cCondicionesDeVenta.getLista);
+		app.get("/condicionesdeventa/alta", cCondicionesDeVenta.getAlta);
+		app.post("/condicionesdeventa/alta", cCondicionesDeVenta.postAlta);
+		app.get("/condicionesdeventa/modificar/:numero", cCondicionesDeVenta.getModificar);
+		app.post("/condicionesdeventa/modificar", cCondicionesDeVenta.postModificar);
+		app.get("/condicionesdeventa/eliminar/:numero", cCondicionesDeVenta.getEliminar);
+	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
+	// TALONARIOS DE COMPROBANTES
+		app.get("/talonarios/lista", cTalonarios.getLista);
+		app.get("/talonarios/alta", cTalonarios.getAlta);
+		app.post("/talonarios/alta", cTalonarios.sp_abm_talo);
+		app.get("/talonarios/modificar/:id", cTalonarios.getModificar);
+		app.post("/talonarios/modificar", cTalonarios.sp_abm_talo);
+		app.get("/talonarios/eliminar/:id", cTalonarios.getEliminar);
 }

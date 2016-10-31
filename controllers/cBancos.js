@@ -16,7 +16,7 @@ function getLista(req, res) {
 		});
 	});
 }
-
+// falta getAlta
 
 function postAlta(req, res){
 	const params = req.body;

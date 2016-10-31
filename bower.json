@@ -1,0 +1,24 @@
+{
+  "name": "Gestion",
+  "description": "Sistema de Gestion JS",
+  "main": "app.js",
+  "authors": [
+    "Marcos",
+    "Patito"
+  ],
+  "license": "qwerty2017",
+  "keywords": [
+    "gestion"
+  ],
+  "homepage": "https://github.com/Markkos89/Pyme.JS",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic-ui-calendar": "^0.0.3"
+  }
+}
