@@ -1,0 +1,69 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<table class="ui blue celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/codigosegreso/alta" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Nombre</label>
+                            <div class="field">
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftNombre"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <!-- listar solo cuentas imputables -->
+                        <div class="six wide field">                            
+                            <label>Cuenta Contable</label>
+                            <div class="field">
+                                <select id="cuenta" name="cuenta" class="ui search dropdown" style="width: auto !important;" max-length="10">
+                                    <option value="">Cuenta</option>
+                                    {% for i in imputables %}
+                                        <option value="{{ i.cuenta }}">{{ i.cuenta }} - {{ i.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    // $("#codigo").mask("9999999999");
+    $('#nombre').limit('15','#charsLeftNombre');
+    
+</script>
+{% endblock %}

@@ -5,7 +5,8 @@ module.exports = {
 	Sp_Alta_Cuen: Sp_Alta_Cuen,
 	getByCuenta: getByCuenta,
 	del: del,
-	validacionMovimientos: validacionMovimientos
+	validacionMovimientos: validacionMovimientos,
+	getAllImputables: getAllImputables
 }
 
 function getAll(cb){
@@ -51,4 +52,13 @@ function del(cuenta, cb){
 
 function validacionMovimientos(cuenta, cb){
 	conn("select top 1(ld_fecha) from diario where ld_debe = '"+cuenta+"' or ld_cred = '"+cuenta+"'", cb)
+}
+
+function getAllImputables(cb){
+	conn("SELECT *, "+
+		"case impu when 'N' then 'No' when 'S' then 'Si' end as imputxt, "+
+		"case ajus when 'N' then 'No' when 'S' then 'Si' end as ajustxt "+
+		"FROM cuen "+
+		"WHERE cuen.impu = 'S' "+
+		"ORDER BY cuenta asc", cb);
 }

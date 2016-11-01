@@ -135,8 +135,8 @@ function getExport(req, res){
 		var arrPlan = [];
 
 		for (var x = 0 ; x < plandecuentas.length ; x++){
-	    	const cuenta = plandecuentas[x].cuenta;
-	    	const nombre = plandecuentas[x].nombre;
+	    	var cuenta = plandecuentas[x].cuenta;
+	    	var nombre = plandecuentas[x].nombre;
 	    	var impu = plandecuentas[x].impu;
 	    	if (impu == 'S')
 	    		impu = 'Si';
@@ -147,7 +147,7 @@ function getExport(req, res){
 	    		ajus = 'Si';
 	    	else
 	    		ajus = 'No';
-	    	const nivel = plandecuentas[x].nivel;
+	    	var nivel = plandecuentas[x].nivel;
 
 	    	var plan = [];
 

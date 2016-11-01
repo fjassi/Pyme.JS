@@ -1,23 +1,22 @@
 {% extends 'template.html' %}
-
 {% block title %}
 	{{ pagename }}
 {% endblock %}
-
 {% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
 <div class="ui grid">
     <div class="left floated left aligned ten wide column">
         <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
     </div>
     <div class="right floated right aligned six wide column">
         <div class="ui buttons">
-            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
-            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/plandecuentas/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
         </div>
     </div>
 </div>
-<!-- <div class="ui blue divider"></div> -->
-<table class="ui sortable celled striped table" id="tabla_empresas">
+<table class="ui blue striped celled table" id="tabla_plandecuentas">
     <thead>
         <tr>
         	<th><a class="ui ribbon label">Opciones</a></th>       
@@ -59,5 +58,9 @@
         $('#cuit').mask('99-99999999-9');
         $('.ui.checkbox').checkbox();
     });
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla_plandecuentas').DataTable();
 </script>
 {% endblock %}

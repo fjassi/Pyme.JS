@@ -1,0 +1,50 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/codigosegreso/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/codigosegreso/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+<table class="ui blue striped celled table" id="tabla_codigosegreso">
+    <thead>
+        <tr>
+        	<th><a class="ui ribbon label">Opciones</a></th>       
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th style="text-align: center;">Cuenta</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in codigosegreso %}
+            <tr>
+            	<td style="text-align: center !important;">
+                    <div class="ui icon buttons">                        
+                        <a href="/codigosegreso/modificar/{{ c.co_codigo }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/codigosegreso/eliminar/{{ c.co_codigo }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                    </div>
+                </td>              
+                <td>{{ c.co_codigo }}</td>
+                <td>{{ c.co_deno }}</td>
+                <td style="text-align: center;">{{ c.co_cuen }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla_codigosegreso').DataTable();
+</script>
+{% endblock %}

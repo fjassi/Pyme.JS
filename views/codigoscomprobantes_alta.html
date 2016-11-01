@@ -1,0 +1,57 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<table class="ui blue celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/codigoscomprobantes/alta" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Numero</label>
+                            <div class="field">
+                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextnumero }}">
+                            </div>
+                        </div>
+                        <div class="six wide field">
+                            <label>Denominacion</label>
+                            <div class="field">
+                                <input type="text" name="denominacion" id="denominacion" placeholder="Denominacion" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftDenominacion"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    // $("#codigo").mask("9999999999");
+    $('#denominacion').limit('40','#charsLeftDenominacion');
+    
+</script>
+{% endblock %}

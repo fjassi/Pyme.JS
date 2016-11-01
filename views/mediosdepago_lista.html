@@ -1,0 +1,58 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/mediosdepago/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/mediosdepago/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+<table class="ui blue striped celled table" id="tabla_mediosdepago">
+    <thead>
+        <tr>
+        	<th><a class="ui ribbon label">Opciones</a></th>       
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Fijo</th>
+            <th>Cotiza</th>
+            <th>Caja</th>
+            <th>Tipo</th>
+            <th>Usa Punto</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in mediosdepago %}
+            <tr>
+            	<td style="text-align: center !important;">
+                    <div class="ui icon buttons">                        
+                        <a href="/mediosdepago/modificar/{{ m.codigo }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/mediosdepago/eliminar/{{ m.codigo }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                    </div>
+                </td>              
+                <td>{{ m.codigo }}</td>
+                <td>{{ m.nombre }}</td>
+                <td>{{ m.fijotxt }}</td>
+                <td>{{ m.cotiza }}</td>
+                <td>{{ m.cajatxt }}</td>
+                <td>{{ m.tipotxt }}</td>
+                <td>{{ m.usa_puntotxt }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla_mediosdepago').DataTable();
+</script>
+{% endblock %}

@@ -3,7 +3,6 @@
 	{{ pagename }}
 {% endblock %}
 {% block content %}
-
 <div class="ui grid">
     <div class="left floated left aligned ten wide column">
         <h1 class="ui dividing blue header">Bancos: Tablas de Referencia</h1>
@@ -14,7 +13,7 @@
             <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
         </div>
     </div>
-</div>	
+</div>
 	
 <table id="tabla" class="ui blue striped celled table" cellspacing="0" width="100%">
 	<thead>
@@ -43,14 +42,12 @@
   		<td>{{ b.cuit }}</td>
 	</tr>
 {% endfor %}
-
-
 	</tbody>
 </table>
-    <!-- asd -->
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
     $(function() {
         $('#tabla').DataTable();
         $('#cuit').mask('99-99999999-9');
