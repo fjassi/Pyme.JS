@@ -2,7 +2,7 @@ var conn = require('../config/db').conn;
 
 module.exports = {
 	getAll: getAll,
-	getByCodigo: getByCodigo,
+	getByNumero: getByNumero,
 	Abm_Dete: Abm_Dete,
 	del: del,
 	getNextNumero: getNextNumero,
@@ -13,12 +13,12 @@ function getAll(cb){
 	conn("select *, RTRIM(LTRIM(de_deno)) as denotxt from dete order by de_nume", cb);
 }
 
-function getByCodigo(codigo, cb){
+function getByNumero(codigo, cb){
 	conn("select *, RTRIM(LTRIM(de_deno)) as denotxt from dete where de_nume = "+codigo, cb);
 }
 
-function Abm_Dete(numero, denominacion, cb){
-	conn("Abm_Dete "+numero+", '"+denominacion+"'", cb);
+function Abm_Dete(o, cb){
+	conn("Abm_Dete "+o.numero+", '"+o.denominacion+"'", cb);
 }
 
 function del(codigo, cb){

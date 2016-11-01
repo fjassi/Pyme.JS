@@ -4,9 +4,8 @@ const mMediosDePago = require('../models/mMediosDePago');
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
-	postAlta: postAlta,
+	Sp_Abm_Mpagos: Sp_Abm_Mpagos,
 	getModificar: getModificar,
-	postModificar: postModificar,
 	getEliminar: getEliminar
 }
 
@@ -28,28 +27,23 @@ function getAlta(req, res){
 	});
 }
 
-function postAlta(req, res){
-	const params = req.body;
-	console.log(params);
-	const codigo = params.codigo;
-	var nombre = params.nombre;
-	nombre = nombre.toUpperCase(); 
-	const cotizacion = params.cotizacion;
-	var caja = params.caja;
-	var usa_punto = params.usa_punto;
-	const tipo = params.tipo;
+function Sp_Abm_Mpagos(req, res){
+	var oMpagos = req.body;
+	console.log(oMpagos);
 
-	if(caja == 'on')
-		caja = 'S';
+	oMpagos.nombre = oMpagos.nombre.toUpperCase(); 
+
+	if(oMpagos.caja == 'on')
+		oMpagos.caja = 'S';
 	else
-		caja = 'N';
+		oMpagos.caja = 'N';
 
-	if(usa_punto == 'on')
-		usa_punto = 'S';
+	if(oMpagos.usa_punto == 'on')
+		oMpagos.usa_punto = 'S';
 	else
-		usa_punto = 'N';
+		oMpagos.usa_punto = 'N';
 
-	mMediosDePago.Sp_Abm_Mpagos(codigo, nombre, 'N', cotizacion, caja, tipo, usa_punto, function(){
+	mMediosDePago.Sp_Abm_Mpagos(oMpagos, function(){
 		res.redirect("/mediosdepago/lista");
 	});
 }
@@ -64,32 +58,6 @@ function getModificar(req, res){
 			pagename: "Modificar Medio de Pago",
 			mediodepago: mediodepago[0]
 		});
-	});
-}
-
-function postModificar(req, res){
-	const params = req.body;
-	console.log(params);
-	const codigo = params.codigo;
-	var nombre = params.nombre;
-	nombre = nombre.toUpperCase(); 
-	const cotizacion = params.cotizacion;
-	var caja = params.caja;
-	var usa_punto = params.usa_punto;
-	const tipo = params.tipo;
-
-	if(caja == 'on')
-		caja = 'S';
-	else
-		caja = 'N';
-
-	if(usa_punto == 'on')
-		usa_punto = 'S';
-	else
-		usa_punto = 'N';
-
-	mMediosDePago.Sp_Abm_Mpagos(codigo, nombre, 'N', cotizacion, caja, tipo, usa_punto, function(){
-		res.redirect("/mediosdepago/lista");
 	});
 }
 

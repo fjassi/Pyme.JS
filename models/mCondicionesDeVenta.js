@@ -20,7 +20,7 @@ function getByNumero(numero, cb){
 }
 
 function Sp_Abm_Cove(o, cb){
-	conn("Sp_Abm_Cove "+o.numero+", '"+o.denominacion+"', "+o.dias+", '"+o.porcentaje+"', "+o.cuotas, cb);
+	conn("Sp_Abm_Cove "+o.numero+", '"+o.denominacion+"', "+o.dias+", '"+o.porce+"', "+o.cuotas, cb);
 }
 
 function del(numero, cb){
