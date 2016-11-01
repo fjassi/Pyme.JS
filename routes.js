@@ -16,10 +16,11 @@ module.exports = function(app) {
 	// BANCOS
 		app.get('/bancos/lista', cBancos.getLista);
 		app.get('/bancos/alta', cBancos.getAlta);
-		app.post('/bancos/alta', cBancos.postAlta);
+		app.post('/bancos/alta', cBancos.Sp_Abm_Bancos);
 		app.get('/bancos/modificar/:codigo', cBancos.getModificar);
-		app.post('/bancos/modificar', cBancos.postModificar);
+		app.post('/bancos/modificar', cBancos.Sp_Abm_Bancos);
 		app.get('/bancos/eliminar/:codigo', cBancos.getEliminar);
+		app.get('/bancos/valcodigo/:codigo', cBancos.ValidarCodigo);
 	// PLAN DE CUENTAS
 		app.get('/plandecuentas/lista', cPlanDeCuentas.getLista);
 		app.get('/plandecuentas/alta', cPlanDeCuentas.getAlta);

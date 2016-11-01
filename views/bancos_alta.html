@@ -24,7 +24,7 @@
                         <div class="field">
                             <label>Codigo</label> 
                             <div class="field">
-                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required>
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" value="{{ nextCodigo }}" required>
                             </div>
                         </div>
                         <div class="field">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
+                    <button id="submit" class="ui positive submit button" tabindex="0" type="button">Submit</button>
                 </form>
             </td>
         </tr>
@@ -50,5 +50,36 @@
 <script src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
     $("#cuit").mask("99-99999999-9");
+    $("#submit").on("click", function (){
+        var codigo = $("#codigo").val();
+        
+        $.getJSON("/bancos/valcodigo/"+codigo, function(validacion){
+            if(validacion.length > 0){
+                return false;
+                $("#codigo").focusin();                
+                Command: toastr["error"]("El codigo de Bancos ya existe.", "Error")
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "3000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            }else{
+                $("#formalta").submit();
+            }
+        });
+    });
 </script>
 {% endblock %}
