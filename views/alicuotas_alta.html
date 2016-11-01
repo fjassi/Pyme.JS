@@ -46,50 +46,13 @@
                             </div>
                         </div>
                     </div>
-                    <button id="btnAlta" class="ui positive submit button" tabindex="0" type="button">Submit</button>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
                 </form>
             </td>
         </tr>
     </tbody>
 </table>
 <script src="/js/jquery.js"></script>
-<script src="/js/jquery.maskedinput.js"></script>
-<script type="text/javascript">
-    $("#cuit").mask("99-99999999-9");
+<!-- <script src="/js/jquery.maskedinput.js"></script> -->
 
-    $(function(){
-        $("#btnAlta").on("click", function (e){
-            var codigo = $("#ti_codigo").val();
-            
-            $.getJSON("/alicuotas/valcodigo/"+ti_codigo, function(validacion){
-                console.log(validacion.length)
-                if(validacion.length > 0){
-                    Command: toastr["error"]("El codigo de Banco ya existe.", "Error");
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "3000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }                
-                    $("#ti_codigo").focusin();
-                    return false;
-                }else{
-                    console.log($("#formalta"))
-                    $("#formalta").submit();
-                }
-            });
-        });
-    });    
-</script>
 {% endblock %}
