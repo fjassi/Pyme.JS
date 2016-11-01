@@ -5,10 +5,10 @@ const mPlanDeCuentas = require('../models/mPlanDeCuentas');
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
-	postAlta: postAlta,
+	Sp_Abm_Coeg: Sp_Abm_Coeg,
 	getModificar: getModificar,
-	postModificar: postModificar,
-	getEliminar: getEliminar
+	getEliminar: getEliminar,
+	ValidarCodigo: ValidarCodigo
 }
 
 function getLista(req, res) {
@@ -32,15 +32,12 @@ function getAlta(req, res){
 	});
 }
 
-function postAlta(req, res){
-	const params = req.body;
-	console.log(params);
-	const codigo = params.codigo;
-	var nombre = params.nombre;
-	nombre = nombre.toUpperCase();
-	const cuenta = params.cuenta;
+function Sp_Abm_Coeg(req, res){
+	const oCoeg = req.body;
+	console.log(oCoeg);
+	oCoeg.nombre = oCoeg.nombre.toUpperCase();
 
-	mCodigosEgreso.Sp_Abm_Coeg(codigo, nombre, cuenta, function(){
+	mCodigosEgreso.Sp_Abm_Coeg(oCoeg, function(){
 		res.redirect('/codigosegreso/lista');
 	});
 }
@@ -61,19 +58,6 @@ function getModificar(req, res){
 	});
 }
 
-function postModificar(req, res){
-	const params = req.body;
-	console.log(params);
-	const codigo = params.codigo;
-	var nombre = params.nombre;
-	nombre = nombre.toUpperCase();
-	const cuenta = params.cuenta;
-
-	mCodigosEgreso.Sp_Abm_Coeg(codigo, nombre, cuenta, function(){
-		res.redirect('/codigosegreso/lista');
-	});
-}
-
 function getEliminar(req, res){
 	const params = req.params;
 	const codigo = params.codigo;
@@ -91,5 +75,14 @@ function getEliminar(req, res){
 				error: "Este Codigo no se puede eliminar porque posee movimientos!"
 			});
 		}
+	});
+}
+
+function ValidarCodigo(req, res){
+	const params = req.params;
+	const codigo = params.codigo;
+
+	mCodigosEgreso.getByCodigo(codigo, function(codigo){
+		res.send(codigo);
 	});
 }

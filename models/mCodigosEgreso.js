@@ -17,8 +17,8 @@ function getByCodigo(codigo, cb){
 	conn("select * from coeg where co_codigo = "+codigo, cb);
 }
 
-function Sp_Abm_Coeg(codigo, nombre, cuenta, cb){
-	conn("Sp_Abm_Coeg "+codigo+", '"+nombre+"', '"+cuenta+"'", cb);
+function Sp_Abm_Coeg(o, cb){
+	conn("Sp_Abm_Coeg "+o.codigo+", '"+o.nombre+"', '"+o.cuenta+"'", cb);
 }
 
 function del(codigo, cb){

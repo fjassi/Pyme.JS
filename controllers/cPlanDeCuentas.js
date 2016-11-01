@@ -6,12 +6,12 @@ var nodeExcel = require('excel-export');
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
-	postAlta: postAlta,
+	Sp_Alta_Cuen: Sp_Alta_Cuen,
 	getModificar: getModificar,
-	postModificar: postModificar,
 	getEliminar: getEliminar,
 	getAjax_CantDigitosPorNivel: getAjax_CantDigitosPorNivel,
-	getExport: getExport
+	getExport: getExport,
+	ValidarCodigo: ValidarCodigo
 }
 
 function getLista(req, res) {
@@ -29,27 +29,22 @@ function getAlta(req, res){
 	});
 }
 
-function postAlta(req, res){
-	const params = req.body;
-	// console.log(params);
-	const codigo = params.codigo;
-	var nombre = params.nombre;
-	nombre = nombre.toUpperCase();
-	var imputable = params.imputable;
-	var ajustable = params.ajustable;
-	const nivel = params.nivel;
+function Sp_Alta_Cuen(req, res){
+	const o = req.body;
+	// console.log(params);	
+	o.nombre = o.nombre.toUpperCase();
 
-	if (imputable == 'on')
-		imputable = 'S';
+	if (o.imputable == 'on')
+		o.imputable = 'S';
 	else
-		imputable = 'N';
+		o.imputable = 'N';
 
-	if (ajustable == 'on')
-		ajustable = 'S';
+	if (o.ajustable == 'on')
+		o.ajustable = 'S';
 	else
-		ajustable = 'N';
+		o.ajustable = 'N';
 
-	mPlanDeCuentas.Sp_Alta_Cuen(codigo, nombre, imputable, ajustable, nivel, function(){
+	mPlanDeCuentas.Sp_Alta_Cuen(o, function(){
 		res.redirect('/plandecuentas/lista');
 	});
 }
@@ -63,30 +58,6 @@ function getModificar(req, res){
 			pagename: "Modificar Plan de Cuenta",
 			plandecuenta: plandecuenta[0]
 		});
-	});
-}
-
-function postModificar(req, res){
-	const params = req.body;
-	console.log(params);
-	const codigo = params.codigo;
-	const nombre = params.nombre;
-	var imputable = params.imputable;
-	var ajustable = params.ajustable;
-	const nivel = params.nivel;
-
-	if (imputable == 'on')
-		imputable = 'S';
-	else
-		imputable = 'N';
-
-	if (ajustable == 'on')
-		ajustable = 'S';
-	else
-		ajustable = 'N';
-
-	mPlanDeCuentas.Sp_Alta_Cuen(codigo, nombre, imputable, ajustable, nivel, function(){
-		res.redirect('/plandecuentas/lista');
 	});
 }
 
@@ -167,4 +138,13 @@ function getExport(req, res){
 	    res.end(result, 'binary');
 	});    
     console.log("finished")
+}
+
+function ValidarCodigo(req, res){
+	const params = req.params;
+	const codigo = params.codigo;
+
+	mPlanDeCuentas.getByCuenta(codigo, function(plandecuenta){
+		res.send(plandecuenta);
+	});
 }

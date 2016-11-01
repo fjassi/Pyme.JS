@@ -25,8 +25,8 @@ function getAll(cb){
 		"ORDER BY cuenta asc", cb);
 }
 
-function Sp_Alta_Cuen(codigo, nombre, imputable, ajustable, nivel, cb){
-	conn("Sp_Alta_Cuen '"+codigo+"', '"+nombre+"', '"+imputable+"', '"+ajustable+"', "+nivel+"", cb);
+function Sp_Alta_Cuen(o, cb){
+	conn("Sp_Alta_Cuen '"+o.codigo+"', '"+o.nombre+"', '"+o.imputable+"', '"+o.ajustable+"', "+o.nivel+"", cb);
 }
 
 function getByCuenta(cuenta, cb){

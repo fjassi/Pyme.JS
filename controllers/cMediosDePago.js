@@ -6,7 +6,8 @@ module.exports = {
 	getAlta: getAlta,
 	Sp_Abm_Mpagos: Sp_Abm_Mpagos,
 	getModificar: getModificar,
-	getEliminar: getEliminar
+	getEliminar: getEliminar,
+	ValidarCodigo: ValidarCodigo
 }
 
 function getLista(req, res){
@@ -85,5 +86,14 @@ function getEliminar(req, res){
 				error: "No se puede eliminar este Medio de Pago porque es FIJO."
 			});
 		}
+	});
+}
+
+function ValidarCodigo(req, res){
+	const params = req.params;
+	const cpdigo = params.codigo;
+
+	mMediosDePago.getByCodigo(codigo, function(mediodepago){
+		res.send(mediodepago);
 	});
 }

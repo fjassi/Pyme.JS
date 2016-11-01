@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                    <button class="ui basic submit button" tabindex="0" type="button" id="btnAlta">Submit</button>
                 </form>
             </td>
         </tr>
@@ -118,17 +118,40 @@
         }
     });
 
-    $("#formalta").submit(function (){
-        var desde = $("#desde").val();
-        var hasta = $("#hasta").val();
+    $(function(){
+        $("#btnAlta").on("click", function (){
+            var desde = $("#desde").val();
+            var hasta = $("#hasta").val();
 
-        if (desde.length == 12){
-            if (hasta.length == 12){
-                //si
+            if (desde.length == 12){
+                if (hasta.length == 12){
+                    //si
+                }else{
+                    console.log("codigo1 length menor a 4 y/o codigo2 length menor a 3");
+                    Command: toastr["error"]("El campo hasta debe tener 12 digitos", "Error");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    $("#hasta").focusin();
+                    return false;
+                }
             }else{
-                console.log("codigo1 length menor a 4 y/o codigo2 length menor a 3");
-                Command: toastr["error"]("El campo hasta debe tener 12 digitos", "Error")
-
+                console.log("codigo1 length menor o igual a 0");
+                Command: toastr["error"]("El campo desde debe tener 12 digitos", "Error");
                 toastr.options = {
                     "closeButton": true,
                     "debug": false,
@@ -146,33 +169,11 @@
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 }
-                event.preventDefault();
-                $("#hasta").focusin();
+                $("desde").focusin();
+                return false;
             }
-        }else{
-            console.log("codigo1 length menor o igual a 0");
-            Command: toastr["error"]("El campo desde debe tener 12 digitos", "Error")
-
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "3000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-            $("desde").focusin();
-            event.preventDefault();
-        }
+        });
     });
+    
 </script>
 {% endblock %}
