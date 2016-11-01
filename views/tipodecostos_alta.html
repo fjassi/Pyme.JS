@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui basic submit button" id="submit" tabindex="0" type="button">Submit</button>
+                    <button class="ui basic submit button" id="btnAlta" tabindex="0" type="button">Submit</button>
                 </form>
             </td>
         </tr>
@@ -64,37 +64,40 @@
 <script type="text/javascript">
     // $("#codigo").mask("9999999999");
     $('#denominacion').limit('30','#charsLeftDenominacion');
-    $("#submit").on("click", function (){
-        var numero = $("#numero").val();
-        
-        $.getJSON("/tipodecostos/valnumero/"+numero, function(validacion){
-            console.log(validacion.length)
-            if(validacion.length > 0){
-                return false;                              
-                Command: toastr["error"]("El numero de Centro de Costo ya existe.", "Error");
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "3000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }                
-                $("#numero").focusin();  
-                // event.preventDefault();
-            }else{
-                $("#formalta").submit();
-            }
+
+    $(function(){
+        $("#btnAlta").on("click", function (e){
+            var numero = $("#numero").val();
+            
+            $.getJSON("/tipodecostos/valnumero/"+numero, function(validacion){
+                console.log(validacion.length)
+                if(validacion.length > 0){
+                    Command: toastr["error"]("El numero de Centro de Costo ya existe.", "Error");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }                
+                    $("#numero").focusin();
+                    return false;
+                }else{
+                    console.log($("#formalta"))
+                    $("#formalta").submit();
+                }
+            });
         });
-    });
+    });    
 </script>
 {% endblock %}
