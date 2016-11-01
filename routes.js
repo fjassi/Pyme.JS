@@ -23,26 +23,30 @@ module.exports = function(app) {
 	// PLAN DE CUENTAS
 		app.get('/plandecuentas/lista', cPlanDeCuentas.getLista);
 		app.get('/plandecuentas/alta', cPlanDeCuentas.getAlta);
-		app.post('/plandecuentas/alta', cPlanDeCuentas.postAlta);
+		app.post('/plandecuentas/alta', cPlanDeCuentas.Sp_Alta_Cuen);
 		app.get('/plandecuentas/modificar/:cuenta', cPlanDeCuentas.getModificar);
-		app.post('/plandecuentas/modificar', cPlanDeCuentas.postModificar);
+		app.post('/plandecuentas/modificar', cPlanDeCuentas.Sp_Alta_Cuen);
 		app.get('/plandecuentas/eliminar/:cuenta', cPlanDeCuentas.getEliminar);
 	 	app.get("/plandecuentas/digitos", cPlanDeCuentas.getAjax_CantDigitosPorNivel);
 	 	app.get("/plandecuentas/export", cPlanDeCuentas.getExport);
+	 	app.get("/plandecuentas/valcodigo/:codigo", cPlanDeCuentas.ValidarCodigo)
+	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
 	// CODIGOS DE EGRESOS
 		app.get("/codigosegreso/lista", cCodigosEgreso.getLista);
 		app.get("/codigosegreso/alta", cCodigosEgreso.getAlta);
-		app.post("/codigosegreso/alta", cCodigosEgreso.postAlta);
+		app.post("/codigosegreso/alta", cCodigosEgreso.Sp_Abm_Coeg);
 		app.get("/codigosegreso/modificar/:codigo", cCodigosEgreso.getModificar);
-		app.post("/codigosegreso/modificar", cCodigosEgreso.postModificar);
+		app.post("/codigosegreso/modificar", cCodigosEgreso.Sp_Abm_Coeg);
 		app.get("/codigosegreso/eliminar/:codigo", cCodigosEgreso.getEliminar);
+		app.get("/codigosegreso/valcodigo/:codigo", cCodigosEgreso.ValidarCodigo);
 	// CODIGOS DE INGRESOS
 		app.get("/codigosingreso/lista", cCodigosIngreso.getLista);
 		app.get("/codigosingreso/alta", cCodigosIngreso.getAlta);
-		app.post("/codigosingreso/alta", cCodigosIngreso.postAlta);
+		app.post("/codigosingreso/alta", cCodigosIngreso.Sp_Abm_Coin);
 		app.get("/codigosingreso/modificar/:codigo", cCodigosIngreso.getModificar);
-		app.post("/codigosingreso/modificar", cCodigosIngreso.postModificar);
+		app.post("/codigosingreso/modificar", cCodigosIngreso.Sp_Abm_Coin);
 		app.get("/codigosingreso/eliminar/:codigo", cCodigosIngreso.getEliminar);
+		app.get("/codigosingreso/valcodigo/:codigo", cCodigosIngreso.ValidarCodigo);
 	// MEDIOS DE PAGO
 		app.get("/mediosdepago/lista", cMediosDePago.getLista);
 		app.get("/mediosdepago/alta", cMediosDePago.getAlta);
@@ -50,7 +54,7 @@ module.exports = function(app) {
 		app.get("/mediosdepago/modificar/:codigo", cMediosDePago.getModificar);
 		app.post("/mediosdepago/modificar", cMediosDePago.Sp_Abm_Mpagos);
 		app.get("/mediosdepago/eliminar/:codigo", cMediosDePago.getEliminar);
-	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
+		app.get("/centrodecostos/valcodigo/:codigo", cMediosDePago.ValidarCodigo);
 	// DETERMINACION CODIGOS DE COMPROBANTES
 		app.get("/codigoscomprobantes/lista", cCodigosComprobantes.getLista);
 		app.get("/codigoscomprobantes/alta", cCodigosComprobantes.getAlta);

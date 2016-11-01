@@ -17,8 +17,8 @@ function getByCodigo(codigo, cb){
 	conn("select * from coin where co_codigo = "+codigo, cb);
 }
 
-function Sp_Abm_Coin(codigo, nombre, cuenta, cb){
-	conn("Sp_Abm_Coin "+codigo+", '"+nombre+"', '"+cuenta+"'", cb);
+function Sp_Abm_Coin(o, cb){
+	conn("Sp_Abm_Coin "+o.codigo+", '"+o.nombre+"', '"+o.cuenta+"'", cb);
 }
 
 function del(codigo, cb){

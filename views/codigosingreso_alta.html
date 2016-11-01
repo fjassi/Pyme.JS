@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                    <button class="ui basic submit button" tabindex="0" type="button" id="btnAlta">Submit</button>
                 </form>
             </td>
         </tr>
@@ -64,6 +64,38 @@
 <script type="text/javascript">
     // $("#codigo").mask("9999999999");
     $('#nombre').limit('15','#charsLeftNombre');
-    
+
+    $(function(){
+        $("#btnAlta").on("click", function (){
+            var codigo = $("#codigo").val();
+            $.getJSON("/codigosingreso/valcodigo/"+codigo, function(validacion){
+                if(validacion.length > 0){                                   
+                    Command: toastr["error"]("El codigo de Codigo de Ingreso ya existe.", "Error");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    $("#codigo").focusin();
+                    return false;
+                }else{
+
+                    $("#formalta").submit();
+                }
+            });
+        });
+    });
 </script>
 {% endblock %}

@@ -70,7 +70,6 @@
             var numero = $("#numero").val();
             
             $.getJSON("/tipodecostos/valnumero/"+numero, function(validacion){
-                console.log(validacion.length)
                 if(validacion.length > 0){
                     Command: toastr["error"]("El numero de Centro de Costo ya existe.", "Error");
                     toastr.options = {
@@ -93,7 +92,6 @@
                     $("#numero").focusin();
                     return false;
                 }else{
-                    console.log($("#formalta"))
                     $("#formalta").submit();
                 }
             });

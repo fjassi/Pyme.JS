@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui basic submit button" tabindex="0" type="submit">Submit</button>
+                    <button class="ui basic submit button" tabindex="0" type="button" id="btnAlta">Submit</button>
                 </form>
             </td>
         </tr>
@@ -70,36 +70,38 @@
 <script type="text/javascript">
     // $("#codigo").mask("9999999999");
     $('#denominacion').limit('40','#charsLeftDenominacion');
-    $("#formalta").submit(function (){
-        var numero = $("#numero").val();
-        
-        $.getJSON("/condicionesdeventa/valnumero/"+numero, function(validacion){
-            if(validacion.length > 0){
-                event.preventDefault();
-                $("#numero").focusin();                
-                Command: toastr["error"]("El numero de Condicion de Venta ya existe.", "Error")
-
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "3000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
+    $(function(){
+        $("#btnAlta").on("click", function (){
+            var numero = $("#numero").val();
+            
+            $.getJSON("/condicionesdeventa/valnumero/"+numero, function(validacion){
+                if(validacion.length > 0){                                  
+                    Command: toastr["error"]("El numero de Condicion de Venta ya existe.", "Error");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    $("#numero").focusin();
+                    return false;
+                }else{
+                    $("#formalta").submit();
                 }
-            }else{
-
-            }
+            });
         });
     });
+    
 </script>
 {% endblock %}
