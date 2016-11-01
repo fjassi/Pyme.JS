@@ -8,6 +8,8 @@ const cCodigosComprobantes = require('./controllers/cCodigosComprobantes');
 const cCondicionesDeVenta = require('./controllers/cCondicionesDeVenta');
 const cTalonarios = require('./controllers/cTalonarios');
 const cCentroDeCostos = require('./controllers/cCentroDeCostos');
+const cTipoDeCostos = require('./controllers/cTipoDeCostos');
+
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -78,4 +80,12 @@ module.exports = function(app) {
 		app.post("/centrodecostos/modificar", cCentroDeCostos.sp_abm_talo);
 		app.get("/centrodecostos/eliminar/:numero", cCentroDeCostos.getEliminar);
 		app.get("/centrodecostos/valnumero/:numero", cCentroDeCostos.ValidarNumero);
+	// TIPO DE COSTOS
+		app.get("/tipodecostos/lista", cTipoDeCostos.getLista);
+		app.get("/tipodecostos/alta", cTipoDeCostos.getAlta);
+		app.post("/tipodecostos/alta", cTipoDeCostos.Sp_Abm_Tipc);
+		app.get("/tipodecostos/modificar/:numero", cTipoDeCostos.getModificar);
+		app.post("/tipodecostos/modificar", cTipoDeCostos.Sp_Abm_Tipc);
+		app.get("/tipodecostos/eliminar/:numero", cTipoDeCostos.getEliminar);
+		app.get("/tipodecostos/valnumero/:numero", cTipoDeCostos.ValidarNumero);
 }
