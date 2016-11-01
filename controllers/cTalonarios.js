@@ -25,7 +25,7 @@ function getAlta(req, res){
 
 function sp_abm_talo(req, res){
 	var oTalonario = req.body;
-
+	
 	mTalonarios.sp_abm_talo(oTalonario, function(){
 		res.redirect('/talonarios/lista');
 	});

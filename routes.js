@@ -7,6 +7,7 @@ const cMediosDePago = require('./controllers/cMediosDePago');
 const cCodigosComprobantes = require('./controllers/cCodigosComprobantes');
 const cCondicionesDeVenta = require('./controllers/cCondicionesDeVenta');
 const cTalonarios = require('./controllers/cTalonarios');
+const cCentroDeCostos = require('./controllers/cCentroDeCostos');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -69,4 +70,12 @@ module.exports = function(app) {
 		app.get("/talonarios/modificar/:id", cTalonarios.getModificar);
 		app.post("/talonarios/modificar", cTalonarios.sp_abm_talo);
 		app.get("/talonarios/eliminar/:id", cTalonarios.getEliminar);
+	// CENTRO DE COSTOS
+		app.get("/centrodecostos/lista", cCentroDeCostos.getLista);
+		app.get("/centrodecostos/alta", cCentroDeCostos.getAlta);
+		app.post("/centrodecostos/alta", cCentroDeCostos.sp_abm_talo);
+		app.get("/centrodecostos/modificar/:numero", cCentroDeCostos.getModificar);
+		app.post("/centrodecostos/modificar", cCentroDeCostos.sp_abm_talo);
+		app.get("/centrodecostos/eliminar/:numero", cCentroDeCostos.getEliminar);
+		app.get("/centrodecostos/valnumero/:numero", cCentroDeCostos.ValidarNumero);
 }
