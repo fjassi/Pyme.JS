@@ -60,10 +60,11 @@ module.exports = function(app) {
 	// CONDICIONES DE VENTA
 		app.get("/condicionesdeventa/lista", cCondicionesDeVenta.getLista);
 		app.get("/condicionesdeventa/alta", cCondicionesDeVenta.getAlta);
-		app.post("/condicionesdeventa/alta", cCondicionesDeVenta.postAlta);
+		app.post("/condicionesdeventa/alta", cCondicionesDeVenta.Sp_Abm_Cove);
 		app.get("/condicionesdeventa/modificar/:numero", cCondicionesDeVenta.getModificar);
-		app.post("/condicionesdeventa/modificar", cCondicionesDeVenta.postModificar);
+		app.post("/condicionesdeventa/modificar", cCondicionesDeVenta.Sp_Abm_Cove);
 		app.get("/condicionesdeventa/eliminar/:numero", cCondicionesDeVenta.getEliminar);
+		app.get("/condicionesdeventa/valnumero/:numero", cCondicionesDeVenta.ValidarNumero)
 	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
 	// TALONARIOS DE COMPROBANTES
 		app.get("/talonarios/lista", cTalonarios.getLista);

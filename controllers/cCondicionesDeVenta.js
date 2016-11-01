@@ -5,10 +5,10 @@ const mCondicionesDeVenta = require('../models/mCondicionesDeVenta');
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
-	postAlta: postAlta,
+	Sp_Abm_Cove: Sp_Abm_Cove,
 	getModificar: getModificar,
-	postModificar: postModificar,
-	getEliminar: getEliminar
+	getEliminar: getEliminar,
+	ValidarNumero: ValidarNumero
 }
 
 function getLista(req, res){
@@ -29,17 +29,12 @@ function getAlta(req, res){
 	});
 }
 
-function postAlta(req, res){
-	const params = req.body;
-	console.log(params)
-	const numero = params.numero;
-	var denominacion = params.denominacion;
-	denominacion = denominacion.toUpperCase();
-	const dias = params.dias;
-	const porce = params.porce;
-	var cuotas = params.cuotas;
+function Sp_Abm_Cove(req, res){
+	const obj = req.body;
+	console.log(obj)
+	obj.denominacion = obj.denominacion.toUpperCase();
 
-	mCondicionesDeVenta.Sp_Abm_Cove(numero, denominacion, dias, porce, cuotas, function(){
+	mCondicionesDeVenta.Sp_Abm_Cove(obj, function(){
 		res.redirect("/condicionesdeventa/lista");
 	});
 }
@@ -53,21 +48,6 @@ function getModificar(req, res){
 			pagename: "Modificar Condicion de Venta",
 			condicion: condicion[0]
 		});
-	});
-}
-
-function postModificar(req, res){
-	const params = req.body;
-	console.log(params)
-	const numero = params.numero;
-	var denominacion = params.denominacion;
-	denominacion = denominacion.toUpperCase();
-	const dias = params.dias;
-	const porce = params.porce;
-	var cuotas = params.cuotas;
-
-	mCondicionesDeVenta.Sp_Abm_Cove(numero, denominacion, dias, porce, cuotas, function(){
-		res.redirect("/condicionesdeventa/lista");
 	});
 }
 
@@ -85,5 +65,14 @@ function getEliminar(req, res){
 				res.redirect("/condicionesdeventa/lista");
 			});
 		}
+	});
+}
+
+function ValidarNumero(req, res){
+	const params = req.params;
+	const numero = params.numero;
+
+	mCondicionesDeVenta.getByNumero(numero, function(validar){
+		res.send(validar)
 	});
 }

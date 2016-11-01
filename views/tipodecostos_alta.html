@@ -25,12 +25,12 @@
     <tbody>
         <tr>
             <td>
-                <form class="ui form" id="formalta" method="post" action="/condicionesdeventa/alta" style="text-align: center !important;">
+                <form class="ui form" id="formalta" method="post" action="/tipodecostos/alta" style="text-align: center !important;">
                     <div class="fields">
                         <div class="two wide field">
                             <label>Numero</label> 
                             <div class="field">
-                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextnumero }}">
+                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
                             </div>
                         </div>
                         <div class="four wide field">
@@ -39,22 +39,16 @@
                                 <input type="text" name="denominacion" id="denominacion" placeholder="Denominacion" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftDenominacion"></span> caraceteres.</div>
                             </div>
                         </div>
-                        <div class="two wide field">
-                            <label>Dias</label> 
+                        <!-- listar solo cuentas imputables -->
+                        <div class="six wide field">                            
+                            <label>Cuenta Contable</label>
                             <div class="field">
-                                <input type="text" name="dias" id="dias" placeholder="Dias" required onKeyPress="return soloNumeros(event)" maxlength="5">
-                            </div>
-                        </div>
-                        <div class="two wide field">
-                            <label>%</label> 
-                            <div class="field">
-                                <input type="text" name="porce" id="porce" placeholder="Porcentaje" required onKeyPress="return Validate3EntY3Dec(event,this)">
-                            </div>
-                        </div>
-                        <div class="two wide field">                   
-                            <label>Cuotas</label>
-                            <div class="field">
-                                <input type="text" name="cuotas" id="cuotas" placeholder="Nro. de Cuotas" maxlength="2" required onKeyPress="return soloNumeros(event)">
+                                <select id="cuenta" name="cuenta" class="ui search dropdown" style="width: auto !important;" maxlength="10">
+                                    <option value="">Cuenta</option>
+                                    {% for i in imputables %}
+                                        <option value="{{ i.cuenta }}">{{ i.cuenta }} - {{ i.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -69,15 +63,15 @@
 <script src="/js/jquery.limit-1.2.js"></script>
 <script type="text/javascript">
     // $("#codigo").mask("9999999999");
-    $('#denominacion').limit('40','#charsLeftDenominacion');
+    $('#denominacion').limit('30','#charsLeftDenominacion');
     $("#formalta").submit(function (){
         var numero = $("#numero").val();
         
-        $.getJSON("/condicionesdeventa/valnumero/"+numero, function(validacion){
+        $.getJSON("/tipodecostos/valnumero/"+numero, function(validacion){
             if(validacion.length > 0){
                 event.preventDefault();
                 $("#numero").focusin();                
-                Command: toastr["error"]("El numero de Condicion de Venta ya existe.", "Error")
+                Command: toastr["error"]("El numero de Centro de Costo ya existe.", "Error")
 
                 toastr.options = {
                     "closeButton": true,

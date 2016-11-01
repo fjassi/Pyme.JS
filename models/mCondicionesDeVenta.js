@@ -19,8 +19,8 @@ function getByNumero(numero, cb){
 	conn("select *, RTRIM(LTRIM(cove.co_deno)) as denominaciontxt from cove where co_nume = "+numero, cb);
 }
 
-function Sp_Abm_Cove(numero, denominacion, dias, porcentaje, cuotas, cb){
-	conn("Sp_Abm_Cove "+numero+", '"+denominacion+"', "+dias+", '"+porcentaje+"', "+cuotas, cb);
+function Sp_Abm_Cove(o, cb){
+	conn("Sp_Abm_Cove "+o.numero+", '"+o.denominacion+"', "+o.dias+", '"+o.porcentaje+"', "+o.cuotas, cb);
 }
 
 function del(numero, cb){
