@@ -16,10 +16,10 @@
     </div>
 </div>	
 	
-<table id="tabla" class="ui right aligned blue striped celled table" cellspacing="0" width="100%">
-	<thead class="center aligned">
+<table id="tabla" class="ui blue striped celled table" cellspacing="0" width="100%">
+	<thead>
     	<tr>
-	    	<th>Acciones</th>
+	    	<th><a class="ui ribbon label">Opciones</a></th>
 	    	<th>Codigo</th>
 	    	<th>Nombre</th>
 	    	<th>CUIT</th>
@@ -30,16 +30,16 @@
 	<tr>
 		<td class="center aligned">
   			<div class="ui icon buttons">
-  				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui red icon button" data-tooltip="Eliminar">
-  					<i class="trash icon large"></i>
-  				</a>
-  				<a id="modificar{{ b.codigo }}" class="ui orange icon button modificar" data-tooltip="Modificar" data-codigo="{{ b.codigo }}">
+  				<a href="/bancos/modificar/{{ b.codigo }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
   					<i class="large edit icon"></i>
+  				</a>
+  				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
+  					<i class="trash icon large"></i>
   				</a>
   			</div>
   		</td>
   		<td>{{ b.codigo }}</td>
-  		<td>{{ b.nombre }}</td>
+  		<td style="text-transform: uppercase;">{{ b.nombre }}</td>
   		<td>{{ b.cuit }}</td>
 	</tr>
 {% endfor %}
@@ -52,9 +52,9 @@
 <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
     $(function() {
+        $('#tabla').DataTable();
         $('#cuit').mask('99-99999999-9');
         $('.ui.checkbox').checkbox();
-        $('#tabla').DataTable();
     });
 </script> 
 {% endblock %}

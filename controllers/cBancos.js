@@ -2,6 +2,7 @@ var mBancos = require('../models/mBancos');
 
 module.exports = {
 	getLista: getLista,
+	getAlta: getAlta,
 	postAlta: postAlta,
 	getModificar: getModificar,
 	postModificar: postModificar,
@@ -17,6 +18,11 @@ function getLista(req, res) {
 	});
 }
 
+function getAlta(req, res){
+	res.render("bancos_alta", {
+		pagename: "Alta de Bancos"
+	});
+}
 
 function postAlta(req, res){
 	const params = req.body;
@@ -33,9 +39,12 @@ function getModificar(req, res){
 	const params = req.params;
 	const codigo = params.codigo;
 
-	mBancos.getByCodigo(codigo, function(banco){
-		res.send(banco);
-	});	
+	mBancos.getByCodigo(codigo, function(bancos){
+		res.render('bancos_modificar', {
+			pagename: 'Modificar Informacion de Bancos',
+			bancos: bancos[0]
+		});
+	});
 }
 
 function postModificar(req, res){
@@ -51,9 +60,9 @@ function postModificar(req, res){
 
 function getEliminar(req, res){
 	const params = req.params;
-	const id = params.id;
+	const codigo = params.codigo;
 
-	mBancos.del(id, function(){
+	mBancos.del(codigo, function(){
 		res.redirect('/bancos/lista');
 	});
 }

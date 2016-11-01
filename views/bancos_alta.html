@@ -1,0 +1,54 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/bancos/alta" style="text-align: center !important;">
+                    <div class="three fields">
+                        <div class="field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Nombre</label>
+                            <div class="field">
+                                <input type="text" style="text-transform: uppercase" name="nombre" id="nombre" placeholder="Nombre" required>
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>N° de CUIT</label>
+                            <div class="ui field">
+                                <input type="text" name="cuit" id="cuit" placeholder="N° de CUIT">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    $("#cuit").mask("99-99999999-9");
+</script>
+{% endblock %}
