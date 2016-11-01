@@ -5,10 +5,10 @@ const mCodigosComprobantes = require('../models/mCodigosComprobantes');
 module.exports = {
 	getLista: getLista,
 	getAlta: getAlta,
-	postAlta: postAlta,
+	Abm_Dete: Abm_Dete,
 	getModificar: getModificar,
-	postModificar: postModificar,
-	getEliminar: getEliminar
+	getEliminar: getEliminar,
+	ValidarNumero: ValidarNumero
 }
 
 function getLista(req, res) {
@@ -29,14 +29,12 @@ function getAlta(req, res){
 	});
 }
 
-function postAlta(req, res){
-	const params = req.body;
-	console.log(params)
-	const numero = params.numero;
-	var denominacion = params.denominacion;
-	denominacion = denominacion.toUpperCase();
+function Abm_Dete(req, res){
+	var obj = req.body;
+	console.log(obj)
+	obj.denominacion = obj.denominacion.toUpperCase();
 
-	mCodigosComprobantes.Abm_Dete(numero, denominacion, function(){
+	mCodigosComprobantes.Abm_Dete(obj, function(){
 		res.redirect("/codigoscomprobantes/lista");
 	});
 }
@@ -45,23 +43,11 @@ function getModificar(req, res){
 	const params = req.params;
 	const numero = params.numero;
 
-	mCodigosComprobantes.getByCodigo(numero, function(codigo){
+	mCodigosComprobantes.getByNumero(numero, function(codigo){
 		res.render("codigoscomprobantes_modificar", {
 			pagename: "Modificar Codigo de Comprobante",
 			codigo: codigo[0]
 		});
-	});
-}
-
-function postModificar(req, res){
-	const params = req.body;
-	console.log(params)
-	const numero = params.numero;
-	var denominacion = params.denominacion;
-	denominacion = denominacion.toUpperCase();
-
-	mCodigosComprobantes.Abm_Dete(numero, denominacion, function(){
-		res.redirect("/codigoscomprobantes/lista");
 	});
 }
 
@@ -79,5 +65,14 @@ function getEliminar(req, res){
 				res.redirect("/codigoscomprobantes/lista");
 			});
 		}
+	});
+}
+
+function ValidarNumero(req, res){
+	const params = req.params;
+	const numero = params.numero;
+
+	mCodigosComprobantes.getByNumero(numero, function(codigo){
+		res.send(codigo);
 	});
 }

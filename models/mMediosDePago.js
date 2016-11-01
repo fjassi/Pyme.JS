@@ -23,8 +23,8 @@ function getByCodigo(codigo, cb){
 	conn("select *, RTRIM(LTRIM(mpagos.nombre)) as nombretxt from mpagos where codigo = "+codigo, cb);
 }
 
-function Sp_Abm_Mpagos(codigo, nombre, fijo, cotiza, caja, tipo, usa_punto, cb){
-	conn("Sp_Abm_Mpagos "+codigo+", '"+nombre+"', "+fijo+", '"+cotiza+"', '"+caja+"', '"+tipo+"', '"+usa_punto+"'", cb);
+function Sp_Abm_Mpagos(o, cb){
+	conn("Sp_Abm_Mpagos "+o.codigo+", '"+o.nombre+"', "+o.fijo+", '"+o.cotiza+"', '"+o.caja+"', '"+o.tipo+"', '"+o.usa_punto+"'", cb);
 }
 
 function del(codigo, cb){

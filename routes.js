@@ -47,17 +47,19 @@ module.exports = function(app) {
 	// MEDIOS DE PAGO
 		app.get("/mediosdepago/lista", cMediosDePago.getLista);
 		app.get("/mediosdepago/alta", cMediosDePago.getAlta);
-		app.post("/mediosdepago/alta", cMediosDePago.postAlta);
+		app.post("/mediosdepago/alta", cMediosDePago.Sp_Abm_Mpagos);
 		app.get("/mediosdepago/modificar/:codigo", cMediosDePago.getModificar);
-		app.post("/mediosdepago/modificar", cMediosDePago.postModificar);
+		app.post("/mediosdepago/modificar", cMediosDePago.Sp_Abm_Mpagos);
 		app.get("/mediosdepago/eliminar/:codigo", cMediosDePago.getEliminar);
+	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
 	// DETERMINACION CODIGOS DE COMPROBANTES
 		app.get("/codigoscomprobantes/lista", cCodigosComprobantes.getLista);
 		app.get("/codigoscomprobantes/alta", cCodigosComprobantes.getAlta);
-		app.post("/codigoscomprobantes/alta", cCodigosComprobantes.postAlta);
+		app.post("/codigoscomprobantes/alta", cCodigosComprobantes.Abm_Dete);
 		app.get("/codigoscomprobantes/modificar/:numero", cCodigosComprobantes.getModificar);
-		app.post("/codigoscomprobantes/modificar", cCodigosComprobantes.postModificar);
+		app.post("/codigoscomprobantes/modificar", cCodigosComprobantes.Abm_Dete);
 		app.get("/codigoscomprobantes/eliminar/:numero", cCodigosComprobantes.getEliminar);
+		app.get("/codigoscomprobantes/valnumero/:numero", cCodigosComprobantes.ValidarNumero)
 	// CONDICIONES DE VENTA
 		app.get("/condicionesdeventa/lista", cCondicionesDeVenta.getLista);
 		app.get("/condicionesdeventa/alta", cCondicionesDeVenta.getAlta);
@@ -65,8 +67,7 @@ module.exports = function(app) {
 		app.get("/condicionesdeventa/modificar/:numero", cCondicionesDeVenta.getModificar);
 		app.post("/condicionesdeventa/modificar", cCondicionesDeVenta.Sp_Abm_Cove);
 		app.get("/condicionesdeventa/eliminar/:numero", cCondicionesDeVenta.getEliminar);
-		app.get("/condicionesdeventa/valnumero/:numero", cCondicionesDeVenta.ValidarNumero)
-	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
+		app.get("/condicionesdeventa/valnumero/:numero", cCondicionesDeVenta.ValidarNumero);
 	// TALONARIOS DE COMPROBANTES
 		app.get("/talonarios/lista", cTalonarios.getLista);
 		app.get("/talonarios/alta", cTalonarios.getAlta);
