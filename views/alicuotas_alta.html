@@ -19,24 +19,30 @@
     <tbody>
         <tr>
             <td>
-                <form class="ui form" id="formalta" method="post" action="/bancos/alta" style="text-align: center !important;">
+                <form class="ui form" id="formalta" method="post" action="/alicuotas/alta" style="text-align: center !important;">
                     <div class="three fields">
                         <div class="field">
                             <label>Codigo</label> 
                             <div class="field">
-                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" value="{{ nextCodigo }}" required>
+                                <input type="text" name="ti_codigo" id="ti_codigo" placeholder="Codigo" value="{{ nextCodigo }}" required>
                             </div>
                         </div>
                         <div class="field">
-                            <label>Nombre</label>
+                            <label>Denominación</label>
                             <div class="field">
-                                <input type="text" style="text-transform: uppercase" name="nombre" id="nombre" placeholder="Nombre" required>
+                                <input type="text" style="text-transform: uppercase" name="ti_descri" id="ti_descri" placeholder="Descripción" required>
                             </div>
                         </div>
                         <div class="field">                            
-                            <label>N° de CUIT</label>
+                            <label>% Ret</label>
                             <div class="ui field">
-                                <input type="text" name="cuit" id="cuit" placeholder="N° de CUIT">
+                                <input type="text" name="ti_alicuo" id="ti_alicuo" placeholder="% Ret">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>% Perc</label>
+                            <div class="ui field">
+                                <input type="text" name="ti_alicuo2" id="ti_alicuo2" placeholder="% Perc">
                             </div>
                         </div>
                     </div>
@@ -53,9 +59,9 @@
 
     $(function(){
         $("#btnAlta").on("click", function (e){
-            var codigo = $("#codigo").val();
+            var codigo = $("#ti_codigo").val();
             
-            $.getJSON("/bancos/valcodigo/"+codigo, function(validacion){
+            $.getJSON("/alicuotas/valcodigo/"+ti_codigo, function(validacion){
                 console.log(validacion.length)
                 if(validacion.length > 0){
                     Command: toastr["error"]("El codigo de Banco ya existe.", "Error");
@@ -76,7 +82,7 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
                     }                
-                    $("#codigo").focusin();
+                    $("#ti_codigo").focusin();
                     return false;
                 }else{
                     console.log($("#formalta"))

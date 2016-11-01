@@ -9,6 +9,7 @@ const cCondicionesDeVenta = require('./controllers/cCondicionesDeVenta');
 const cTalonarios = require('./controllers/cTalonarios');
 const cCentroDeCostos = require('./controllers/cCentroDeCostos');
 const cTipoDeCostos = require('./controllers/cTipoDeCostos');
+const cAlicuotas = require('./controllers/cAlicuotas');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -91,4 +92,11 @@ module.exports = function(app) {
 		app.post("/tipodecostos/modificar", cTipoDeCostos.Sp_Abm_Tipc);
 		app.get("/tipodecostos/eliminar/:numero", cTipoDeCostos.getEliminar);
 		app.get("/tipodecostos/valnumero/:numero", cTipoDeCostos.ValidarNumero);
+	// ALICUOTAS
+		app.get('/alicuotas/lista', cAlicuotas.getLista);
+		// app.get('/alicuotas/alta', cAlicuotas.getAlta);
+		// app.post('/alicuotas/alta', cAlicuotas.Sp_Abm_Tiri);
+		// app.get('/alicuotas/modificar/:tI_codigo', cAlicuotas.getModificar);
+		// app.post('/alicuotas/modificar', cAlicuotas.Sp_Abm_Tiri);
+		// app.get('/alicuotas/eliminar/:ti_codigo', cAlicuotas.getEliminar);	
 }
