@@ -1,0 +1,65 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons center aligned">
+            <a href="/bancospropios/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+	
+<table id="tabla" class="ui blue striped celled table" cellspacing="0" width="100%">
+	<thead>
+    	<tr>
+	    	<th><a class="ui ribbon label">Opciones</a></th>
+        <th>N° de Cuenta</th>
+	    	<th>Banco</th>
+	    	<th>Moneda</th>
+	    	<th>Acuerdo $</th>
+        <th>Cta Contable</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+{% for b in bancospropios %}
+	<tr>
+		<td class="center aligned">
+  			<div class="ui icon buttons">
+  				<a href="/bancospropios/modificar/{{ b.cu_nume|url_encode }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
+  					<i class="large edit icon"></i>
+  				</a>
+  				<a href="/bancospropios/eliminar/{{ b.cu_nume }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
+  					<i class="trash icon large"></i>
+  				</a>
+  			</div>
+  		</td>
+  		<td>{{ b.cu_nume }}</td>
+  		<td>{{ b.cu_banco }}</td>
+  		<td>{{ b.cu_moneda }}</td>
+      <td>{{ b.cu_acuerdo }}</td>
+      <td>{{ b.cu_cuen }}</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#tabla').DataTable({
+          "language": {
+            "emptyTable": "No hay datos disponibles en la tabla",
+            "infoEmpty": "No se obtuvieron resultados"
+          }
+        });
+        $('#cuit').mask('99-99999999-9');
+        $('.ui.checkbox').checkbox();
+    });
+</script> 
+{% endblock %}

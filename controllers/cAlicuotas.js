@@ -30,7 +30,7 @@ function getAlta(req, res){
 function Sp_Abm_Alicuotas(req, res){
 	var oAlicuotas = req.body;
 	oAlicuotas.ti_descri = oAlicuotas.ti_descri.toUpperCase();
-
+	
 	mAlicuotas.Sp_Abm_Tiri(oAlicuotas, function(){
 		res.redirect('/alicuotas/lista');
 	});

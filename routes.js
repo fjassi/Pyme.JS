@@ -10,6 +10,7 @@ const cTalonarios = require('./controllers/cTalonarios');
 const cCentroDeCostos = require('./controllers/cCentroDeCostos');
 const cTipoDeCostos = require('./controllers/cTipoDeCostos');
 const cAlicuotas = require('./controllers/cAlicuotas');
+const cBancosPropios = require('./controllers/cBancosPropios');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -102,5 +103,12 @@ module.exports = function(app) {
 		app.post("/alicuotas/alta", cAlicuotas.Sp_Abm_Alicuotas);
 		app.get('/alicuotas/modificar/:ti_codigo', cAlicuotas.getModificar);
 		app.post('/alicuotas/modificar', cAlicuotas.Sp_Abm_Alicuotas);
-		// app.get('/alicuotas/eliminar/:ti_codigo', cAlicuotas.getEliminar);	
+		app.get('/alicuotas/eliminar/:ti_codigo', cAlicuotas.getEliminar);
+	// BANCOS PROPIOS
+		app.get("/bancospropios/lista", cBancosPropios.getLista);
+		app.get("/bancospropios/alta", cBancosPropios.getAlta);
+		app.post("/bancospropios/alta", cBancosPropios.Sp_Abm_BancosPropios);
+		app.get('/bancospropios/modificar/:cu_nume', cBancosPropios.getModificar);
+		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
+		app.get('/bancospropios/eliminar/:cu_nume', cBancosPropios.getEliminar);
 }
