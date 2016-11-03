@@ -27,6 +27,7 @@
             <td>
                 <form class="ui form" id="formalta" method="post" action="/bancospropios/alta" style="text-align: center !important;">
                     <input hidden name="saldo" value="0">
+                    <input hidden name="moneda" value="1">
                     <div class="fields">
                         <div class="two wide field">
                             <label>Codigo</label> 
@@ -37,14 +38,14 @@
                         <div class="four wide field">
                             <label>Nombre</label>
                             <div class="field">
-                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;">
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftNombre"></span> caracteres.</div>
                             </div>
                         </div>
                         <!-- listar solo cuentas imputables -->
                         <div class="six wide field">                            
                             <label>Cuenta Contable</label>
                             <div class="field">
-                                <select id="cuenta" name="cuenta" class="ui search dropdown" style="width:auto !important;" maxlength="10">
+                                <select id="cuenta" name="cuenta" class="ui search dropdown" required style="width:auto !important;" maxlength="10">
                                     <option value="">Cuenta</option>
                                     {% for i in imputables %}
                                         <option value="{{ i.cuenta }}">{{ i.cuenta }} - {{ i.nombre }}</option>
@@ -53,19 +54,13 @@
                             </div>
                         </div>
                         <div class="two wide field">
-                            <label>Moneda</label> 
-                            <div class="field">
-                                <input type="text" name="moneda" id="moneda" placeholder="Moneda" value="1" readonly>
-                            </div>
-                        </div>
-                        <div class="two wide field">
                             <label>Acuerdo Desc. $</label> 
                             <div class="field">
-                                <input type="text" name="acuerdo" id="acuerdo" placeholder="$" onKeyPress="return soloNumeros(event)">
+                                <input type="text" name="acuerdo" id="acuerdo" placeholder="$" onKeyPress="return Validate10EntY2Dec(event,this)">
                             </div>
                         </div>
                     </div>
-                    <button class="ui positive submit button" tabindex="0" type="submit" id="btnAlta">Submit</button>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
                 </form>
             </td>
         </tr>
@@ -75,6 +70,6 @@
 <script src="/js/jquery.maskedinput.js"></script>
 <script src="/js/jquery.limit-1.2.js"></script>
 <script type="text/javascript">
-    // $("#codigo").mask("9999999999");
+    $('#nombre').limit('15','#charsLeftNombre');
 </script>
 {% endblock %}

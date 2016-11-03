@@ -29,7 +29,7 @@ function getAlta(req, res){
 
 function Sp_Abm_Alicuotas(req, res){
 	var oAlicuotas = req.body;
-	oAlicuotas.ti_descri = oAlicuotas.ti_descri.toUpperCase();
+	oAlicuotas.descripcion = oAlicuotas.descripcion.toUpperCase();
 	
 	mAlicuotas.Sp_Abm_Tiri(oAlicuotas, function(){
 		res.redirect('/alicuotas/lista');
@@ -38,9 +38,9 @@ function Sp_Abm_Alicuotas(req, res){
 
 function getModificar(req, res){
 	const params = req.params;
-	const ti_codigo = params.ti_codigo;
+	const codigo = params.codigo;
 
-	mAlicuotas.getByCodigo(ti_codigo, function(alicuotas){
+	mAlicuotas.getByCodigo(codigo, function(alicuotas){
 		res.render('alicuotas_modificar', {
 			pagename: 'Modificar Informacion de Alícuotas',
 			alicuotas: alicuotas[0]
@@ -50,18 +50,18 @@ function getModificar(req, res){
 
 function getEliminar(req, res){
 	const params = req.params;
-	const ti_codigo = params.ti_codigo;
+	const codigo = params.codigo;
 
-	mAlicuotas.del(ti_codigo, function(){
+	mAlicuotas.del(codigo, function(){
 		res.redirect('/alicuotas/lista');
 	});
 }
 
 function ValidarCodigo(req, res){
 	const params = req.params;
-	const ti_codigo = params.ti_codigo;
+	const codigo = params.codigo;
 
-	mAlicuotas.getByCodigo(ti_codigo, function(alicuotas){
+	mAlicuotas.getByCodigo(codigo, function(alicuotas){
 		res.send(alicuotas);
 	});
 }

@@ -41,7 +41,7 @@ function getAlta(req, res){
 
 function Sp_Abm_BancosPropios(req, res){
 	var oBancosPropios = req.body;
-	// oBancosPropios.cu_banco = oBancosPropios.cu_banco.toUpperCase();
+	oBancosPropios.nombre = oBancosPropios.nombre.toUpperCase();
 	
 	mBancosPropios.Sp_Abm_Ctas(oBancosPropios, function(){
 		res.redirect('/bancospropios/lista');
@@ -65,16 +65,16 @@ function getModificar(req, res){
 
 function getEliminar(req, res){
 	const params = req.params;
-	const cu_nume = params.cu_nume;
+	const codigo = params.codigo;
 
 	// verificar movimientos
-	mBancosPropios.validacionMovimientos(cu_nume, function(movimientos){
+	mBancosPropios.validacionMovimientos(codigo, function(movimientos){
 		if (movimientos.length > 0){
 			res.render("error", {
 				error: "No se puede eliminar este Banco porque tiene movimientos."
 			});
 		}else{
-			mBancosPropios.del(cu_nume, function(){
+			mBancosPropios.del(codigo, function(){
 				res.redirect('/bancospropios/lista');
 			});
 		}
