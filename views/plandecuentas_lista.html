@@ -50,6 +50,14 @@
     </tbody>
 </table>
 <script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#tabla_empresas').DataTable();
+        $('table').tablesort();
+        $('#cuit').mask('99-99999999-9');
+        $('.ui.checkbox').checkbox();
+    });
 <script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
 <script type="text/javascript">
