@@ -1,0 +1,281 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/clientes/modificar" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>N° de Cliente</label> 
+                            <div class="field">
+                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ cliente.cl_nume }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Razon Social</label>
+                            <div class="field">
+                                <input type="text" name="razonsocial" id="razonsocial" placeholder="Razon Social" required style="text-transform: uppercase;" value="{{ cliente.razonsocialtxt }}"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Direccion</label>
+                            <div class="field">
+                                <input type="text" name="direccion" id="direccion" placeholder="Direccion" required value="{{ cliente.direcciontxt }}"><div class="aviso">Quedan <span id="charsLeftDireccion"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">                            
+                            <label>Localidad</label>
+                            <div class="field">
+                                <input type="text" name="localidad" id="localidad" placeholder="Localidad" required value="{{ cliente.localidadtxt }}"><div class="aviso">Quedan <span id="charsLeftLocalidad"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Provincia</label>
+                            <div class="field">
+                                <select class="ui dropdown" name="provincia" id="provincia" style="width: auto !important;">
+                                    {% for p in provincias %}
+                                        {% if p.descripcion == cliente.provinciatxt %}
+                                            <option value="{{ p.descripcion }}" selected>{{ p.descripcion }}</option>
+                                        {% else %}
+                                            <option value="{{ p.descripcion }}">{{ p.descripcion }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>C.P.</label> 
+                            <div class="field">
+                                <input type="text" name="codigopostal" id="codigopostal" placeholder="Codigo Postal" required onKeyPress="return soloNumeros(event)" value="{{ cliente.codigopostaltxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Telefono</label> 
+                            <div class="field">
+                                <input type="text" name="telefono" id="telefono" placeholder="Telefono" onKeyPress="return soloNumeros(event)" maxlength="20" value="{{ cliente.teletxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Celular</label> 
+                            <div class="field">
+                                <input type="text" name="celular" id="celular" placeholder="Celular" onKeyPress="return soloNumeros(event)" maxlength="20" value="{{ cliente.celutxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fax</label> 
+                            <div class="field">
+                                <input type="text" name="fax" id="fax" placeholder="Fax" onKeyPress="return soloNumeros(event)" maxlength="20" value="{{ cliente.faxtxt }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>E-Mail</label> 
+                            <div class="field">
+                                <input type="text" name="email" id="email" placeholder="E-Mail" maxlength="40" value="{{ cliente.mailtxt }}">
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Posee C.C.</label>
+                            <div class="ui toggle checkbox">
+                                {% if cliente.cl_ctac == 'S' %} 
+                                    <input type="checkbox" name="posee" id="posee" checked>
+                                {% else %}
+                                    <input type="checkbox" name="posee" id="posee">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Habilitada</label>
+                            <div class="ui toggle checkbox">
+                                {% if cliente.cl_habi == 'S' %}
+                                    <input type="checkbox" name="habilitada" id="habilitada" checked="">
+                                {% else %}
+                                    <input type="checkbox" name="habilitada" id="habilitada">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Solo con Saldo +</label>
+                            <div class="ui toggle checkbox">
+                                {% if cliente.cl_habi2 == 'S' %}
+                                    <input type="checkbox" name="saldopositivo" id="saldopositivo" checked>
+                                {% else %}
+                                    <input type="checkbox" name="saldopositivo" id="saldopositivo">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Dado de Baja</label>
+                            <div class="ui toggle checkbox">
+                                {% if cliente.cl_baja == 'S' %}
+                                    <input type="checkbox" name="baja" id="baja" checked>
+                                {% else %}
+                                    <input type="checkbox" name="baja" id="baja">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Lista de Precios</label>
+                            <div class="field">
+                                <input type="text" name="listadeprecios" id="listadeprecios" placeholder="" onKeyPress="return soloNumeros(event)" maxlength="1" value="{{ cliente.cl_lista }}">
+                            </div>
+                        </div>
+                        <div class="five wide field">
+                            <label>Garantia</label> 
+                            <div class="field">
+                                <input type="text" name="garantia" id="garantia" placeholder="Garantia" required value="{{ cliente.garantiatxt }}"><div class="aviso">Quedan <span id="charsLeftGarantia"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Cred. Limite</label> 
+                            <div class="field">
+                                <input type="text" name="credlimite" id="credlimite" placeholder="0.00" onKeyPress="return Validate8EntY2Dec(event,this)" value="{{ cliente.cl_credito }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Garantia T.E.</label> 
+                            <div class="field">
+                                <input type="text" name="te" id="te" placeholder="T.E." onKeyPress="return soloNumeros(event)" maxlength="20" value="{{ cliente.garantiatelefonotxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Garantia Domicilio</label> 
+                            <div class="field">
+                                <input type="text" name="domicilio" id="domicilio" placeholder="Domicilio" maxlength="40" value="{{ cliente.garantiadomiciliotxt }}"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <div class="grouped fields">
+                                <label>Categoria IVA</label>
+                                <div class="field">
+                                    <select class="ui dropdown" name="categoria" id="categoria" style="width: auto !important;">
+                                        {% for c in codigos_iva %}
+                                            {% if c.codigo == cliente.cl_iva %}
+                                                <option value="{{ c.codigo }}" selected>{{ c.nombre }}</option>
+                                            {% else %}
+                                                <option value="{{ c.codigo }}">{{ c.nombre }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                    
+                        <div class="three wide field">
+                            <label>C.U.I.T.</label> 
+                            <div class="field">
+                                <input type="text" name="cuit" id="cuit" placeholder="Cuit" required onKeyPress="return soloNumeros(event)" value="{{ cliente.cl_cuit }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="three wide field">
+                            <div class="grouped fields">
+                                <label>Tipo Doc.</label>
+                                <div class="field">
+                                    <select class="ui dropdown" name="tipodoc" id="tipodoc" style="width: 50px !important;">
+                                        {% for t in tipo_docs %}
+                                            {% if t.codigo == cliente.cl_tido %}
+                                                <option value="{{ t.codigo }}" selected>{{ t.nombre }}</option>
+                                            {% else %}
+                                                <option value="{{ t.codigo }}">{{ t.nombre }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Nro Doc.</label> 
+                            <div class="field">
+                                <input type="text" name="nrodoc" id="nrodoc" placeholder="Nro. Doc." required onKeyPress="return soloNumeros(event)" maxlength="9" value="{{ cliente.cl_docu }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fecha Alta</label>                             
+                            <div class="ui calendar" id="example1" name="example1">
+                                <div class="ui input left icon">
+                                  <i class="calendar icon"></i>
+                                  <input type="text" placeholder="Fecha" id="fecha_alta" name="fecha_alta" value="{{ cliente.fechaaltaf }}">
+                                </div>
+                              </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Cuenta Contable</label> 
+                            <div class="field">
+                                <input type="text" name="cuentacontable" id="cuentacontable" placeholder="Cuenta Contable" onKeyPress="return soloNumeros(event)" maxlength="10" value="{{ cliente.cuentatxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Vendedor</label> 
+                            <div class="field">
+                                <input type="text" name="vendedor" id="vendedor" placeholder="Vendedor" maxlength="9" value="{{ cliente.vendedortxt }}">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Nro Proveedor</label> 
+                            <div class="field">
+                                <input type="text" name="nro_proveedor" id="nro_proveedor" placeholder="Nro. Proveedor" maxlength="10" value="{{ cliente.nroproveedortxt }}">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+
+<script type="text/javascript">
+    $("#cuit").mask("99-99999999-9");
+    // $('#nombre').limit('25','#charsLeftNombre');
+    $(function(){
+        $('#example1').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10)
+                        day = "0"+day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10)
+                        month = "0"+month;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -26,9 +26,16 @@
     <link rel="stylesheet" type="text/css" href="/css/components/dropdown.css">
     <link rel="stylesheet" type="text/css" href="/css/components/icon.css">
     <link rel="stylesheet" type="text/css" href="/css/components/popup.css">
+    <link rel="stylesheet" type="text/css" href="/css/components/table.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css">
+    <link rel="stylesheet" href="/bower_components/semantic-ui-calendar/dist/calendar.min.css" />
     <link href="/css/toastr.css" rel="stylesheet"/>
+
+    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script> -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -67,7 +74,7 @@
                 <li><a href="#">Ventas</a></li>
                 <li><a href="#">Clientes</a>
                     <ul>
-                        <li><a href="#">Base de Datos</a></li>
+                        <li><a href="/clientes/lista">Base de Datos</a></li>
                         <li><a href="#">Cuenta Corriente 1 Cliente</a></li>
                         <li><a href="#">Mayor de Ctas. Ctes.</a></li>
                         <li><a href="#">Recibos / Cobranzas</a>
@@ -310,7 +317,7 @@
 <!-- Semantic-UI -->
 <script src="/js/semantic.js"></script>
 <script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
-<!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.js"></script> -->
+<script type="text/javascript" src="/js/semantic.js"></script>
 <script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
 <!-- SmartMenus jQuery plugin -->
 <script type="text/javascript" src="/js/jquery.smartmenus.js"></script>
@@ -319,6 +326,9 @@
 <script src="/js/jquery-tablesort.js"></script>
 <!-- SmartMenus jQuery init -->
 <script src="/js/toastr.js"></script>
+<link type="text/javascript" href="/css/components/popup.js">
+<link type="text/javascript" href="/css/components/table.js">
+<script type="text/javascript" src="/bower_components/semantic-ui-calendar/dist/calendar.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $('#main-menu').smartmenus({

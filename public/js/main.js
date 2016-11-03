@@ -125,7 +125,7 @@ function Validate3EntY3Dec(e, field) {
     return false
 }//onKeyPress="return Validate3EntY3Dec(event,this)"
 
-function Validate4EntY2Dec(e, field) {
+function Validate8EntY2Dec(e, field) {
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -147,7 +147,7 @@ function Validate4EntY2Dec(e, field) {
     if (key > 47 && key < 58) {
         if (field.value == "") return true
         // 10 enteros?
-        regexp = /[0-9]{4}/
+        regexp = /[0-9]{8}/
         return !(regexp.test(field.value))
     }
     // .

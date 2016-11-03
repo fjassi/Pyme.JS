@@ -9,6 +9,7 @@ const cCondicionesDeVenta = require('./controllers/cCondicionesDeVenta');
 const cTalonarios = require('./controllers/cTalonarios');
 const cCentroDeCostos = require('./controllers/cCentroDeCostos');
 const cTipoDeCostos = require('./controllers/cTipoDeCostos');
+const cClientes = require('./controllers/cClientes');
 const cAlicuotas = require('./controllers/cAlicuotas');
 const cBancosPropios = require('./controllers/cBancosPropios');
 
@@ -33,7 +34,6 @@ module.exports = function(app) {
 	 	app.get("/plandecuentas/digitos", cPlanDeCuentas.getAjax_CantDigitosPorNivel);
 	 	app.get("/plandecuentas/export", cPlanDeCuentas.getExport);
 	 	app.get("/plandecuentas/valcodigo/:codigo", cPlanDeCuentas.ValidarCodigo)
-	// ==================================================================>>>>>>>>>>>>> a partir de acá, POO <<<<<<<<<<<<<<=======
 	// CODIGOS DE EGRESOS
 		app.get("/codigosegreso/lista", cCodigosEgreso.getLista);
 		app.get("/codigosegreso/alta", cCodigosEgreso.getAlta);
@@ -97,6 +97,14 @@ module.exports = function(app) {
 		app.post("/tipodecostos/modificar", cTipoDeCostos.Sp_Abm_Tipc);
 		app.get("/tipodecostos/eliminar/:numero", cTipoDeCostos.getEliminar);
 		app.get("/tipodecostos/valnumero/:numero", cTipoDeCostos.ValidarNumero);
+	// CLIENTES
+		app.get("/clientes/lista", cClientes.getLista);
+		app.get("/clientes/alta", cClientes.getAlta);
+		app.post("/clientes/alta", cClientes.sp_clientes);
+		app.get("/clientes/modificar/:numero", cClientes.getModificar);
+		app.post("/clientes/modificar", cClientes.sp_clientes);
+		app.get("/clientes/eliminar/:numero", cClientes.getEliminar);
+		app.get("/clientes/valnumero/:numero", cClientes.ValidarNumero);
 	// ALICUOTAS
 		app.get("/alicuotas/lista", cAlicuotas.getLista);
 		app.get("/alicuotas/alta", cAlicuotas.getAlta);
