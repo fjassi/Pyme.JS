@@ -93,14 +93,20 @@ function getModificar(req, res){
 		});
 	});		
 }
-
 function getEliminar(req, res){
 	const params = req.params;
 	const numero = params.numero;
 
-	// verificar movimientos
-	mClientes.del(numero, function(){
-		res.redirect('/clientes/lista');
+	mClientes.validacionMovimientos(numero, function(movimientos){
+		if (movimientos.length == 0){
+			mClientes.del(numero, function(){
+				res.redirect('/clientes/lista');
+			});
+		}else{
+			res.render("error", {
+				error: "Este Cliente no se puede eliminar porque posee movimientos!"
+			});
+		}
 	});
 }
 

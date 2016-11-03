@@ -55,7 +55,7 @@ function getNextNumero(cb){
 }
 
 function validacionMovimientos(numero, cb){	
-	conn("select top 1(ps_fecha), ps_coeg from pcas where ps_coeg = "+numero+" "+
+	conn("select top 1(fa_clie), ps_coeg from Fact where fa_clie = "+numero+" "+
 		"union "+
-		"select top 1(ct_fecm), ct_coeg from corri where ct_coeg = "+numero, cb)
+		"select top 1(cc_clie), ct_coeg from Ccli where cc_clie = "+numero, cb)
 }
