@@ -1,0 +1,279 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+   <!--  <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/plandecuentas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon"></i></div>
+        </div>
+    </div> -->
+</div>
+<table class="ui blue celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/clientes/alta" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>N° de Cliente</label> 
+                            <div class="field">
+                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Razon Social</label>
+                            <div class="field">
+                                <input type="text" name="razonsocial" id="razonsocial" placeholder="Razon Social" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">                            
+                            <label>Direccion</label>
+                            <div class="field">
+                                <input type="text" name="direccion" id="direccion" placeholder="Direccion" required><div class="aviso">Quedan <span id="charsLeftDireccion"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">                            
+                            <label>Localidad</label>
+                            <div class="field">
+                                <input type="text" name="localidad" id="localidad" placeholder="Localidad" required><div class="aviso">Quedan <span id="charsLeftLocalidad"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="two wide field">                            
+                            <label>Provincia</label>
+                            <div class="field">
+                                <select class="ui dropdown" name="provincia" id="provincia" style="width: auto !important;">
+                                    {% for p in provincias %}
+                                        <option value="{{ p.descripcion }}">{{ p.descripcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>C.P.</label> 
+                            <div class="field">
+                                <input type="text" name="codigopostal" id="codigopostal" placeholder="Codigo Postal" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Telefono</label> 
+                            <div class="field">
+                                <input type="text" name="telefono" id="telefono" placeholder="Telefono" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Celular</label> 
+                            <div class="field">
+                                <input type="text" name="celular" id="celular" placeholder="Celular" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fax</label> 
+                            <div class="field">
+                                <input type="text" name="fax" id="fax" placeholder="Fax" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>E-Mail</label> 
+                            <div class="field">
+                                <input type="text" name="email" id="email" placeholder="E-Mail" required>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Posee C.C.</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="posee" id="posee">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Habilitada</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="habilitada" id="habilitada">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Solo con Saldo +</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="saldopositivo" id="saldopositivo">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Dado de Baja</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="baja" id="baja">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Lista de Precios</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="listadeprecios" id="listadeprecios">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Garantia</label> 
+                            <div class="field">
+                                <input type="text" name="garantia" id="garantia" placeholder="Garantia" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields" style="float: center !important;">
+                        <div class="three wide field">
+                            <label>Cred. Limite</label> 
+                            <div class="field">
+                                <input type="text" name="credlimite" id="credlimite" placeholder="0.00" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>T.E.</label> 
+                            <div class="field">
+                                <input type="text" name="te" id="te" placeholder="T.E." required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Domicilio</label> 
+                            <div class="field">
+                                <input type="text" name="domicilio" id="domicilio" placeholder="Domicilio" required>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <div class="grouped fields">
+                                <label>Categoria IVA</label>
+                                <div class="field">
+                                    <select class="ui dropdown" name="categoria" id="categoria" style="width: auto !important;">
+                                        {% for c in codigos_iva %}
+                                            <option value="{{ c.codigo }}">{{ c.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                    
+                        <div class="three wide field">
+                            <label>C.U.I.T.</label> 
+                            <div class="field">
+                                <input type="text" name="cuit" id="cuit" placeholder="Cuit" required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">   
+                        <div class="three wide field">
+                            <div class="grouped fields">
+                                <label>Tipo Doc.</label>
+                                <div class="field">
+                                    <select class="ui dropdown" name="tipodoc" id="tipodoc" style="width: auto !important;">
+                                        {% for t in tipo_docs %}
+                                            <option value="{{ t.codigo }}">{{ t.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Nro Doc.</label> 
+                            <div class="field">
+                                <input type="text" name="nrodoc" id="nrodoc" placeholder="Nro. Doc." required onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fecha Alta</label>                             
+                            <div class="ui calendar" id="example1">
+                                <div class="ui input left icon">
+                                  <i class="calendar icon"></i>
+                                  <input type="text" placeholder="Date/Time">
+                                </div>
+                              </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Cuenta Contable</label> 
+                            <div class="field">
+                                <input type="text" name="cuentacontable" id="cuentacontable" placeholder="Cuenta Contable">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Vendedor</label> 
+                            <div class="field">
+                                <input type="text" name="vendedor" id="vendedor" placeholder="Vendedor">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Nro Proveedor</label> 
+                            <div class="field">
+                                <input type="text" name="nro_proveedor" id="nro_proveedor" placeholder="Nro. Proveedor">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="button" id="btnAlta">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+
+<script type="text/javascript">
+    $("#cuit").mask("99-99999999-9");
+    // $('#nombre').limit('25','#charsLeftNombre');
+    $(function(){
+        $("#btnAlta").on("click", function (){
+            var codigo = $("#codigo").val();
+            $.getJSON("/clientes/valcodigo/"+codigo, function(validacion){
+                if(validacion.length > 0){
+                    Command: toastr["error"]("El codigo de Centro de Costo ya existe.", "Error");
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    $("#codigo").focusin();
+                    return false;
+                }else{
+                    $("#formalta").submit();
+                }
+            });
+        });
+
+        $('#example1').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
