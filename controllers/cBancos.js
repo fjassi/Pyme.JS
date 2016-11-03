@@ -2,10 +2,11 @@ var mBancos = require('../models/mBancos');
 
 module.exports = {
 	getLista: getLista,
-	postAlta: postAlta,
+	getAlta: getAlta,
+	Sp_Abm_Bancos: Sp_Abm_Bancos,
 	getModificar: getModificar,
-	postModificar: postModificar,
-	getEliminar: getEliminar
+	getEliminar: getEliminar,
+	ValidarCodigo: ValidarCodigo
 }
 
 function getLista(req, res) {
@@ -16,15 +17,21 @@ function getLista(req, res) {
 		});
 	});
 }
-// falta getAlta
 
-function postAlta(req, res){
-	const params = req.body;
-	const codigo = params.codigo
-	const nombre = params.nombre;
-	const cuit = params.cuit;
+function getAlta(req, res){
+	mBancos.getNextCodigo(function(banco){
+			res.render("bancos_alta", {
+			pagename: "Alta de Bancos",
+			nextCodigo: banco[0].proximo_codigo 
+		});
+	});
+}
 
-	mBancos.Sp_Abm_Bancos(codigo, nombre, cuit, function(){
+function Sp_Abm_Bancos(req, res){
+	var oBancos = req.body;
+	oBancos.nombre = oBancos.nombre.toUpperCase();
+
+	mBancos.Sp_Abm_Bancos(oBancos, function(){
 		res.redirect('/bancos/lista');
 	});
 }
@@ -33,27 +40,38 @@ function getModificar(req, res){
 	const params = req.params;
 	const codigo = params.codigo;
 
-	mBancos.getByCodigo(codigo, function(banco){
-		res.send(banco);
-	});	
-}
-
-function postModificar(req, res){
-	const params = req.body;
-	const codigo = params.codigo;
-	const nombre = params.nombre;
-	const cuit = params.cuit;
-	
-	mBancos.Sp_Abm_Bancos(codigo, nombre, cuit, function(){
-		res.redirect('/bancos/lista');
+	mBancos.getByCodigo(codigo, function(bancos){
+		res.render('bancos_modificar', {
+			pagename: 'Modificar Informacion de Bancos',
+			bancos: bancos[0]
+		});
 	});
-}	
+}
 
 function getEliminar(req, res){
 	const params = req.params;
-	const id = params.id;
+	const codigo = params.codigo;
 
-	mBancos.del(id, function(){
-		res.redirect('/bancos/lista');
+	// verificar movimientos
+	mBancos.validacionMovimientos(codigo, function(movimientos){
+		if (movimientos.length > 0){
+			res.render("error", {
+				error: "No se puede eliminar este Banco porque tiene movimientos."
+			});
+		}else{
+			mBancos.del(codigo, function(){
+				res.redirect('/bancos/lista');
+			});
+		}
+	});
+	
+}
+
+function ValidarCodigo(req, res){
+	const params = req.params;
+	const codigo = params.codigo;
+
+	mBancos.getByCodigo(codigo, function(bancos){
+		res.send(bancos);
 	});
 }

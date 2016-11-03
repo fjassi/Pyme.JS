@@ -10,16 +10,20 @@ const cTalonarios = require('./controllers/cTalonarios');
 const cCentroDeCostos = require('./controllers/cCentroDeCostos');
 const cTipoDeCostos = require('./controllers/cTipoDeCostos');
 const cClientes = require('./controllers/cClientes');
+const cAlicuotas = require('./controllers/cAlicuotas');
+const cBancosPropios = require('./controllers/cBancosPropios');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
 	app.get('/error', cIndex.getError);
 	// BANCOS
-		app.get('/bancos/lista', cBancos.getLista); // falta getAlta
-		app.post('/bancos/nuevo', cBancos.postAlta);
+		app.get('/bancos/lista', cBancos.getLista);
+		app.get('/bancos/alta', cBancos.getAlta);
+		app.post('/bancos/alta', cBancos.Sp_Abm_Bancos);
 		app.get('/bancos/modificar/:codigo', cBancos.getModificar);
-		app.post('/bancos/modificar', cBancos.postModificar);
+		app.post('/bancos/modificar', cBancos.Sp_Abm_Bancos);
 		app.get('/bancos/eliminar/:codigo', cBancos.getEliminar);
+		app.get('/bancos/valcodigo/:codigo', cBancos.ValidarCodigo);
 	// PLAN DE CUENTAS
 		app.get('/plandecuentas/lista', cPlanDeCuentas.getLista);
 		app.get('/plandecuentas/alta', cPlanDeCuentas.getAlta);
@@ -101,4 +105,18 @@ module.exports = function(app) {
 		app.post("/clientes/modificar", cClientes.sp_clientes);
 		app.get("/clientes/eliminar/:numero", cClientes.getEliminar);
 		app.get("/clientes/valnumero/:numero", cClientes.ValidarNumero);
+	// ALICUOTAS
+		app.get("/alicuotas/lista", cAlicuotas.getLista);
+		app.get("/alicuotas/alta", cAlicuotas.getAlta);
+		app.post("/alicuotas/alta", cAlicuotas.Sp_Abm_Alicuotas);
+		app.get('/alicuotas/modificar/:ti_codigo', cAlicuotas.getModificar);
+		app.post('/alicuotas/modificar', cAlicuotas.Sp_Abm_Alicuotas);
+		app.get('/alicuotas/eliminar/:ti_codigo', cAlicuotas.getEliminar);
+	// BANCOS PROPIOS
+		app.get("/bancospropios/lista", cBancosPropios.getLista);
+		app.get("/bancospropios/alta", cBancosPropios.getAlta);
+		app.post("/bancospropios/alta", cBancosPropios.Sp_Abm_BancosPropios);
+		app.get('/bancospropios/modificar/:cu_nume', cBancosPropios.getModificar);
+		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
+		app.get('/bancospropios/eliminar/:cu_nume', cBancosPropios.getEliminar);
 }

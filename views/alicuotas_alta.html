@@ -1,0 +1,58 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/alicuotas/alta" style="text-align: center !important;">
+                    <div class="three fields">
+                        <div class="field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="ti_codigo" id="ti_codigo" placeholder="Codigo" value="{{ nextCodigo }}" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Denominación</label>
+                            <div class="field">
+                                <input type="text" style="text-transform: uppercase" name="ti_descri" id="ti_descri" placeholder="Descripción" required>
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>% Ret</label>
+                            <div class="ui field">
+                                <input type="text" name="ti_alicuo" id="ti_alicuo" placeholder="% Ret">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>% Perc</label>
+                            <div class="ui field">
+                                <input type="text" name="ti_alicuo2" id="ti_alicuo2" placeholder="% Perc">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<!-- <script src="/js/jquery.maskedinput.js"></script> -->
+
+{% endblock %}

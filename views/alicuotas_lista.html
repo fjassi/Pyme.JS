@@ -9,7 +9,7 @@
     </div>
     <div class="right floated right aligned six wide column">
         <div class="ui buttons center aligned">
-            <a href="/bancos/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/alicuotas/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
             <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
         </div>
     </div>
@@ -20,26 +20,28 @@
     	<tr>
 	    	<th><a class="ui ribbon label">Opciones</a></th>
 	    	<th>Codigo</th>
-	    	<th>Nombre</th>
-	    	<th>CUIT</th>
+	    	<th>Denominación</th>
+	    	<th>% Ret.</th>
+        <th>% Perc.</th>
   		</tr>
   	</thead>
   	<tbody>
-{% for b in bancos %}
+{% for a in alicuotas %}
 	<tr>
 		<td class="center aligned">
   			<div class="ui icon buttons">
-  				<a href="/bancos/modificar/{{ b.codigo }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
+  				<a href="/alicuotas/modificar/{{ a.ti_codigo }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
   					<i class="large edit icon"></i>
   				</a>
-  				<a href="/bancos/eliminar/{{ b.codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
+  				<a href="/alicuotas/eliminar/{{ a.ti_codigo }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
   					<i class="trash icon large"></i>
   				</a>
   			</div>
   		</td>
-  		<td>{{ b.codigo }}</td>
-  		<td style="text-transform: uppercase;">{{ b.nombre }}</td>
-  		<td>{{ b.cuit }}</td>
+  		<td>{{ a.ti_codigo }}</td>
+  		<td>{{ a.ti_descri }}</td>
+  		<td>{{ a.ti_alicuo }}</td>
+      <td>{{ a.ti_alicuo2 }}</td
 	</tr>
 {% endfor %}
 	</tbody>
@@ -48,7 +50,12 @@
 <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
     $(function() {
-        $('#tabla').DataTable();
+        $('#tabla').DataTable({
+          "language": {
+            "emptyTable": "No hay datos disponibles en la tabla",
+            "infoEmpty": "No se obtuvieron resultados"
+          }
+        });
         $('#cuit').mask('99-99999999-9');
         $('.ui.checkbox').checkbox();
     });
