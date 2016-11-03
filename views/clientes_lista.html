@@ -16,7 +16,7 @@
         </div>
     </div>
 </div>
-<table class="ui blue striped celled table" id="tabla_clientes">
+<table class="ui striped celled table" id="tabla_clientes">
     <thead>
         <tr>
         	<th><a class="ui ribbon label">Opciones</a></th>
@@ -40,10 +40,10 @@
                 </td>
                 <td>{{ c.cl_nume }}</td>
                 <td>{{ c.cl_apel }}</td>
-                <td>{{ c.cl_dir }}</td>
-                <td>{{ c.cl_ctac }}</td>
-                <td>{{ c.cl_habi }}</td>
-                <td>{{ c.cl_cuit }}</td>
+                <td>{{ c.cl_direc }}</td>
+                <td>{{ c.cuentacorrientetxt }}</td>
+                <td>{{ c.habilitadotxt }}</td>
+                <td><div style="width: 110px !important;">{{ c.cl_cuit }}</div></td>
                 <td>{{ c.cl_tele }}</td>
             </tr>
         {% endfor %}
