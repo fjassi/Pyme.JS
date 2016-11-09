@@ -11,7 +11,8 @@ module.exports = {
 	sp_clientes: sp_clientes,
 	getModificar: getModificar,
 	getEliminar: getEliminar,
-	ValidarNumero: ValidarNumero
+	ValidarNumero: ValidarNumero,
+	ValidarCuit: ValidarCuit
 }
 
 function getLista(req, res) {
@@ -68,6 +69,12 @@ function sp_clientes(req, res){
 	if(oCliente.fecha_alta.length > 0)
 		oCliente.fecha_alta = tools.changeDate(oCliente.fecha_alta);
 	
+	if (oCliente.nrodoc == '')
+		oCliente.nrodoc = null;
+
+	if (oCliente.credlimite == '')
+		oCliente.credlimite = 0;
+	
 	mClientes.sp_clientes(oCliente, function(){
 		res.redirect('/clientes/lista');
 	});
@@ -93,6 +100,7 @@ function getModificar(req, res){
 		});
 	});		
 }
+
 function getEliminar(req, res){
 	const params = req.params;
 	const numero = params.numero;
@@ -116,5 +124,14 @@ function ValidarNumero(req, res){
 
 	mClientes.getByNumero(numero, function(cliente){
 		res.send(cliente);
+	});
+}
+
+function ValidarCuit(req, res){
+	const params = req.params;
+	const cuit = params.cuit;
+
+	mClientes.getByCuit(cuit, function(clientes){
+		res.send(clientes);
 	});
 }

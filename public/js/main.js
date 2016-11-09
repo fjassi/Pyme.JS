@@ -159,3 +159,38 @@ function Validate8EntY2Dec(e, field) {
     // other key
     return false
 }//onKeyPress="return Validate8EntY2Dec(event,this)"
+
+function validarCuit(cuit) { 
+    if(cuit.length != 11) {
+        return false;
+    }
+
+    var acumulado   = 0;
+    var digitos     = cuit.split("");
+    var digito      = digitos.pop();
+
+    for(var i = 0; i < digitos.length; i++) {
+        acumulado += digitos[9 - i] * (2 + (i % 6));
+    }
+
+    var verif = 11 - (acumulado % 11);
+    if(verif == 11) {
+        verif = 0;
+    } else if(verif == 10) {
+        verif = 9;
+    }
+
+    return digito == verif;
+}
+
+function generateTodayDateDMY () {
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+
+    if (day < 10) { day = '0' + day }
+    if (month < 10) { month = '0' + month }
+
+    today = day+'-'+month+'-'+today.getFullYear();
+    return today;
+}
