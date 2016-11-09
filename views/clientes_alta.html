@@ -30,31 +30,32 @@
                         <div class="two wide field">
                             <label>N° de Cliente</label> 
                             <div class="field">
-                                <input type="text" name="numero" id="numero" placeholder="Numero" required onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
+                                <input type="text" name="numero" id="numero" placeholder="Numero"  onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
                             </div>
                         </div>
                         <div class="four wide field">
                             <label>Razon Social</label>
                             <div class="field">
-                                <input type="text" name="razonsocial" id="razonsocial" placeholder="Razon Social" required style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
+                                <input type="text" name="razonsocial" id="razonsocial" placeholder="Razon Social"  style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
                             </div>
                         </div>
-                        <div class="three wide field">
+                        <div class="four wide field">
                             <label>Direccion</label>
                             <div class="field">
-                                <input type="text" name="direccion" id="direccion" placeholder="Direccion" required><div class="aviso">Quedan <span id="charsLeftDireccion"></span> caraceteres.</div>
+                                <input type="text" name="direccion" id="direccion" placeholder="Direccion" ><div class="aviso">Quedan <span id="charsLeftDireccion"></span> caraceteres.</div>
                             </div>
                         </div>
                         <div class="three wide field">                            
                             <label>Localidad</label>
                             <div class="field">
-                                <input type="text" name="localidad" id="localidad" placeholder="Localidad" required><div class="aviso">Quedan <span id="charsLeftLocalidad"></span> caraceteres.</div>
+                                <input type="text" name="localidad" id="localidad" placeholder="Localidad" ><div class="aviso">Quedan <span id="charsLeftLocalidad"></span> caraceteres.</div>
                             </div>
                         </div>
                         <div class="two wide field">                            
                             <label>Provincia</label>
                             <div class="field">
                                 <select class="ui dropdown" name="provincia" id="provincia" style="width: auto !important;">
+                                    <option value="Sin Provincia">Sin Provincia</option>
                                     {% for p in provincias %}
                                         <option value="{{ p.descripcion }}">{{ p.descripcion }}</option>
                                     {% endfor %}
@@ -66,7 +67,7 @@
                         <div class="two wide field">
                             <label>C.P.</label> 
                             <div class="field">
-                                <input type="text" name="codigopostal" id="codigopostal" placeholder="Codigo Postal" required onKeyPress="return soloNumeros(event)">
+                                <input type="text" name="codigopostal" id="codigopostal" placeholder="Codigo Postal"  onKeyPress="return soloNumeros(event)">
                             </div>
                         </div>
                         <div class="three wide field">
@@ -128,7 +129,7 @@
                         <div class="five wide field">
                             <label>Garantia</label> 
                             <div class="field">
-                                <input type="text" name="garantia" id="garantia" placeholder="Garantia" required><div class="aviso">Quedan <span id="charsLeftGarantia"></span> caraceteres.</div>
+                                <input type="text" name="garantia" id="garantia" placeholder="Garantia" ><div class="aviso">Quedan <span id="charsLeftGarantia"></span> caraceteres.</div>
                             </div>
                         </div>
                     </div>
@@ -145,10 +146,10 @@
                                 <input type="text" name="te" id="te" placeholder="T.E." onKeyPress="return soloNumeros(event)" maxlength="20">
                             </div>
                         </div>
-                        <div class="three wide field">
+                        <div class="four wide field">
                             <label>Domicilio</label> 
                             <div class="field">
-                                <input type="text" name="domicilio" id="domicilio" placeholder="Domicilio" maxlength="40"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caraceteres.</div>
+                                <input type="text" name="domicilio" id="domicilio" placeholder="Domicilio" maxlength="40"><div class="aviso">Quedan <span id="charsLeftDomicilio"></span> caraceteres.</div>
                             </div>
                         </div>
                         <div class="three wide field">
@@ -166,7 +167,7 @@
                         <div class="three wide field">
                             <label>C.U.I.T.</label> 
                             <div class="field">
-                                <input type="text" name="cuit" id="cuit" placeholder="Cuit" required onKeyPress="return soloNumeros(event)">
+                                <input type="text" name="cuit" id="cuit" placeholder="Cuit"  onKeyPress="return soloNumeros(event)">
                             </div>
                         </div>
                     </div>
@@ -186,12 +187,12 @@
                         <div class="three wide field">
                             <label>Nro Doc.</label> 
                             <div class="field">
-                                <input type="text" name="nrodoc" id="nrodoc" placeholder="Nro. Doc." required onKeyPress="return soloNumeros(event)" maxlength="9">
+                                <input type="text" name="nrodoc" id="nrodoc" placeholder="Nro. Doc."  onKeyPress="return soloNumeros(event)" maxlength="9">
                             </div>
                         </div>
                         <div class="three wide field">
                             <label>Fecha Alta</label>                             
-                            <div class="ui calendar" id="example1" name="example1">
+                            <div class="ui calendar" id="fecha" name="fecha">
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
                                   <input type="text" placeholder="Fecha" id="fecha_alta" name="fecha_alta">
@@ -218,50 +219,109 @@
                         </div>
                     </div>
                     <button class="ui positive submit button" tabindex="0" type="button" id="btnAlta">Submit</button>
+                    <div class="ui error message"></div>
                 </form>
             </td>
         </tr>
     </tbody>
 </table>
 <script src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/semantic.js"></script>
 <script src="/js/jquery.maskedinput.js"></script>
 <script src="/js/jquery.limit-1.2.js"></script>
-
 <script type="text/javascript">
-    $("#cuit").mask("99-99999999-9");
-    // $('#nombre').limit('25','#charsLeftNombre');
-    $(function(){
-        $("#btnAlta").on("click", function (){
-            var numero = $("#numero").val();
-            $.getJSON("/clientes/valnumero/"+numero, function(validacion){
-                if(validacion.length > 0){
-                    Command: toastr["error"]("El codigo de Centro de Costo ya existe.", "Error");
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "3000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    $("#codigo").focusin();
-                    return false;
+    $('#razonsocial').limit('30','#charsLeftRazonSocial');
+    $('#direccion').limit('40','#charsLeftDireccion');
+    $('#localidad').limit('20','#charsLeftLocalidad');
+    $('#garantia').limit('30','#charsLeftGarantia');
+    $('#domicilio').limit('40','#charsLeftDomicilio');
+
+    $("#cuit").mask("99999999999", {
+        completed: function(){
+            var cuit = $(this).val();
+            console.log(cuit)
+            // console.log(validarCuit(cuit))
+            if(cuit.length==11){
+                if(validarCuit(cuit)){
+                    
                 }else{
-                    $("#formalta").submit();
+                    alert("CUIT no valido.");
+                    $("#cuit").val('');
+                    $("#cuit").focus();
                 }
-            });
+            }else{
+                 alert("El CUIT debe tener 11 caracteres.");
+                    // $("#cuit").val('');
+                    $("#cuit").focus();
+            }
+        } 
+    });        
+    
+    $(function(){
+        var today = generateTodayDateDMY();
+        $("#fecha_alta").val(today);
+
+        $("#btnAlta").on("click", function (){
+            //hacer todo esto si el form es valido con semantic
+            if($("#formalta").form('is valid')){
+                var numero = $("#numero").val();
+                $.getJSON("/clientes/valnumero/"+numero, function(validacion){
+                    if(validacion.length > 0){
+                        Command: toastr["error"]("El numero de Cliente ya existe.", "Error");
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "3000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        $("#codigo").focusin();
+                        return false;
+                    }else{
+                        var cuit = $("#cuit").val();
+                        $.getJSON("/clientes/valcuit/"+cuit, function(validacioncuit){
+                            if (validacioncuit.length > 0){
+                                Command: toastr["error"]("El Nro. de CUIT ya existe.", "Error");
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "debug": false,
+                                    "newestOnTop": false,
+                                    "progressBar": true,
+                                    "positionClass": "toast-top-right",
+                                    "preventDuplicates": false,
+                                    "onclick": null,
+                                    "showDuration": "300",
+                                    "hideDuration": "1000",
+                                    "timeOut": "3000",
+                                    "extendedTimeOut": "1000",
+                                    "showEasing": "swing",
+                                    "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                    "hideMethod": "fadeOut"
+                                }
+                                return false;
+                            }else{
+                                $("#formalta").submit();
+                            }
+                        });
+                    }
+                });
+            }else{
+
+            }
         });
 
-        $('#example1').calendar({
+        $('#fecha').calendar({
             type: 'date',
             monthFirst: false,
             formatter: {
@@ -278,6 +338,20 @@
                 }
             }
         });
+    });
+
+    $('#formalta').form({
+        fields: {
+            razonsocial: {
+                identifier: 'razonsocial',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Debe ingresar una Razon Social.'
+                    }
+                ]
+            }
+        }
     });
 </script>
 {% endblock %}

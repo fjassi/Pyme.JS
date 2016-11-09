@@ -106,6 +106,7 @@ module.exports = function(app) {
 		app.post("/clientes/modificar", cClientes.sp_clientes);
 		app.get("/clientes/eliminar/:numero", cClientes.getEliminar);
 		app.get("/clientes/valnumero/:numero", cClientes.ValidarNumero);
+		app.get("/clientes/valcuit/:cuit", cClientes.ValidarCuit);
 	// ALICUOTAS
 		app.get("/alicuotas/lista", cAlicuotas.getLista);
 		app.get("/alicuotas/alta", cAlicuotas.getAlta);

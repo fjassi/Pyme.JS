@@ -15,6 +15,7 @@
     "excel-export": "^0.5.1",
     "express": "^3.5.1",
     "express-session": "^1.1.0",
+    "gulp": "^3.9.1",
     "logfmt": "^1.1.2",
     "materialize-css": "^0.97.7",
     "method-override": "^1.0.0",

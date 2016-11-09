@@ -967,12 +967,21 @@
       hideOnScroll: false
     },
 
+    // text: {
+    //   days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    //   months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    //   monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //   today: 'Today',
+    //   now: 'Now',
+    //   am: 'AM',
+    //   pm: 'PM'
+    // },
     text: {
-      days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      today: 'Today',
-      now: 'Now',
+      days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      today: 'Hoy',
+      now: 'Ahora',
       am: 'AM',
       pm: 'PM'
     },

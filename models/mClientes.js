@@ -6,7 +6,8 @@ module.exports = {
 	sp_clientes: sp_clientes,
 	del: del,
 	getNextNumero: getNextNumero,
-	validacionMovimientos: validacionMovimientos
+	validacionMovimientos: validacionMovimientos,
+	getByCuit: getByCuit
 }
 
 function getAll(cb){
@@ -58,4 +59,8 @@ function validacionMovimientos(numero, cb){
 	conn("select top 1(fa_clie), ps_coeg from Fact where fa_clie = "+numero+" "+
 		"union "+
 		"select top 1(cc_clie), ct_coeg from Ccli where cc_clie = "+numero, cb)
+}
+
+function getByCuit(cuit, cb){
+	conn("select top 1(cl_apel) from clientes where clientes.cl_cuit = "+cuit, cb);
 }
