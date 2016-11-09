@@ -24,25 +24,25 @@
                         <div class="field">
                             <label>Codigo</label> 
                             <div class="field">
-                                <input type="text" name="ti_codigo" id="ti_codigo" placeholder="Codigo" readonly required value="{{ alicuotas.ti_codigo }}">
+                                <input type="text" name="codigo" id="codigo" placeholder="Codigo" readonly required value="{{ alicuotas.ti_codigo }}">
                             </div>
                         </div>
                         <div class="field">
                             <label>Denominación</label>
                             <div class="field">
-                                <input type="text" style="text-transform: uppercase" name="ti_descri" id="ti_descri" placeholder="Denominación" value="{{ alicuotas.ti_descri }}">
+                                <input type="text" style="text-transform: uppercase" name="descripcion" id="descripcion" placeholder="Denominación" value="{{ alicuotas.descripciontxt }}"><div class="aviso">Quedan <span id="charsLeftDescripcion"></span> caracteres.</div>
                             </div>
                         </div>
                         <div class="field">                            
                             <label>% Ret</label>
                             <div class="ui field">
-                                <input type="text" name="cuit" id="cuit" value="{{ alicuotas.ti_alicuo }}" placeholder="% Ret">
+                                <input type="text" name="retencion" id="retencion" value="{{ alicuotas.ti_alicuo }}" placeholder="% Ret" onKeyPress="return Validate4EntY2Dec(event,this)">
                             </div>
                         </div>
                         <div class="field">                            
                             <label>% Perc</label>
                             <div class="ui field">
-                                <input type="text" name="cuit" id="cuit" value="{{ alicuotas.ti_alicuo2 }}" placeholder="% Perc">
+                                <input type="text" name="percepcion" id="percepcion" value="{{ alicuotas.ti_alicuo2 }}" placeholder="% Perc" onKeyPress="return Validate4EntY2Dec(event,this)">
                             </div>
                         </div>
                     </div>
@@ -53,4 +53,8 @@
     </tbody>
 </table>
 <script src="/js/jquery.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    $('#descripcion').limit('50','#charsLeftDescripcion');
+</script>
 {% endblock %}
