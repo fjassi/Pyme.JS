@@ -31,10 +31,10 @@
 	<tr>
 		<td class="center aligned">
   			<div class="ui icon buttons">
-  				<a href="/bancospropios/modificar/{{ b.cu_nume|url_encode }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
+  				<a href="/bancospropios/modificar/{{ b.codigotxt|url_encode }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
   					<i class="large edit icon"></i>
   				</a>
-  				<a href="/bancospropios/eliminar/{{ b.cu_nume }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
+  				<a href="/bancospropios/eliminar/{{ b.codigotxt }}" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
   					<i class="trash icon large"></i>
   				</a>
   			</div>

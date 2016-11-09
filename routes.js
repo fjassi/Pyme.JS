@@ -109,14 +109,14 @@ module.exports = function(app) {
 		app.get("/alicuotas/lista", cAlicuotas.getLista);
 		app.get("/alicuotas/alta", cAlicuotas.getAlta);
 		app.post("/alicuotas/alta", cAlicuotas.Sp_Abm_Alicuotas);
-		app.get('/alicuotas/modificar/:ti_codigo', cAlicuotas.getModificar);
+		app.get('/alicuotas/modificar/:codigo', cAlicuotas.getModificar);
 		app.post('/alicuotas/modificar', cAlicuotas.Sp_Abm_Alicuotas);
-		app.get('/alicuotas/eliminar/:ti_codigo', cAlicuotas.getEliminar);
+		app.get('/alicuotas/eliminar/:codigo', cAlicuotas.getEliminar);
 	// BANCOS PROPIOS
 		app.get("/bancospropios/lista", cBancosPropios.getLista);
 		app.get("/bancospropios/alta", cBancosPropios.getAlta);
 		app.post("/bancospropios/alta", cBancosPropios.Sp_Abm_BancosPropios);
-		app.get('/bancospropios/modificar/:cu_nume', cBancosPropios.getModificar);
+		app.get('/bancospropios/modificar/:codigo', cBancosPropios.getModificar);
 		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
-		app.get('/bancospropios/eliminar/:cu_nume', cBancosPropios.getEliminar);
+		app.get('/bancospropios/eliminar/:codigo', cBancosPropios.getEliminar);
 }

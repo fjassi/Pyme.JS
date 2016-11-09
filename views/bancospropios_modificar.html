@@ -27,17 +27,18 @@
             <td>
                 <form class="ui form" id="formalta" method="post" action="/bancospropios/modificar" style="text-align: center !important;">
                     <input hidden name="saldo" value="0">
+                    <input hidden name="moneda" value="1">
                     <div class="fields">
                         <div class="two wide field">
                             <label>Codigo</label> 
                             <div class="field">
-                                <input type="text" name="codigo" id="codigo" placeholder="Numero" value="{{ bancospropios.cu_nume }}">
+                                <input type="text" name="codigo" id="codigo" placeholder="Numero" value="{{ bancospropios.codigotxt }}" maxlength="10">
                             </div>
                         </div>
                         <div class="four wide field">
                             <label>Nombre</label>
                             <div class="field">
-                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;" value="{{ bancospropios.cu_banco }}">
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" required style="text-transform: uppercase;" value="{{ bancospropios.nombretxt }}">
                             </div>
                         </div>
                         <!-- listar solo cuentas imputables -->
@@ -57,15 +58,9 @@
                             </div>
                         </div>
                         <div class="two wide field">
-                            <label>Moneda</label> 
-                            <div class="field">
-                                <input type="text" name="moneda" id="moneda" placeholder="Moneda" value="{{ bancospropios.cu_moneda }}" value="1" readonly>
-                            </div>
-                        </div>
-                        <div class="two wide field">
                             <label>Acuerdo Desc. $</label> 
                             <div class="field">
-                                <input type="text" name="acuerdo" id="acuerdo" value="{{ bancospropios.cu_acuerdo }}" placeholder="$" onKeyPress="return soloNumeros(event)">
+                                <input type="text" name="acuerdo" id="acuerdo" value="{{ bancospropios.cu_acuerdo }}" placeholder="$" onKeyPress="return Validate10EntY2Dec(event,this)">
                             </div>
                         </div>
                     </div>
