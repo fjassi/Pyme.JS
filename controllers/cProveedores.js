@@ -17,7 +17,7 @@ function getLista(req, res) {
 			pagename: 'Lista de Proveedores',
 			codigosegreso: Proveedorsegreso
 		});
-  	});
+  });
 }
 
 function getAlta(req, res){
