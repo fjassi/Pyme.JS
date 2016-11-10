@@ -12,7 +12,11 @@ const cTipoDeCostos = require('./controllers/cTipoDeCostos');
 const cClientes = require('./controllers/cClientes');
 const cAlicuotas = require('./controllers/cAlicuotas');
 const cBancosPropios = require('./controllers/cBancosPropios');
+<<<<<<< HEAD
+const cChequeras = require('./controllers/cChequeras');
+=======
 const cProveedores = require('./controllers/cProveedores');
+>>>>>>> 3a54b41af9ea8cebcfc0da0e14435196328d5e75
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -121,6 +125,13 @@ module.exports = function(app) {
 		app.get('/bancospropios/modificar/:codigo', cBancosPropios.getModificar);
 		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
 		app.get('/bancospropios/eliminar/:codigo', cBancosPropios.getEliminar);
+	// CHEQUERAS
+		app.get("/chequeras/cuentas", cChequeras.getCuentas);
+		app.post("/chequeras/cuentas", cChequeras.postCuentas);
+		app.get("/chequeras/lista/:cuenta", cChequeras.getLista);
+		app.get('/chequeras/eliminar/:cuenta/:id', cChequeras.getEliminar);
+		app.get("/chequeras/alta/:cuenta", cChequeras.getAlta);
+		app.post("/chequeras/alta", cChequeras.Sp_Abm_Chequeras);
 	// PROVEEDORES
 		app.get("/proveedores/lista", cProveedores.getLista);
 }

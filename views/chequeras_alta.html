@@ -1,0 +1,51 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/chequeras/alta" style="text-align: center !important;">
+                    <input hidden id="cuenta" name="cuenta" value="{{ cuenta }}">
+                    <input hidden name="idche" id="idche" value="0">
+                    <div class="three fields">
+                        <div class="eight wide field">
+                            <label>Desde Cheque N°</label> 
+                            <div class="field">
+                                <input type="text" minlength="6" maxlength="10" name="desde" id="desde" onKeyPress="return soloNumeros(event)" required><div class="aviso">Quedan <span id="charsLeftDesde"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>Hasta Cheque N°</label>
+                            <div class="field">
+                                <input type="text" minlength="6" maxlength="10" name="hasta" id="hasta" onKeyPress="return soloNumeros(event)" required><div class="aviso">Quedan <span id="charsLeftHasta"></span> caraceteres.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btnAlta" class="ui positive submit button" tabindex="0" type="submit">Enviar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    $('#desde').limit('10','#charsLeftDesde');
+    $('#hasta').limit('10','#charsLeftHasta');
+</script>
+{% endblock %}

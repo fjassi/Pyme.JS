@@ -1,0 +1,33 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+
+
+<form action="/chequeras/cuentas" method="POST" style="margin-top: 2em;">	
+    <table class="ui blue striped celled table" cellspacing="0" width="100%">
+        <tr>
+            <td>Cuenta</td>
+            <td>
+                <div class="field">
+                    <select class="ui dropdown" name="cuenta" id="cuenta" style="width: auto !important;">
+                        {% for c in cuentas %}
+                            <option value="{{ c.codigotxt }}">{{ c.codigotxt }} - {{ c.nombretxt }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </td>
+            <td>
+                <button class="ui positive submit button" type="submit">Enviar</button>
+            </td>
+        </tr> 	
+    </table>
+</form>
+<script type="text/javascript" src="/js/jquery.js"></script>
+{% endblock %}
