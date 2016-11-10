@@ -122,5 +122,11 @@ module.exports = function(app) {
 		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
 		app.get('/bancospropios/eliminar/:codigo', cBancosPropios.getEliminar);
 	// CHEQUERAS
-		app.get("/chequeras/lista", )	
+		app.get("/chequeras/cuentas", cChequeras.getCuentas);
+		app.post("/chequeras/cuentas", cChequeras.postCuentas);
+		app.get("/chequeras/lista/:cuenta", cChequeras.getLista);
+		app.get('/chequeras/eliminar/:cuenta/:id', cChequeras.getEliminar);
+		app.get("/chequeras/alta/:cuenta", cChequeras.getAlta);
+		app.post("/chequeras/alta", cChequeras.Sp_Abm_Chequeras);
+
 }

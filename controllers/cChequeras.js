@@ -1,67 +1,79 @@
 var mChequeras = require('../models/mChequeras');
+var mBancosPropios = require('../models/mBancosPropios');
+const tools = require('../public/js/utils.js');
 
 module.exports = {
+	getCuentas: getCuentas,
+	postCuentas: postCuentas,
 	getLista: getLista,
 	getAlta: getAlta,
 	Sp_Abm_Chequeras: Sp_Abm_Chequeras,
-	getModificar: getModificar,
-	getEliminar: getEliminar,
-	ValidarCodigo: ValidarCodigo
+	getEliminar: getEliminar
 }
 
-function getLista(req, res) {
-	mChequeras.getAll(function (chequeras){
-		res.render('alicuotas_lista', {
-			pagename: 'Chequeras',
-			chequeras: chequeras
+function getCuentas(req, res) {
+	mBancosPropios.getAll(function (cuentas){
+		res.render('chequeras_cuentas', {
+			pagename: 'Elige una Cuenta',
+			cuentas: cuentas
 		});
 	});
 }
 
 function getAlta(req, res){
-	mChequeras.getNextCodigo(function(chequeras){
-			res.render("chequeras_alta", {
-			pagename: "Alta de Chequeras",
-			nextCodigo: chequeras[0].proximo_codigo 
-		});
-	});
-}
-
-function Sp_Abm_Alicuotas(req, res){
-	var oAlicuotas = req.body;
-	oAlicuotas.descripcion = oAlicuotas.descripcion.toUpperCase();
-	
-	mAlicuotas.Sp_Abm_Tiri(oAlicuotas, function(){
-		res.redirect('/alicuotas/lista');
-	});
-}
-
-function getModificar(req, res){
 	const params = req.params;
-	const codigo = params.codigo;
+	const cuenta = params.cuenta;
 
-	mAlicuotas.getByCodigo(codigo, function(alicuotas){
-		res.render('alicuotas_modificar', {
-			pagename: 'Modificar Informacion de Alícuotas',
-			alicuotas: alicuotas[0]
+	mBancosPropios.getAll(function(cuentas){
+		res.render("chequeras_alta", {
+			pagename: 'Nuevo Registro de Chequera',
+			cuentas: cuentas,
+			cuenta: cuenta
 		});
 	});
+}
+
+function Sp_Abm_Chequeras(req, res){
+	var oMchequeras = req.body;
+	var fechaHoy = tools.generateTodayDateYMD();
+	oMchequeras.alta = fechaHoy;
+	oMchequeras.baja = null;
+
+	mChequeras.Sp_Abm_Chequeras(oMchequeras, function(){
+		res.redirect("/chequeras/lista/"+encodeURIComponent(oMchequeras.cuenta));
+	});
+}
+
+function postCuentas(req, res) {
+	const params = req.body;
+	var cuenta = params.cuenta;
+	cuenta = encodeURIComponent(cuenta);
+
+	res.redirect('/chequeras/lista/'+cuenta);
+}
+
+function getLista(req, res) {
+	const params = req.params;
+	const cuenta = params.cuenta;
+
+
+	mChequeras.getAll_ByCuenta(cuenta, function (chequeras){
+  		res.render('chequeras_lista', {
+				pagename: 'Lista de Chequeras de '+cuenta,
+				chequeras: chequeras,
+				cuenta: cuenta
+		});
+  });
 }
 
 function getEliminar(req, res){
 	const params = req.params;
-	const codigo = params.codigo;
-
-	mAlicuotas.del(codigo, function(){
-		res.redirect('/alicuotas/lista');
+	const id = params.id;
+	var cuenta = params.cuenta;
+	cuenta = encodeURIComponent(cuenta);
+	
+	mChequeras.del(id, function(){
+		res.redirect('/chequeras/lista/'+cuenta);
 	});
 }
 
-function ValidarCodigo(req, res){
-	const params = req.params;
-	const codigo = params.codigo;
-
-	mAlicuotas.getByCodigo(codigo, function(alicuotas){
-		res.send(alicuotas);
-	});
-}

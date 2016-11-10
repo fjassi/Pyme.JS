@@ -1,0 +1,70 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons center aligned">
+            <a href="/chequeras/alta/{{ cuenta|url_encode }}" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+             <a href="#" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+	
+<table id="table" class="ui blue striped celled table" cellspacing="0" width="100%">
+	<thead>
+    	<tr>
+	    	<th><a class="ui ribbon label">Opciones</a></th>
+	    	<th>Fecha Alta</th>
+	    	<th>Desde N°</th>
+	    	<th>Hasta N°</th>
+        <th>Total Cheques</th>
+        <th>Usados</th>
+        <th>Restan</th>
+        <th>Fecha Baja</th>
+        <th>ID Chequera</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+{% for c in chequeras %}
+	<tr>
+		<td class="center aligned">
+  			<div class="ui icon buttons">
+  				<a href="/chequeras/eliminar/{{ c.cuentatxt|url_encode }}/{{ c.idche }}" onclick="if (!confirm('¿Seguro desea eliminar N° de chequera {{ c.idche }}?')) return false;" class="ui inverted red icon button" data-tooltip="Eliminar">
+  					<i class="trash icon large"></i>
+  				</a>
+  			</div>
+  		</td>
+  		<td>{{ c.alta_txt }}</td>
+  		<td>{{ c.desde }}</td>
+  		<td>{{ c.hasta }}</td>
+      <td>{{ c.total_cheques }}</td>
+      <td>{{ c.usados }}</td>
+      <td>{{ c.restan }}</td>
+      <td>{{ c.baja }}</td>
+      <td>{{ c.idche }}</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#table').DataTable({
+          "language": {
+            "emptyTable": "No hay datos disponibles en la tabla",
+            "infoEmpty": "No se obtuvieron resultados"
+          }
+        });
+        $('#cuit').mask('99-99999999-9');
+        $('.ui.checkbox').checkbox();
+    });
+</script> 
+
+{% endblock %}
