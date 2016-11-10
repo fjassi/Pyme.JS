@@ -12,6 +12,7 @@ const cTipoDeCostos = require('./controllers/cTipoDeCostos');
 const cClientes = require('./controllers/cClientes');
 const cAlicuotas = require('./controllers/cAlicuotas');
 const cBancosPropios = require('./controllers/cBancosPropios');
+const cProveedores = require('./controllers/cProveedores');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -120,4 +121,6 @@ module.exports = function(app) {
 		app.get('/bancospropios/modificar/:codigo', cBancosPropios.getModificar);
 		app.post('/bancospropios/modificar', cBancosPropios.Sp_Abm_BancosPropios);
 		app.get('/bancospropios/eliminar/:codigo', cBancosPropios.getEliminar);
+	// PROVEEDORES
+		app.get("/proveedores/lista", cProveedores.getLista);
 }
