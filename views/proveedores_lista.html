@@ -1,0 +1,52 @@
+{% extends 'template.html' %}
+{% block title %}
+    {{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/proveedores/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/proveedores/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+<table class="ui blue striped celled table" id="tabla">
+    <thead>
+        <tr>
+            <th><a class="ui ribbon label">Opciones</a></th>       
+            <th>Codigo</th>
+            <th>Razon Social</th>
+            <th>Nombre de Fantasia</th>
+            <th>CUIT</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in proveedores %}
+            <tr>
+                <td style="text-align: center !important;">
+                    <div class="ui icon buttons">
+                        <a href="/proveedores/modificar/{{ p.pr_nume }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/proveedores/eliminar/{{ p.pr_nume }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                    </div>
+                </td>
+                <td>{{ p.pr_nume }}</td>              
+                <td>{{ p.pr_apel }}</td>
+                <td>{{ p.pr_fanta }}</td>
+                <td>{{ p.pr_cuit }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla').DataTable();
+</script>
+{% endblock %}
