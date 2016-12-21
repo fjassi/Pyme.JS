@@ -1,0 +1,192 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/periodoscontables/alta" style="text-align: center !important;">
+                    <input hidden id="mes1" name="mes1">
+                    <input hidden id="mes2" name="mes2">
+                    <input hidden id="mes3" name="mes3">
+                    <input hidden id="mes4" name="mes4">
+                    <input hidden id="mes5" name="mes5">
+                    <input hidden id="mes6" name="mes6">
+                    <input hidden id="mes7" name="mes7">
+                    <input hidden id="mes8" name="mes8">
+                    <input hidden id="mes9" name="mes9">
+                    <input hidden id="mes10" name="mes10">
+                    <input hidden id="mes11" name="mes11">
+                    <input hidden id="mes12" name="mes12">
+                    <input hidden id="cerrado" name="cerrado">
+                    <div class="three fields">
+                        <div class="eight wide field">
+                            <label>Desde Fecha</label>                             
+                            <div id="fecha1" class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="desde" name="desde" placeholder="dd/mm/yyyy" onKeyPress="return soloNumeros(event)" required>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>Hasta Fecha</label>                             
+                            <div id="fecha2" class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="hasta" name="hasta" placeholder="dd/mm/yyyy" onKeyPress="return soloNumeros(event)" required>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="blue header ui">Indices (Ajustes por inflacion)</h3>
+                    <div class="fields">
+                        <div class="field">
+                            <label>1° Mes</label> 
+                            <div class="field">
+                                <input type="text" name="inmes1" id="inmes1" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>2° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes2" id="inmes2" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>3° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes3" id="inmes3" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>4° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes4" id="inmes4" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>5° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes5" id="inmes5" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>6° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes6" id="inmes6" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>7° Mes</label> 
+                            <div class="field">
+                                <input type="text" name="inmes7" id="inmes7" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>8° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes8" id="inmes8" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>9° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes9" id="inmes9" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>10° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes10" id="inmes10" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>11° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes11" id="inmes11" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>12° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes12" id="inmes12" value="0" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btnAlta" class="ui positive submit button" tabindex="0" type="submit">Enviar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+
+$(function(){
+    $('#formalta').on('submit', function(e){
+        e.preventDefault();
+        var mesDesde = $('#desde').val().substring(3, 5);
+            mesDesde = parseInt(mesDesde);
+        console.log(mesDesde);
+        var anio = $('#desde').val().substring(6, 10);
+            anio = parseInt(anio);
+        for (i = 1; i <= 12; i++) {
+            if(mesDesde == 12){
+                mesDesde = 0;
+                anio = anio+1;
+            }
+            mesDesde = mesDesde+1
+            $("#mes"+i).val(mesDesde+"/"+anio)
+        }
+        this.submit();
+    });
+    
+    $('#fecha1, #fecha2').calendar({
+        type: 'date',
+        monthFirst: false,
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                if (day < 10)
+                    day = "0"+day;
+                var month = date.getMonth() + 1;
+                if (month < 10)
+                    month = "0"+month;
+                var year = date.getFullYear();
+                return day + '/' + month + '/' + year;
+            }
+        },
+            onChange: function(date, text){
+                if(this.id == 'fecha1'){
+                    var anio = text.substring(6, 10);
+                    anio = parseInt(anio);
+                    anio2 = anio + 1;
+                    $('#hasta').val(text.substring(0, 6)+anio2);
+            }
+        }
+    });
+    var fechaHoy = generateTodayDateDMY();
+    $('#desde').val(fechaHoy);
+    var anio = fechaHoy.substring(6, 10);
+    anio = parseInt(anio);
+    anio2 = anio + 1;
+    $('#hasta').val(fechaHoy.substring(0, 6)+anio2);
+
+    
+});
+  
+</script>
+{% endblock %}

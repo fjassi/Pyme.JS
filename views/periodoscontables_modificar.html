@@ -29,7 +29,7 @@
                     <input hidden name="mes10" value="{{ periodo.pe_10 }}">
                     <input hidden name="mes11" value="{{ periodo.pe_11 }}">
                     <input hidden name="mes12" value="{{ periodo.pe_12 }}">
-                    <input hidden name="cerrado" value="{% if periodo.cerrado == null %}''{% else %}periodo.cerrado{% endif %}">
+                    <input hidden name="cerrado" value="{% if periodo.cerrado == null %}{% else %}{% if periodo.cerrado == '01/01/1900' %}{% else %}{{ periodo.cerrado }}{% endif %}{% endif %}">
                     <div class="fields">
                         <div class="field">
                             <label>1° Mes</label> 
