@@ -15,6 +15,7 @@ const cBancosPropios = require('./controllers/cBancosPropios');
 const cChequeras = require('./controllers/cChequeras');
 const cProveedores = require('./controllers/cProveedores');
 const cPeriodos = require('./controllers/cPeriodos');
+const cRecibos = require('./controllers/cRecibos');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -144,4 +145,7 @@ module.exports = function(app) {
 		app.get("/periodoscontables/eliminar/:fecha_desde", cPeriodos.getEliminar);
 		app.get("/periodoscontables/modificar/:fecha_desde", cPeriodos.getModificar);
 		app.post("/periodoscontables/modificar", cPeriodos.Sp_Abm_Peri);
+	//RECIBOS
+		app.get("/recibos/consulta", cRecibos.getConsulta);
+		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax)
 }
