@@ -14,6 +14,7 @@ const cAlicuotas = require('./controllers/cAlicuotas');
 const cBancosPropios = require('./controllers/cBancosPropios');
 const cChequeras = require('./controllers/cChequeras');
 const cProveedores = require('./controllers/cProveedores');
+const cPeriodos = require('./controllers/cPeriodos');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -131,4 +132,16 @@ module.exports = function(app) {
 		app.post("/chequeras/alta", cChequeras.Sp_Abm_Chequeras);
 	// PROVEEDORES
 		app.get("/proveedores/lista", cProveedores.getLista);
+		app.get("/proveedores/alta", cProveedores.getAlta);
+		app.post("/proveedores/alta", cProveedores.sp_proveedores);
+		app.get("/proveedores/eliminar/:numero", cProveedores.getEliminar);
+		app.get("/proveedores/modificar/:numero", cProveedores.getModificar);
+		app.post("/proveedores/modificar", cProveedores.sp_proveedores);
+	// PERIODOS CONTABLES
+		app.get("/periodoscontables/lista", cPeriodos.getLista);
+		// app.get("/periodoscontables/alta", cPeriodos.getAlta);
+		app.get("/periodoscontables/ver/:fecha_desde", cPeriodos.getVer);
+		app.get("/periodoscontables/eliminar/:fecha_desde", cPeriodos.getEliminar);
+		app.get("/periodoscontables/modificar/:fecha_desde", cPeriodos.getModificar);
+		app.post("/periodoscontables/modificar", cPeriodos.Sp_Abm_Peri);
 }

@@ -2,10 +2,10 @@ var conn = require('../config/db').conn;
 
 module.exports = {
 	getAll: getAll,
-	getByCodigo: getByCodigo,
 	sp_proveedores: sp_proveedores,
-	del: del,
 	getNextCodigo: getNextCodigo,
+	getByCodigo: getByCodigo,
+	del: del,
 	validacionMovimientos: validacionMovimientos
 }
 
@@ -13,41 +13,39 @@ function getAll(cb){
 	conn("select * from proveedores order by pr_nume", cb);
 }
 
-// sp_proveedores
-// pr_nume es el campo clave.
-// el codigo no es tan facil de proponer, porque es ALFANUMERICO.
-// El sistema busca “codigos libres”
-// primero desce “001” hasta “999”
-// luego “A01”....”A00”
-// “B01”....”B99” y asi hasta el infinito
-
-function getByCodigo(codigo, cb){
-	conn("select * from proveedores where pr_nume = "+codigo, cb);
+function getByCodigo(numero, cb){
+	conn("select *, RTRIM(LTRIM(pr_apel)) as razonsocialtxt, "+
+		"RTRIM(LTRIM(pr_fanta)) as fantasiatxt, "+
+		"RTRIM(LTRIM(pr_direc)) as direcciontxt, "+
+		"RTRIM(LTRIM(pr_local)) as localidadtxt, "+
+		"RTRIM(LTRIM(pr_cp)) as cptxt, "+
+		"RTRIM(LTRIM(pr_tele)) as telefonotxt, "+
+		"RTRIM(LTRIM(pr_tele2)) as telefono2txt, "+
+		"RTRIM(LTRIM(pr_fax)) as faxtxt, "+
+		"RTRIM(LTRIM(pr_fax2)) as fax2txt, "+
+		"RTRIM(LTRIM(pr_web)) as webtxt, "+
+		"RTRIM(LTRIM(pr_bco)) as bancotxt, "+
+		"RTRIM(LTRIM(pr_cuenta)) as cuentatxt, "+
+		"RTRIM(LTRIM(pr_conta)) as nombretxt, "+
+		"RTRIM(LTRIM(pr_cotel1)) as tel1txt, "+
+		"RTRIM(LTRIM(pr_cotel2)) as tel2txt "+ 
+		"from proveedores where pr_nume = "+numero, cb);
 }
 
-// create procedure sp_proveedores
-// @pr_nume char(3),@pr_apel char(40), @pr_fanta char(50), @pr_direc char(50) ,
-// @pr_local char(25), @pr_cp char(8), @pr_prov char(15),  @pr_tele char(30),
-// @pr_tele2 char(30), @pr_fax char(20), @pr_fax2 char(30), @pr_mail char(40),
-// @pr_web char(50), @pr_iva smallint, @pr_cuit char(13), @pr_bco char(40),
-// @pr_cuenta char(10), @pr_retega bit, @pr_reteib bit, @pr_Ig char(1), @pr_conta char(30),
-// @pr_cotel1 char(20), @pr_cotel2 char(20), @pr_comail char(40), @pr_paga_adias decimal(3,0),
-// @pr_pagadia char(1), @pr_por_efe decimal(3,0), @pr_por_tik decimal(3,0), @pr_por_che decimal(3,0),
-// @pr_por_tar decimal(3,0), @pr_salini decimal(15,2)
 function sp_proveedores(o, cb){
-	conn("sp_proveedores "+o.codigo+", '"+o.nombre+"', '"+o.cuenta+"'", cb);
+	conn("sp_proveedores '"+o.numero+"', '"+o.razonsocial+"', '"+o.fantasia+"', '"+o.direccion+"', '"+o.localidad+"', '"+o.cpostal+"', '"+o.provincia+"', '"+o.telefono+"', '"+o.telefono2+"', '"+o.fax+"', '"+o.fax2+"', '"+o.mail+"', '"+o.web+"', "+o.iva+", '"+o.cuit+"', '"+o.banco+"', '"+o.cuentacontable+"', '"+o.retgan+"', '"+o.retib+"', '"+o.ig+"', '"+o.conombre+"', '"+o.cotel1+"', '"+o.cotel2+"', '"+o.comail+"', '"+o.pagadias+"', '"+o.pagalosdias+"', "+o.efectivo+", "+o.ticket+", "+o.cheque+", "+o.tarjeta+", "+o.saldoinicial, cb);
 }
 
-function del(codigo, cb){
-	conn("DELETE FROM proveedores WHERE pr_nume = "+codigo, cb);
+function del(numero, cb){
+	conn("DELETE FROM proveedores WHERE pr_nume = "+numero, cb);
 }
 
 function getNextCodigo(cb){
 	conn("select ISNULL(max(pr_nume), 0)+1 as proximo_codigo from proveedores", cb);
 }
 
-function validacionMovimientos(codigo, cb){
-	conn("select top 1(ps_fecha), ps_coeg from pcas where ps_coeg = "+codigo+" "+
+function validacionMovimientos(numero, cb){
+	conn("select top 1(fp_prov) from fapr where fp_prov = "+numero+" "+
 		"union "+
-		"select top 1(ct_fecm), ct_coeg from corri where ct_coeg = "+codigo, cb)
+		"select top 1(o1_prov) from opa1 where o1_prov = "+numero, cb)
 }

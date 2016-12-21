@@ -1,0 +1,280 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/proveedores/alta" style="text-align: center !important;">
+                    <div class="fields">
+                        <div class="two wide field">
+                            <label>Codigo</label> 
+                            <div class="field">
+                                <input type="text" name="numero" id="numero" placeholder="Codigo"  onKeyPress="return soloNumeros(event)" value="{{ nextcodigo }}">
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Razon Social</label>
+                            <div class="field">
+                                <input type="text" name="razonsocial" id="razonsocial" placeholder="Razon Social"  style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftRazonSocial"></span> caracteres.</div>
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Nombre Fantasia</label>
+                            <div class="field">
+                                <input type="text" name="fantasia" id="fantasia" placeholder="Nombre Fantasia"  style="text-transform: uppercase;"><div class="aviso">Quedan <span id="charsLeftFantasia"></span> caracteres.</div>
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Domicilio</label>
+                            <div class="field">
+                                <input type="text" name="direccion" id="direccion" placeholder="Direccion" ><div class="aviso">Quedan <span id="charsLeftDireccion"></span> caracteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">                            
+                            <label>Localidad</label>
+                            <div class="field">
+                                <input type="text" name="localidad" id="localidad" placeholder="Localidad" ><div class="aviso">Quedan <span id="charsLeftLocalidad"></span> caracteres.</div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="fields">   
+                        <div class="two wide field">
+                            <label>C.P.</label> 
+                            <div class="field">
+                                <input type="text" name="cpostal" id="cpostal" placeholder="CP"  onKeyPress="return soloNumeros(event)" maxlength="8">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>Provincia</label>
+                            <div class="field">
+                                <select class="ui dropdown" name="provincia" id="provincia" style="width: auto !important;">
+                                    <option value="Sin Provincia">Sin Provincia</option>
+                                    {% for p in provincias %}
+                                        <option value="{{ p.descripcion }}">{{ p.descripcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Telefono</label> 
+                            <div class="field">
+                                <input type="text" name="telefono" id="telefono" placeholder="Telefono" onKeyPress="return soloNumeros(event)" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Celular</label> 
+                            <div class="field">
+                                <input type="text" name="telefono2" id="telefono2" placeholder="Celular" onKeyPress="return soloNumeros(event)" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fax</label> 
+                            <div class="field">
+                                <input type="text" name="fax" id="fax" placeholder="Fax" onKeyPress="return soloNumeros(event)" maxlength="20">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Fax 2</label>
+                            <div class="field">
+                                <input type="text" name="fax2" id="fax2" placeholder="Fax 2" onKeyPress="return soloNumeros(event)" maxlength="30">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="five wide field">
+                            <label>E-Mail</label> 
+                            <div class="field">
+                                <input type="email" name="mail" id="mail" placeholder="E-Mail" maxlength="40">
+                            </div>
+                        </div>
+                        <div class="five wide field">
+                            <label>Web Site</label>
+                            <div class="field">
+                                <input type="text" name="web" id="web" placeholder="Web Site" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="four wide field">                            
+                            <label>Categoria IVA</label>
+                            <div class="field">
+                                <select class="ui dropdown" name="iva" id="iva" style="width: auto !important;">
+                                    {% for c in codigos_iva %}
+                                        <option value="{{ c.codigo }}">{{ c.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>C.U.I.T.</label> 
+                            <div class="field cuiit" data-content="El CUIT debe tener 11 digitos">
+                                <input type="text" name="cuit" id="cuit" placeholder="Cuit"  onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="four wide field">
+                            <label>Banco y Cuenta</label> 
+                            <div class="field">
+                                <input type="text" name="banco" id="banco" placeholder="Banco y Cuenta"><div class="aviso">Quedan <span id="charsLeftBanco"></span> caracteres.</div>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Cuenta Contable</label> 
+                            <div class="field">
+                                <input type="text" name="cuentacontable" id="cuentacontable" placeholder="Nº de Cuenta Contable" onKeyPress="return soloNumeros(event)" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Retiene Ganancias</label>
+                            <div class="ui toggle checkbox ingresos" data-content="Tilde esta opcion si retiene GANANCIAS a este proveedor">
+                                <input type="checkbox" name="retgan" id="retgan">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>Inscripto en Ganancias</label>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="ig" id="ig">
+                            </div>
+                        </div>
+                        <div class="two wide field">
+                            <label>Retiene Ing. Brutos</label>
+                            <div class="ui toggle checkbox bruto" data-content="Tilde esta opcion si Ud le retiene IIBB a este proveedor">
+                                <input type="checkbox" name="retib" id="retib">
+                            </div>
+                        </div>
+                        <div class="two wide field">    
+                            <label>Saldo Inicial $</label> 
+                            <div class="field">
+                                <input type="text" name="saldoinicial" id="saldoinicial" onKeyPress="return soloNumeros(event)" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sixteen wide field" style="border-top: 1px solid rgba(34, 36, 38, 0.15); border-bottom: 1px solid rgba(34, 36, 38, 0.15); margin-top: 2em;">
+                        <h3 class="ui blue header" style="padding: 10px;">Convenio de Pago</h3>
+                    </div>
+                    <div class="fields">
+                        <div class="three wide field">
+                            <label>Paga a dias</label>
+                            <div class="field">
+                                <input type="text" placeholder="0" name="pagadias" id="pagadias" onkeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">                            
+                            <label>o Los Dias</label>
+                            <div class="field">
+                                <select class="ui dropdown" name="pagalosdias" id="pagalosdias" style="width: auto !important;">
+                                    <option value=" ">No se usa</option>
+                                    <option value="L">Lunes</option>
+                                    <option value="M">Martes</option>
+                                    <option value="I">Miercoles</option>
+                                    <option value="J">Jueves</option>
+                                    <option value="V">Viernes</option>
+                                    <option value="S">Sabado</option>
+                                    <option value="D">Domingo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>% Efectivo</label>
+                            <div class="field">
+                                <input type="text" placeholder="0" name="efectivo" id="efectivo" onkeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>% Tiquet</label>
+                            <div class="field">
+                                <input type="text" placeholder="0" name="ticket" id="ticket" onkeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>% Cheques</label>
+                            <div class="field">
+                                <input type="text" placeholder="0" name="cheque" id="cheque" onkeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="three wide field">
+                            <label>% Tarjetas</label>
+                            <div class="field">
+                                <input type="text" placeholder="0" name="tarjeta" id="tarjeta" onkeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sixteen wide field" style="border-top: 1px solid rgba(34, 36, 38, 0.15); border-bottom: 1px solid rgba(34, 36, 38, 0.15); margin-top: 2em;">
+                        <h3 class="ui blue header" style="padding: 10px;">Contacto</h3>
+                    </div>
+                    <div class="fields">
+                        <div class="four wide field">
+                            <label>Nombre</label>
+                            <input type="text" name="conombre" id="conombre" placeholder="Nombre"><div class="aviso">Quedan <span id="charsLeftCoNombre"></span> caracteres.</div>
+                        </div>
+                        <div class="four wide field">
+                            <label>Telefono</label>
+                            <input type="text" name="cotel1" id="cotel1" placeholder="Telefono" maxlength="20" onkeyPress="return soloNumeros(event)">
+                        </div>
+                        <div class="four wide field">
+                            <label>Telefono 2</label>
+                            <input type="text" name="cotel2" id="cotel2" placeholder="Telefono 2" maxlength="20" onkeyPress="return soloNumeros(event)">
+                        </div>
+                        <div class="four wide field">
+                            <label>E-Mail</label>
+                            <input type="email" name="comail" id="comail" placeholder="E-Mail">
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/semantic.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript">
+    $('#razonsocial').limit('40','#charsLeftRazonSocial');
+    $('#fantasia').limit('50','#charsLeftFantasia');
+    $('#direccion').limit('50','#charsLeftDireccion');
+    $('#localidad').limit('25','#charsLeftLocalidad');
+    $('#banco').limit('40','#charsLeftBanco');
+    $('#conombre').limit('30','#charsLeftCoNombre');
+
+    $('.ingresos').popup();
+    $('.bruto').popup();
+    $('.cuiit').popup();
+
+    $("#cuit").mask("99-99999999-9", {
+        completed: function(){
+            var cuit = $(this).val();
+            console.log(cuit)
+            // console.log(validarCuit(cuit))
+            if(cuit.length==11){
+                if(validarCuit(cuit)){
+                    
+                }else{
+                    alert("CUIT no valido.");
+                    $("#cuit").val('');
+                    $("#cuit").focus();
+                }
+            }else{
+                 alert("El CUIT debe tener 11 caracteres.");
+                    // $("#cuit").val('');
+                    $("#cuit").focus();
+            }
+        } 
+    });
+</script>
+{% endblock %}

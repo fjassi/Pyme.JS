@@ -1,0 +1,93 @@
+{% extends 'template.html' %}
+{% block title %}
+  {{ pagename }}
+{% endblock %}
+{% block content %}
+
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+
+<table class="ui blue striped celled table" cellspacing="0" width="100%">
+  <thead>
+      <tr>
+        <th>1° Mes</th>
+        <th>2° Mes</th>
+        <th>3° Mes</th>
+        <th>4° Mes</th>
+        <th>5° Mes</th>
+        <th>6° Mes</th>
+        <th>7° Mes</th>
+        <th>8° Mes</th>
+        <th>9° Mes</th>
+        <th>10° Mes</th>
+        <th>11° Mes</th>
+        <th>12° Mes</th>
+        <th>Cerrado</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{ periodo.pe_01 }}</td>
+      <td>{{ periodo.pe_02 }}</td>
+      <td>{{ periodo.pe_03 }}</td>
+      <td>{{ periodo.pe_04 }}</td>
+      <td>{{ periodo.pe_05 }}</td>
+      <td>{{ periodo.pe_06 }}</td>
+      <td>{{ periodo.pe_07 }}</td>
+      <td>{{ periodo.pe_08 }}</td>
+      <td>{{ periodo.pe_09 }}</td>
+      <td>{{ periodo.pe_10 }}</td>
+      <td>{{ periodo.pe_11 }}</td>
+      <td>{{ periodo.pe_12 }}</td>
+      <td>{{ periodo.cerrado }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="blue header ui">Indices (Ajustes por inflacion)</h3>
+
+<table class="ui blue striped celled table" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th><a class="ui ribbon label">Opciones</a></th>
+      <th>1° Mes</th>
+      <th>2° Mes</th>
+      <th>3° Mes</th>
+      <th>4° Mes</th>
+      <th>5° Mes</th>
+      <th>6° Mes</th>
+      <th>7° Mes</th>
+      <th>8° Mes</th>
+      <th>9° Mes</th>
+      <th>10° Mes</th>
+      <th>11° Mes</th>
+      <th>12° Mes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center aligned">
+        <div class="ui icon buttons">
+          <a href="/periodoscontables/modificar/{{ periodo.desde|url_encode }}" class="ui inverted orange icon button modificar" data-tooltip="Modificar">
+            <i class="large edit icon"></i>
+          </a>
+        </div>
+      </td>
+      <td>{{ periodo.in_01 }}</td>
+      <td>{{ periodo.in_02 }}</td>
+      <td>{{ periodo.in_03 }}</td>
+      <td>{{ periodo.in_04 }}</td>
+      <td>{{ periodo.in_05 }}</td>
+      <td>{{ periodo.in_06 }}</td>
+      <td>{{ periodo.in_07 }}</td>
+      <td>{{ periodo.in_08 }}</td>
+      <td>{{ periodo.in_09 }}</td>
+      <td>{{ periodo.in_10 }}</td>
+      <td>{{ periodo.in_11 }}</td>
+      <td>{{ periodo.in_12 }}</td>
+    </tr>
+  </tbody>
+</table>
