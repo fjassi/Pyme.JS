@@ -3,6 +3,7 @@ const tools = require('../public/js/utils.js');
 
 module.exports = {
 	getLista: getLista,
+	getAlta: getAlta,
 	getModificar: getModificar,
 	getVer: getVer,
 	Sp_Abm_Peri: Sp_Abm_Peri,
@@ -17,6 +18,13 @@ function getLista(req, res) {
 		});
 	});	
 }
+
+function getAlta(req, res){
+	res.render("periodoscontables_alta", {
+		pagename: "Nuevo Periodo"
+	});
+}
+
 
 function getModificar(req, res){
 	const params = req.params;

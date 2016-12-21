@@ -1,0 +1,54 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th><h1></h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/periodoscontables/alta" style="text-align: center !important;">
+                    <div class="three fields">
+                        <div class="eight wide field">
+                            <label>Desde Fecha</label>                             
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="desde" name="desde" placeholder="dd/mm/yyyy" onKeyPress="return soloNumeros(event)" required>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>Hasta Fecha</label>                             
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" id="hasta" name="hasta" placeholder="dd/mm/yyyy" onKeyPress="return soloNumeros(event)" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Enviar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script src="/js/jquery.limit-1.2.js"></script>
+<script type="text/javascript" src="/bower_components/semantic-ui-calendar/dist/calendar.min.js"></script>
+
+<script type="text/javascript">
+$("#desde").mask("99/99/9999");
+$("#hasta").mask("99/99/9999");
+</script>
+{% endblock %}
