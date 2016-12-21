@@ -14,6 +14,7 @@ const cAlicuotas = require('./controllers/cAlicuotas');
 const cBancosPropios = require('./controllers/cBancosPropios');
 const cChequeras = require('./controllers/cChequeras');
 const cProveedores = require('./controllers/cProveedores');
+const cRecibos = require('./controllers/cRecibos');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -131,4 +132,9 @@ module.exports = function(app) {
 		app.post("/chequeras/alta", cChequeras.Sp_Abm_Chequeras);
 	// PROVEEDORES
 		app.get("/proveedores/lista", cProveedores.getLista);
+	// PERIODOS CONTABLES
+
+	//RECIBOS
+		app.get("/recibos/consulta", cRecibos.getConsulta);
+		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax)
 }
