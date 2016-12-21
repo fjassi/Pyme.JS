@@ -1,0 +1,45 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <div class="right floated right aligned six wide column">
+        <div class="ui buttons center aligned">
+            <a href="/periodoscontables/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div>
+</div>
+
+<table class="ui blue striped celled table" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th><a class="ui ribbon label">Opciones</a></th>
+      <th>Desde Fecha</th>
+      <th>Hasta Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in periodos %}
+      <tr>
+        <td class="center aligned">
+          <div class="ui icon buttons">
+            <a href="/periodoscontables/ver/{{ p.desde|url_encode }}" class="ui inverted green icon button" data-tooltip="Ver">
+              <i class="large search icon"></i>
+            </a>
+            <a href="/periodoscontables/eliminar/{{ p.desde|url_encode }}" class="ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="large trash icon"></i></a>
+          </div>
+        </td>
+        <td>{{ p.desde }}</td>
+        <td>{{ p.hasta }}</td>
+      </tr>
+    {% endfor %}  
+  </tbody>
+</table>
+	
+<script type="text/javascript" src="/js/jquery.js"></script>
+{% endblock %}

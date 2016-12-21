@@ -1,0 +1,115 @@
+{% extends 'template.html' %}
+
+{% block title %}
+    {{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<table class="ui blue celled striped table">
+    <tbody>
+        <tr>
+            <td>
+                <form class="ui form" id="formalta" method="post" action="/periodoscontables/modificar" style="text-align: center !important;">
+                    <input hidden name="desde" value="{{ periodo.desde }}">
+                    <input hidden name="hasta" value="{{ periodo.hasta }}">
+                    <input hidden name="mes1" value="{{ periodo.pe_01 }}">
+                    <input hidden name="mes2" value="{{ periodo.pe_02 }}">
+                    <input hidden name="mes3" value="{{ periodo.pe_03 }}">
+                    <input hidden name="mes4" value="{{ periodo.pe_04 }}">
+                    <input hidden name="mes5" value="{{ periodo.pe_05 }}">
+                    <input hidden name="mes6" value="{{ periodo.pe_06 }}">
+                    <input hidden name="mes7" value="{{ periodo.pe_07 }}">
+                    <input hidden name="mes8" value="{{ periodo.pe_08 }}">
+                    <input hidden name="mes9" value="{{ periodo.pe_09 }}">
+                    <input hidden name="mes10" value="{{ periodo.pe_10 }}">
+                    <input hidden name="mes11" value="{{ periodo.pe_11 }}">
+                    <input hidden name="mes12" value="{{ periodo.pe_12 }}">
+                    <input hidden name="cerrado" value="{% if periodo.cerrado == null %}''{% else %}periodo.cerrado{% endif %}">
+                    <div class="fields">
+                        <div class="field">
+                            <label>1° Mes</label> 
+                            <div class="field">
+                                <input type="text" name="inmes1" id="inmes1" value="{{ periodo.in_01 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>2° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes2" id="inmes2" value="{{ periodo.in_02 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>3° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes3" id="inmes3" value="{{ periodo.in_03 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>4° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes4" id="inmes4" value="{{ periodo.in_04 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>5° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes5" id="inmes5" value="{{ periodo.in_05 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>6° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes6" id="inmes6" value="{{ periodo.in_06 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>7° Mes</label> 
+                            <div class="field">
+                                <input type="text" name="inmes7" id="inmes7" value="{{ periodo.in_07 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>8° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes8" id="inmes8" value="{{ periodo.in_08 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>9° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes9" id="inmes9" value="{{ periodo.in_09 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>10° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes10" id="inmes10" value="{{ periodo.in_10 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>11° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes11" id="inmes11" value="{{ periodo.in_11 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                        <div class="field">                            
+                            <label>12° Mes</label>
+                            <div class="field">
+                                <input type="text" name="inmes12" id="inmes12" value="{{ periodo.in_12 }}" onKeyPress="return Validate3EntY6Dec(event,this)">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui positive submit button" tabindex="0" type="submit">Enviar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+{% endblock %}

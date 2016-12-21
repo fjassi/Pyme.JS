@@ -1,4 +1,6 @@
 const mProveedores = require('../models/mProveedores');
+const mProvincias = require('../models/mProvincias');
+const mCdiva = require('../models/mCdiva');
 // const mPlanDeCuentas = require('../models/mPlanDeCuentas');
 // var nodeExcel = require('excel-export');
 
@@ -7,52 +9,74 @@ module.exports = {
 	getAlta: getAlta,
 	sp_proveedores: sp_proveedores,
 	getModificar: getModificar,
-	getEliminar: getEliminar,
-	ValidarCodigo: ValidarCodigo
+	getEliminar: getEliminar
 }
 
 function getLista(req, res) {
-  	mProveedores.getAll(function (codigosegreso){
+  	mProveedores.getAll(function (proveedores){
   		res.render("proveedores_lista", {
 			pagename: 'Lista de Proveedores',
-			codigosegreso: Proveedorsegreso
+			proveedores: proveedores
 		});
-  	});
+  });
 }
 
 function getAlta(req, res){
-	mPlanDeCuentas.getAllImputables(function(imputables){
-		mProveedores.getNextCodigo(function(nextcodigo){
-			res.render("proveedores_alta", {
-				pagename: "Alta de Proveedor",
-				imputables: imputables,
-				nextcodigo: nextcodigo[0].proximo_codigo
+	mProveedores.getNextCodigo(function(nextcodigo){
+		mProvincias.getAll(function(provincias){
+			mCdiva.getAll(function(codigos_iva){
+					res.render("proveedores_alta", {
+					pagename: "Alta de Proveedor",
+					nextcodigo: nextcodigo[0].proximo_codigo,
+					provincias: provincias,
+					codigos_iva: codigos_iva
+				});
 			});
 		});
-	});
+	});	
 }
 
 function sp_proveedores(req, res){
-	const oCoeg = req.body;
-	console.log(oCoeg);
-	oCoeg.nombre = oCoeg.nombre.toUpperCase();
+	var oProveedores = req.body;
+	oProveedores.razonsocial = oProveedores.razonsocial.toUpperCase();
+	oProveedores.fantasia = oProveedores.fantasia.toUpperCase();
+	oProveedores.direccion = oProveedores.direccion.toUpperCase();
+	oProveedores.localidad = oProveedores.localidad.toUpperCase();
+	oProveedores.conombre = oProveedores.conombre.toUpperCase();
 
-	mProveedores.sp_proveedores(oCoeg, function(){
+	if (oProveedores.retgan == 'on')
+		oProveedores.retgan = 1;
+	else
+		oProveedores.retgan = 0;
+
+	if (oProveedores.retib == 'on')
+		oProveedores.retib = 1;
+	else
+		oProveedores.retib = 0;
+
+	if (oProveedores.ig == 'on')
+		oProveedores.ig = 1;
+	else
+		oProveedores.ig = 0;
+
+	mProveedores.sp_proveedores(oProveedores, function(){
 		res.redirect('/proveedores/lista');
 	});
 }
 
 function getModificar(req, res){
 	const params = req.params;
-	const codigo = params.codigo;
+	const numero = params.numero;
 
-	mProveedores.getByCodigo(codigo, function(codigoegreso){
-		console.log(codigoegreso)
-		mPlanDeCuentas.getAllImputables(function(imputables){
-			res.render("proveedores_modificar", {
-				pagename: "Modificar Proveedor",
-				imputables: imputables,
-				codigoegreso: Proveedoregreso[0]
+	mProveedores.getByCodigo(numero, function(proveedores){
+		mProvincias.getAll(function(provincias){
+			mCdiva.getAll(function(codigos_iva){
+					res.render("proveedores_modificar", {
+					pagename: "Modificar Proveedor",
+					proveedores: proveedores[0],
+					provincias: provincias,
+					codigos_iva: codigos_iva
+				});
 			});
 		});
 	});
@@ -60,14 +84,11 @@ function getModificar(req, res){
 
 function getEliminar(req, res){
 	const params = req.params;
-	const codigo = params.codigo;
-	// 	Coeg.co_codigo
-	// Verificar en 2 tablas
-	// Pcas.ps_coeg
-	// Corri.ct_coeg
-	mProveedores.validacionMovimientos(codigo, function(movimientos){
+	const numero = params.numero;
+
+	mProveedores.validacionMovimientos(numero, function(movimientos){
 		if (movimientos.length == 0){
-			mProveedores.del(codigo, function(){
+			mProveedores.del(numero, function(){
 				res.redirect('/proveedores/lista');
 			});
 		}else{
@@ -75,14 +96,5 @@ function getEliminar(req, res){
 				error: "Este Proveedor no se puede eliminar porque posee movimientos!"
 			});
 		}
-	});
-}
-
-function ValidarCodigo(req, res){
-	const params = req.params;
-	const codigo = params.codigo;
-
-	mProveedores.getByCodigo(codigo, function(codigo){
-		res.send(codigo);
 	});
 }
