@@ -140,7 +140,8 @@ module.exports = function(app) {
 		app.post("/proveedores/modificar", cProveedores.sp_proveedores);
 	// PERIODOS CONTABLES
 		app.get("/periodoscontables/lista", cPeriodos.getLista);
-		// app.get("/periodoscontables/alta", cPeriodos.getAlta);
+		app.get("/periodoscontables/alta", cPeriodos.getAlta);
+		app.post("/periodoscontables/alta", cPeriodos.Sp_Abm_Peri);
 		app.get("/periodoscontables/ver/:fecha_desde", cPeriodos.getVer);
 		app.get("/periodoscontables/eliminar/:fecha_desde", cPeriodos.getEliminar);
 		app.get("/periodoscontables/modificar/:fecha_desde", cPeriodos.getModificar);

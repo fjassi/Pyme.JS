@@ -3,6 +3,7 @@ const tools = require('../public/js/utils.js');
 
 module.exports = {
 	getLista: getLista,
+	getAlta: getAlta,
 	getModificar: getModificar,
 	getVer: getVer,
 	Sp_Abm_Peri: Sp_Abm_Peri,
@@ -17,6 +18,13 @@ function getLista(req, res) {
 		});
 	});	
 }
+
+function getAlta(req, res){
+	res.render("periodoscontables_alta", {
+		pagename: "Nuevo Periodo"
+	});
+}
+
 
 function getModificar(req, res){
 	const params = req.params;
@@ -48,7 +56,7 @@ function Sp_Abm_Peri(req, res){
 	var oPeriodos = req.body;
 	oPeriodos.desde = tools.changeDate(oPeriodos.desde);
 	oPeriodos.hasta = tools.changeDate(oPeriodos.hasta);
-	
+
 	mPeriodos.Sp_Abm_Peri(oPeriodos, function(){
 		res.redirect('/periodoscontables/lista');
 	});
