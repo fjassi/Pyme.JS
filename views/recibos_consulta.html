@@ -45,7 +45,7 @@
         </select>
     </div>
     <div class="five wide field">
-        <select class="ui search dropdown" name="cliente" id="cliente">
+        <select class="ui search dropdown" name="tipo" id="tipo">
             <option value="0">Medio de Pago</option>
             {% for m in mediosdepago %}
                 <option value="{{ m.codigo }}">{{ m.nombre }}</option>
@@ -67,20 +67,36 @@
         </tr>
     </thead>
     <tbody>
-        {% for c in codigosegreso %}
+        <tr>
+            <td style="text-align: center !important;">
+                <div class="ui icon buttons">                        
+                    <a href="/codigosegreso/modificar/{{ c.co_codigo }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                    <a href="/codigosegreso/eliminar/{{ c.co_codigo }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                </div>
+            </td>              
+            <td>{{ c.co_codigo }}</td>
+            <td>{{ c.co_deno }}</td>
+            <td style="text-align: center;">{{ c.co_cuen }}</td>
+        </tr>
+    </tbody>
+    <!-- <tbody id="tbodylisto">
+                            
+    </tbody>
+    <script type="text/template" id="tabla_codigos" />
+        [% for c in codigosegreso %]
             <tr>
             	<td style="text-align: center !important;">
                     <div class="ui icon buttons">                        
-                        <a href="/codigosegreso/modificar/{{ c.co_codigo }}" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
-                        <a href="/codigosegreso/eliminar/{{ c.co_codigo }}" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
+                        <a href="/codigosegreso/modificar/[[ c.co_codigo ]]" class="mini ui orange icon button inverted" data-tooltip="Modificar"><i class="edit icon"></i></a>
+                        <a href="/codigosegreso/eliminar/[[ c.co_codigo ]]" class="mini ui red icon button inverted" data-tooltip="Eliminar" onclick="if (!confirm('¿Seguro desea eliminar?')) return false;"><i class="trash icon"></i></a>
                     </div>
                 </td>              
-                <td>{{ c.co_codigo }}</td>
-                <td>{{ c.co_deno }}</td>
-                <td style="text-align: center;">{{ c.co_cuen }}</td>
+                <td>[[ c.co_codigo ]]</td>
+                <td>[[ c.co_deno ]]</td>
+                <td style="text-align: center;">[[ c.co_cuen ]]</td>
             </tr>
-        {% endfor %}
-    </tbody>
+        [% endfor %]
+    </script> -->
 </table>
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
@@ -88,7 +104,7 @@
 <script type="text/javascript" src="/js/semantic.js"></script>
 <script src="/js/swig.min.js"></script>
 <script type="text/javascript">
-    $('#tabla_codigosegreso').DataTable();
+    // var cTable = $('#tabla_codigosegreso').DataTable();
     swig.setDefaults({
         varControls: ['[[', ']]'],
         tagControls: ['[%', '%]']
@@ -100,15 +116,31 @@
 
         if(desde.length > 0){
             if(hasta.length > 0){
+                $('#tbodylisto').html('<p style="padding-left: 20px; padding-top: 20px;">Cargando...<p>');
                 var cliente = $("#cliente").val();
                 var tipo = $("#tipo").val();
 
                 desde = encodeURIComponent(changeDate(desde));
                 hasta = encodeURIComponent(changeDate(hasta));
                 if(cliente == '') cliente = 0; 
-
+                // $('#tabla_codigosegreso').DataTable( {
+                //     "ajax": "/recibos/filtroajax/"+desde+"/"+hasta+"/"+cliente+"/"+tipo
+                // } );
                 $.getJSON("/recibos/filtroajax/"+desde+"/"+hasta+"/"+cliente+"/"+tipo, function(recibos){
-                    console.log(recibos)
+                    console.log(recibos.length)
+
+                    if (recibos.length != 0){
+                        $('#tabla_codigosegreso').DataTable( {
+                            "dataSrc": recibos
+                        } );
+                        // $('#tbodylisto > tr').remove();
+                        // var template = $('#tabla_codigos').html();
+                        // var output = parseSwig(template, recibos);
+                        // $('#tbodylisto').html(output);
+                    }else{
+                        $('#tbodylisto > tr').remove();                 
+                        $("#tbodylisto").html("<tr><td colspan='20' style='padding-left: 20px; padding-top: 20px;'>No se han encontrado resultados para esta búsqueda.</td></tr>");
+                    }
                 });
             }else{
                 alert("Debe seleccionar una fecha hasta.");
@@ -141,3 +173,20 @@
     });
 </script>
 {% endblock %}
+<!-- 
+First you need to initialize table: For example you have table id: example
+
+var oTable =$('#example').dataTable();
+then you can use jquery get or ajax. to insert in datatable you need to use .fnAddData() for example:
+
+$.get( "ajax/test.html", function( data ) {
+        $.each($.parseJSON(data),function(i,e){
+            oTable.fnAddData( 
+                [
+                    e.id,
+                    e.name,
+                    e.gender,
+                    e.state,
+                    e.phone
+                ]);             
+    }); -->

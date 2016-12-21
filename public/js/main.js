@@ -298,3 +298,12 @@ function Validate10EntY2Dec(e, field) {
     // other key
     return false
 }//onKeyPress="return Validate10EntY2Dec(event,this)"
+
+// PARA EL SWIG CUANDO SE USA CON AJAX EN LAS VISTAS
+function parseSwig(input, data) {
+    var output = swig.render(input, { locals: {
+        data: data
+    }});
+
+    return output;
+}
