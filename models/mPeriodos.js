@@ -9,7 +9,7 @@ module.exports = {
 }
 
 function getAll(cb){
-	conn("select *, CONVERT(varchar(13), peri.pe_desde, 103) as desde, CONVERT(varchar(13), peri.pe_hasta, 103) as hasta, CONVERT(varchar(13), peri.pe_cerro, 103) as cerrado from peri", cb);
+	conn("select *, CONVERT(varchar(13), peri.pe_desde, 103) as desde, CONVERT(varchar(13), peri.pe_hasta, 103) as hasta, CONVERT(varchar(13), peri.pe_cerro, 103) as cerrado from peri order by desde desc", cb);
 }
 
 function getByFecha(fecha_desde, cb){
@@ -29,5 +29,5 @@ function del(fecha_desde, cb){
 }
 
 function validacionMovimientos(fecha_desde, cb){
-	conn("select top 1(ld_fecha) from diario where ld_fecha = '"+fecha_desde+"'", cb)
+	conn("select top 1(ld_fecha) from diario where ld_fecha = '"+fecha_desde+"'", cb);
 }

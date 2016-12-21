@@ -42,7 +42,7 @@
       <td>{{ periodo.pe_10 }}</td>
       <td>{{ periodo.pe_11 }}</td>
       <td>{{ periodo.pe_12 }}</td>
-      <td>{{ periodo.cerrado }}</td>
+      <td>{% if periodo.cerrado == null %}{% else %}{% if periodo.cerrado == '01/01/1900' %}{% else %}{{ periodo.cerrado }}{% endif %}{% endif %}</td>
     </tr>
   </tbody>
 </table>

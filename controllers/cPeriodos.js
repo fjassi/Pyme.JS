@@ -56,7 +56,7 @@ function Sp_Abm_Peri(req, res){
 	var oPeriodos = req.body;
 	oPeriodos.desde = tools.changeDate(oPeriodos.desde);
 	oPeriodos.hasta = tools.changeDate(oPeriodos.hasta);
-	
+
 	mPeriodos.Sp_Abm_Peri(oPeriodos, function(){
 		res.redirect('/periodoscontables/lista');
 	});
