@@ -148,5 +148,11 @@ module.exports = function(app) {
 		app.post("/periodoscontables/modificar", cPeriodos.Sp_Abm_Peri);
 	//RECIBOS
 		app.get("/recibos/consulta", cRecibos.getConsulta);
-		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax)
+		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax);
+		app.get("/recibos/ver/:numero", cRecibos.getVer);
+		app.get("/recibos/eliminar/:numero", cRecibos.getEliminar);
+		app.get("/recibos/getByNumero/:numero", cRecibos.getByNumero);
+		app.get("/recibos/getrec1/:numero", cRecibos.get_rec1);
+		app.get("/recibos/getrec2/:numero", cRecibos.get_rec2);
+		app.get("/recibos/getrec3/:numero", cRecibos.get_rec3);
 }
