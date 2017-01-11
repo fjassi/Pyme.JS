@@ -11,7 +11,6 @@ module.exports = {
 	get_rec1: get_rec1,
 	get_rec2: get_rec2,
 	get_rec3: get_rec3,
-	getByNumero: getByNumero
 }
 
 function getConsulta(req, res) {
@@ -82,7 +81,16 @@ function getVer(req, res){
 }
 
 function getEliminar(req, res){
+	const params = req.params;
+	const numero = params.numero;
 
+	mRecibos.delRec1(numero, function(){
+		mRecibos.delRec2(numero, function(){
+			mRecibos.delRec3(numero, function(){
+				res.redirect("/recibos/consulta");
+			});
+		});
+	});
 }
 
 function get_rec1(req, res){

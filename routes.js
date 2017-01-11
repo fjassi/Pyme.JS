@@ -16,6 +16,7 @@ const cChequeras = require('./controllers/cChequeras');
 const cProveedores = require('./controllers/cProveedores');
 const cPeriodos = require('./controllers/cPeriodos');
 const cRecibos = require('./controllers/cRecibos');
+const cOrdenes = require('./controllers/cOrdenes');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -151,8 +152,15 @@ module.exports = function(app) {
 		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax);
 		app.get("/recibos/ver/:numero", cRecibos.getVer);
 		app.get("/recibos/eliminar/:numero", cRecibos.getEliminar);
-		app.get("/recibos/getByNumero/:numero", cRecibos.getByNumero);
 		app.get("/recibos/getrec1/:numero", cRecibos.get_rec1);
 		app.get("/recibos/getrec2/:numero", cRecibos.get_rec2);
 		app.get("/recibos/getrec3/:numero", cRecibos.get_rec3);
+	// ORDENES DE PAGO
+		app.get("/ordenes/consulta", cOrdenes.getConsulta);
+		app.get("/ordenes/filtroajax/:desde/:hasta/:proveedor/:talonario/:tipo", cOrdenes.getFiltroAjax);	
+		app.get("/ordenes/ver/:numero", cOrdenes.getVer);
+		app.get("/ordenes/eliminar/:numero", cOrdenes.getEliminar);
+		app.get("/ordenes/getorden1/:numero", cOrdenes.get_orden1);
+		app.get("/ordenes/getorden2/:numero", cOrdenes.get_orden2);
+		app.get("/ordenes/getorden3/:numero", cOrdenes.get_orden3);
 }
