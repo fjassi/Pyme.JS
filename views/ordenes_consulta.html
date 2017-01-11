@@ -1,6 +1,6 @@
 {% extends 'template.html' %}
 {% block title %}
-	{{ pagename }}
+    {{ pagename }}
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
@@ -28,20 +28,27 @@
         </div>
     </div>
     <div class="three wide field">
-        <select class="ui search dropdown" name="cliente" id="cliente">
-            <option value="0">Cliente</option>
-            {% for c in clientes %}
-                <option value="{{ c.cl_nume }}">{{ c.cl_apel }}</option>
+        <select class="ui search dropdown" name="proveedor" id="proveedor">
+            <option value="0">Por Proveedor</option>
+            {% for p in proveedores %}
+                <option value="{{ p.pr_nume }}">{{ p.pr_apel }}</option>
             {% endfor %}
         </select>
     </div>
-    <div class="five wide field">
-        <select class="ui search dropdown" name="tipo" id="tipo">
-            <option value="0">Medio de Pago</option>
-            {% for m in mediosdepago %}
-                <option value="{{ m.codigo }}">{{ m.nombre }}</option>
+    <div class="three wide field">
+        <select class="ui search dropdown" name="talonario" id="talonario">
+            <option value="0">Por Talonario</option>
+            {% for o in ordenes %}
+                <option value="{{ o.o1_sucu }}">{{ o.o1_sucu }}</option>
             {% endfor %}
         </select>
+    </div>
+    <div class="three wide field">
+        <select class="ui search dropdown" name="tipo" id="tipo">
+            <option value="0">Tipo de Orden</option>
+            <option value="1">Otras Cuentas</option>
+            <option value="2">Proveedores</option>
+        </select>        
     </div>
     <div class="two wide field">
         <button class="ui inverted green button" style="margin-right: 0px;" onClick="FiltroBusqueda();"><i class="search icon" style="margin-right: 3px; margin-left: 3px;"></i></button>
@@ -51,48 +58,51 @@
 <table class="ui striped celled table" id="tabla_codigosegreso">
     <thead>
         <tr>
-        	<th><a class="ui ribbon label">Opciones</a></th>  
+            <th><a class="ui ribbon label">Opciones</a></th>  
             <th>Fecha</th>
-            <th>N° Tal</th>
-            <th>N° Recibo</th>
-            <th>N° Cliente</th>
-            <th>Razon Social</th>
-            <th>Importe</th>
+            <th>N°</th>
+            <th>Destino</th>
+            <th>Total $</th>
+            <th>Talonario</th>
             <th>N° Mov.</th>
+            <th>Imp C.C.</th>
+            <th>Periodo</th>
+            <th>Ch. Caja</th>
         </tr>
     </thead>
 </table>
+
 <div class="ui fullscreen modal" id="modalVer" style="max-height: 80vh !important; overflow-y: auto;">
     <i class="close icon"></i>
     <div class="header">
-        Ver Recibo
+        Orden de Pago
     </div>
     <div class="ui container" style="margin-top: 10px !important;">
         <div class="ui form">
             <div class="fields">
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Cliente</label>
+                <label style="font-weight: bold !important; margin-top: 10px !important;">Destino</label>
                 <div class="four wide field">
-                    <input type="text" name="cliente_recibo" id="cliente_recibo" readonly style="text-align: center !important;">
+                    <input type="text" name="destino" id="destino" readonly style="text-align: center !important;">
                 </div>
                 <div class="four wide field"></div>
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Comprobante N°</label>
+                <label style="font-weight: bold !important; margin-top: 10px !important;">Orden Pago N°</label>
                 <div class="field">
-                    <input type="text" name="comprobante" id="comprobante" readonly style="width: 50px !important; text-align: center !important;">
+                    <input type="text" name="ordenpago" id="ordenpago" readonly style="width: 80px !important; text-align: center !important;">
                 </div>
-                <label style="font-weight: bold !important; margin-top: 10px !important;">N° Caja</label>
+                <label style="font-weight: bold !important; margin-top: 10px !important;">Caja</label>
                 <div class="field">
-                    <input type="text" name="nro_caja" id="nro_caja" readonly style="width: 80px !important; text-align: center !important;">
+                    <input type="text" name="nro_caja" id="nro_caja" readonly style="width: 50px !important; text-align: center !important;">
                 </div>
                 <label style="font-weight: bold !important; margin-top: 10px !important;">Fecha</label>
                 <div class="field">
-                    <input type="text" name="fecha_recibo" id="fecha_recibo" readonly style="width: 110px !important; text-align: center !important;">
+                    <input type="text" name="fecha_orden" id="fecha_orden" readonly style="width: 110px !important; text-align: center !important;">
                 </div>
             </div>
             <div class="ui divider"></div>
             <div class="ui grid">
                 <div class="ten wide field">
-                    <label style="margin-top: 10px !important;">Comprobantes Abonados</label>
-                    <table class="ui table">
+                    <label style="margin-top: 10px !important;">Comprobantes a Abonar</label>
+                    <table class="ui table" style="width: 100% !important; overflow-x: scroll; display: block !important;">
                         <thead>
                             <tr>
                                 <th>N° Comprob.</th>
@@ -100,9 +110,12 @@
                                 <th>Total $</th>
                                 <th>Abona $</th>
                                 <th>Detalle</th>
+                                <th>Fecha</th>
+                                <th>Tip.Comp.</th>
+                                <th>Alíc. IVA %</th>
                             </tr>
                         </thead>
-                        <tbody id="r3_table_content">
+                        <tbody id="op2_table_content">
                             <!-- <tr></tr> -->
                         </tbody>
                     </table>
@@ -116,7 +129,7 @@
                                 <th>Importe $</th>
                             </tr>
                         </thead>
-                        <tbody id="r3_table2_content">
+                        <tbody id="op2_table2_content">
                             <!-- <tr></tr> -->
                         </tbody>
                     </table>
@@ -146,11 +159,9 @@
                                 <th style="text-align: center !important;">Banco</th>
                                 <th style="text-align: center !important;">Fecha Valor</th>
                                 <th style="text-align: center !important;">Mueve Caja</th>
-                                <th style="text-align: center !important;">Titular/N° Cert.</th>
-                                <th style="text-align: center !important;">Cta.Ctable</th>
                             </tr>
                         </thead>
-                        <tbody id="r2_table_content">
+                        <tbody id="op3_table_content"">
                             <!-- <tr></tr> -->
                         </tbody>
                     </table>
@@ -189,30 +200,33 @@ function FiltroBusqueda(){
 
     if(desde.length > 0){
         if(hasta.length > 0){
-            var cliente = $("#cliente").val();
+            var proveedor = $("#proveedor").val();
+            var talonario = $("#talonario").val();
             var tipo = $("#tipo").val();
 
             desde = encodeURIComponent(changeDate(desde));
             hasta = encodeURIComponent(changeDate(hasta));
-            if(cliente == '') cliente = 0;
+            if(proveedor == '') proveedor = 0;
 
-            $('#tabla_codigosegreso').DataTable({
+            var table = $('#tabla_codigosegreso').DataTable({
                 ajax: {
-                    url: "/recibos/filtroajax/"+desde+"/"+hasta+"/"+cliente+"/"+tipo,
+                    url: "/ordenes/filtroajax/"+desde+"/"+hasta+"/"+proveedor+"/"+talonario+"/"+tipo,
                     dataSrc: "data"
                 },
                 columns: [
                     { data : null },
-                    { data : "Fecha" },
-                    { data : "Talon" },
-                    { data : "Numero" },
-                    { data : "cliente" },
-                    { data : "Apellido" },
-                    { data : "Total" },
-                    { data : "Movim" }
+                    { data : "xfecha" },
+                    { data : "xnume" },
+                    { data : "xdesti" },
+                    { data : "xtotal" },
+                    { data : "xsucu" },
+                    { data : "xnumovi" },
+                    { data : "xcosto" },
+                    { data : "xaplica" },
+                    { data : "xcaja" }
                 ],
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-                    $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.Numero+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/recibos/eliminar/"+aData.Numero+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
+                    $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.xnume+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/ordenes/eliminar/"+aData.xnume+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
                 },
             });
         }else{
@@ -248,39 +262,41 @@ $(function(){
 $(document).on("click", ".ver", function(){
     var numero = $(this).data("numero");
     $("#WaitingModal").modal("show");
-    $.getJSON("/recibos/getrec1/"+numero, function(rec1){
-        $.getJSON("/recibos/getrec2/"+numero, function(rec2){
-            $.getJSON("/recibos/getrec3/"+numero, function(rec3){
-                $("#cliente_recibo").val(rec1[0].cl_apel);
-                $("#comprobante").val(rec1[0].r1_talo);
-                $("#nro_caja").val(rec1[0].r1_nume);
-                $("#fecha_recibo").val(rec1[0].fechaf);
-                $("#total").val(rec1[0].r1_total);
-                $("#det1").val(rec1[0].det1);
-                $("#det2").val(rec1[0].det2);
-                $("#det3").val(rec1[0].det3);
-                $("#total2").val(rec2[0].total);
-                var diferencia = rec2[0].total - rec1[0].r1_total;
+    $.getJSON("/ordenes/getorden1/"+numero, function(op1){
+        $.getJSON("/ordenes/getorden2/"+numero, function(op2){
+            $.getJSON("/ordenes/getorden3/"+numero, function(op3){
+                $("#destino").val(op1[0].o1_desti);
+                $("#ordenpago").val(op1[0].o1_nume);
+                $("#nro_caja").val(op1[0].o1_sucu);
+                $("#fecha_orden").val(op1[0].xfecha);
+                $("#total").val(op1[0].o1_total);
+                $("#total2").val(op1[0].o1_total);
+                $("#det1").val(op1[0].o1_nota1);
+                $("#det2").val(op1[0].o1_nota2);
+                $("#det3").val(op1[0].o1_nota3);
+                var diferencia = op1[0].total;
                 $("#dif2").val(diferencia);
-                tabla_r3_content = "";
-                tabla2_r3_content = "";
-                r2_table_content = "";
-                for(var x = 0; x < rec2.length; x++){
-                    r2_table_content += "<tr><td style='text-align: center !important;'>"+rec2[x].r2_tipo+"</td><td style='text-align: center !important;'>"+rec2[x].nombre+"</td><td style='text-align: center !important;'>"+rec2[x].r2_impor+"</td><td style='text-align: center !important;'>"+rec2[x].r2_impo_o+"</td><td style='text-align: center !important;'>"+rec2[x].r2_cotiza+"</td><td style='text-align: center !important;'>"+rec2[x].r2_bsc+"</td><td style='text-align: center !important;'>"+rec2[x].r2_cheque+"</td><td style='text-align: center !important;'>"+rec2[x].r2_cuenta+"</td><td style='text-align: center !important;'>"+rec2[x].r2_banco+"</td><td style='text-align: center !important;'>"+rec2[x].fechaf+"</td><td></td><td style='text-align: center !important;'>"+rec2[x].r2_titu+"</td><td style='text-align: center !important;'>"+rec2[x].r2_cta6+"</td></tr>"
-                }
-                for(var i = 0; i < rec3.length; i++){
-                    if(rec3[0].r3_tipo != ''){
-                        tabla_r3_content += "<tr><td>"+rec3[i].r3_factu+"</td><td>"+rec3[i].r3_tipo+"</td><td>"+rec3[i].r3_impo+"</td><td>"+rec3[i].r3_impa+"</td><td>"+rec3[i].r3_deta+"</td></tr>";
-                    }else{
-                        tabla2_r3_content += "<tr><td>"+rec3[i].r3_deta+"</td><td>"+rec3[i].r3_impo+"</td></tr>"
+                op2_table_content = "";
+                op2_table2_content = "";
+                op3_table_content = "";
+                for(var x = 0; x < op2.length; x++){
+                    if(op2[0].o2_tipo == 1){
+                        op2_table_content += "<tr><td style='text-align: center !important;'>"+op2[x].o2_factu+"</td><td style='text-align: center !important;'>"+op2[x].o2_letra+"</td><td style='text-align: center !important;'>"+op2[x].o2_impo+"</td><td style='text-align: center !important;'>"+op2[x].o2_impa+"</td><td style='text-align: center !important;'>"+op2[x].o2_deta+"</td><td style='text-align: center !important;'>"+op2[x].xfecha+"</td><td style='text-align: center !important;'>"+op2[x].o2_tipo+"</td><td style='text-align: center !important;'></td></tr>";
+                    } else {
+                        op2_table2_content += "<tr><td style='text-align: center !important;'>"+op2[x].o2_deta+"</td><td style='text-align: center !important;'>"+op2[x].o2_impa+"</td></tr>";
                     }
+                    
                 }
-                $("#r2_table_content").empty();
-                $("#r3_table_content").empty();
-                $("#r3_table2_content").empty();
-                $("#r2_table_content").append(r2_table_content);
-                $("#r3_table_content").append(tabla_r3_content);
-                $("#r3_table2_content").append(tabla2_r3_content);
+                for(var x = 0; x < op3.length; x++){
+                    op3_table_content += "<tr><td style='text-align: center !important;'>"+op3[x].o3_tipo+"</td><td style='text-align: center !important;'>"+op3[x].nombre+"</td><td style='text-align: center !important;'>"+op3[x].o3_impor+"</td><td style='text-align: center !important;'>"+op3[x].o3_impo_o+"</td><td style='text-align: center !important;'>"+op3[x].o3_cotiza+"</td><td style='text-align: center !important;'></td><td style='text-align: center !important;'>"+op3[x].o3_cheque+"</td><td style='text-align: center !important;'></td><td style='text-align: center !important;'>"+op3[x].o3_banco+"</td><td style='text-align: center !important;'>"+op3[x].xfecha+"</td><td style='text-align: center !important;'>"+op3[x].o3_mu_caja+"</td></tr>"
+                }
+
+                $("#op2_table_content").empty();
+                $("#op2_table2_content").empty();
+                $("#op3_table_content").empty();
+                $("#op2_table_content").append(op2_table_content);
+                $("#op2_table2_content").append(op2_table2_content);
+                $("#op3_table_content").append(op3_table_content);
                 $(".ui.fullscreen.modal").modal({
                     blurring: true
                 });
