@@ -1,25 +1,25 @@
-const mRecibos = require('../models/mRecibos');
+const mComprobantes = require('../models/mComprobantes');
 const mClientes = require('../models/mClientes');
-const mMediosDePago = require('../models/mMediosDePago');
+const mTipoCV = require('../models/mTipoCV');
 var tools = require('../public/js/utils.js');
 
 module.exports = {
 	getConsulta: getConsulta,
-	getFiltroAjax: getFiltroAjax,
-	getVer: getVer,
-	getEliminar: getEliminar,
-	get_rec1: get_rec1,
-	get_rec2: get_rec2,
-	get_rec3: get_rec3,
+	// getFiltroAjax: getFiltroAjax,
+	// getVer: getVer,
+	// getEliminar: getEliminar,
+	// get_rec1: get_rec1,
+	// get_rec2: get_rec2,
+	// get_rec3: get_rec3,
 }
 
 function getConsulta(req, res) {
 	mClientes.getAll(function (clientes){
-		mMediosDePago.getAll(function (mediosdepago){
-			res.render('recibos_consulta', {
-				pagename: 'Recibos - Consultas, Bajas',
+		mTipoCV.getAll(function (tipocv){
+			res.render('comprobantes_consulta', {
+				pagename: 'Comprobantes de Ventas - Consultas, Bajas, Modificaciones',
 				clientes: clientes,
-				mediosdepago: mediosdepago
+				tipocv: tipocv
 			});
 		});
 	});
@@ -50,10 +50,7 @@ function getFiltroAjax(req, res){
  		query += "and rec1.r1_clie = "+cliente;
 
 	mRecibos.getFiltro(query, function(recibos){
-		// var array = []
-		// for(var key in recibos){
-		// 	array.push(recibos[key])
-		// }
+
 		var objData = { "data" : recibos };
 
 		res.send(objData)
