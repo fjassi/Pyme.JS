@@ -16,6 +16,7 @@ const cChequeras = require('./controllers/cChequeras');
 const cProveedores = require('./controllers/cProveedores');
 const cPeriodos = require('./controllers/cPeriodos');
 const cRecibos = require('./controllers/cRecibos');
+const cAsientos = require('./controllers/cAsientos');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -146,7 +147,7 @@ module.exports = function(app) {
 		app.get("/periodoscontables/eliminar/:fecha_desde", cPeriodos.getEliminar);
 		app.get("/periodoscontables/modificar/:fecha_desde", cPeriodos.getModificar);
 		app.post("/periodoscontables/modificar", cPeriodos.Sp_Abm_Peri);
-	//RECIBOS
+	// RECIBOS
 		app.get("/recibos/consulta", cRecibos.getConsulta);
 		app.get("/recibos/filtroajax/:desde/:hasta/:cliente/:tipo", cRecibos.getFiltroAjax);
 		app.get("/recibos/ver/:numero", cRecibos.getVer);
@@ -155,4 +156,7 @@ module.exports = function(app) {
 		app.get("/recibos/getrec1/:numero", cRecibos.get_rec1);
 		app.get("/recibos/getrec2/:numero", cRecibos.get_rec2);
 		app.get("/recibos/getrec3/:numero", cRecibos.get_rec3);
+	// ASIENTOS
+		app.get("/asientos_lista", cAsientos.getLista);
+		app.get("/asientos/filtroajax/:desde/:hasta", cAsientos.getFiltroAjax);
 }
