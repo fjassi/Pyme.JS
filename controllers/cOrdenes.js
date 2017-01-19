@@ -56,8 +56,7 @@ function getFiltroAjax(req, res){
 
 	mOrdenes.getFiltro(query, function(ordenes){
 		var objData = { "data" : ordenes };
-
-		res.send(objData)
+		res.send(objData);
 	});
 }
 

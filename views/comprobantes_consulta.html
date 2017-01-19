@@ -11,6 +11,14 @@
 </div>
 
 <div class="ui grid">
+    <div class="three wide field">
+        <select class="ui search dropdown" name="tipo" id="tipo">
+            <option value="0">Tipo de Comprobante</option>
+            {% for t in tipocv %}
+                <option value="{{ t.tipo }}">{{ t.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <div class="two wide field">
         <div class="ui calendar" id="fecha" name="fecha">
             <div class="ui input left icon">
@@ -28,27 +36,19 @@
         </div>
     </div>
     <div class="three wide field">
-        <select class="ui search dropdown" name="proveedor" id="proveedor">
-            <option value="0">Por Proveedor</option>
-            {% for p in proveedores %}
-                <option value="{{ p.pr_nume }}">{{ p.pr_apel }}</option>
+        <select class="ui search dropdown" name="cliente" id="cliente">
+            <option value="0">Clientes</option>
+            {% for c in clientes %}
+                <option value="{{ c.cl_nume }}">{{ c.cl_apel }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="three wide field">
-        <select class="ui search dropdown" name="talonario" id="talonario">
-            <option value="0">Por Talonario</option>
-            {% for o in ordenes %}
-                <option value="{{ o.o1_sucu }}">{{ o.o1_sucu }}</option>
-            {% endfor %}
+        <select class="ui search dropdown" name="estado" id="estado">
+            <option value="0">Estado</option>
+            <option value="1">Todos</option>
+            <option value="2">Adeudados</option>
         </select>
-    </div>
-    <div class="three wide field">
-        <select class="ui search dropdown" name="tipo" id="tipo">
-            <option value="0">Tipo de Orden</option>
-            <option value="1">Otras Cuentas</option>
-            <option value="2">Proveedores</option>
-        </select>        
     </div>
     <div class="two wide field">
         <button class="ui inverted green button" style="margin-right: 0px;" onClick="FiltroBusqueda();"><i class="search icon" style="margin-right: 3px; margin-left: 3px;"></i></button>
@@ -58,21 +58,24 @@
 <table class="ui striped celled table" id="tabla_codigosegreso">
     <thead>
         <tr>
-            <th><a class="ui ribbon label">Opciones</a></th>  
-            <th>Fecha</th>
+            <th><a class="ui ribbon label" style="width: 40px;">Opciones</a></th>  
+            <th style="width: 40px;">Letra</th>
             <th>N°</th>
-            <th>Destino</th>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Cliente</th>
             <th>Total $</th>
-            <th>Talonario</th>
-            <th>N° Mov.</th>
-            <th>Imp C.C.</th>
-            <th>Periodo</th>
-            <th>Ch. Caja</th>
+            <th>Abonó $</th>
+            <th>Vence</th>
+            <th>Neto $</th>
+            <th>% Ret</th>
+            <th>Importe $</th>
+            <th style="width: 40px;">Remito/Factura</th>
         </tr>
     </thead>
 </table>
 <div class="ui grid">
-    <label id="lblTotal"></label>
+    <label id="lblTotal">Total</label>
 </div>
 
 <div class="ui fullscreen modal" id="modalVer" style="max-height: 80vh !important; overflow-y: auto;">
@@ -231,30 +234,11 @@ function FiltroBusqueda(){
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
                     $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.xnume+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/ordenes/eliminar/"+aData.xnume+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
                 },
-                drawCallback: function() {
-                   var api = this.api();
-
-                   // Total over all pages
-                   var total = api.column(4).data().sum();
-
-                   // Total over this page
-                   var pageTotal = api.column(4, {page:'current'}).data().sum();
-
-                   $(api.column(5).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+                fnInitComplete: function(oSettings, json) {
+                  $.getJSON("/ordenes/filtroajax/"+desde+"/"+hasta+"/"+proveedor+"/"+talonario+"/"+tipo, function(total){
+                    $("#lblTotal").val("<h1>Total: " + total[0].xtotal + "</h1>");
+                  });
                 }
-                //fnInitComplete: function(oSettings, json) {
-                //    table.column(4).data().each(function(index, value){
-                //        total = parseFloat(value);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //        console.log( 'Data in index: '+index+' is: '+value );
-                //    });
-                //    var total = 0;
-                //    $('#tabla_codigosegreso tr').find('td:eq(4)').each(function(){
-                //        valor = $(this).html();
-                //        total += parseFloat(valor);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //    });
-                //}
             });
         }else{
             alert("Debe seleccionar una fecha hasta.");
