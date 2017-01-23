@@ -71,7 +71,7 @@
         </tr>
     </thead>
 </table>
-<div class="ui grid">
+<div class="ui grid" style="margin-top:20px;">
     <label id="lblTotal"></label>
 </div>
 
@@ -231,30 +231,36 @@ function FiltroBusqueda(){
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
                     $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.xnume+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/ordenes/eliminar/"+aData.xnume+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
                 },
-                drawCallback: function() {
-                   var api = this.api();
-
-                   // Total over all pages
-                   var total = api.column(4).data().sum();
-
-                   // Total over this page
-                   var pageTotal = api.column(4, {page:'current'}).data().sum();
-
-                   $(api.column(5).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+                fnInitComplete: function(oSettings, json) {
+                    var formatNumber = {
+                        separador: ".", // separador para los miles
+                        sepDecimal: ',', // separador para los decimales
+                        formatear:function (num){
+                            num +='';
+                            var splitStr = num.split('.');
+                            var splitLeft = splitStr[0];
+                            var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                            var regx = /(\d+)(\d{3})/;
+                            while (regx.test(splitLeft)) {
+                                splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                            }
+                            return this.simbol + splitLeft  +splitRight;
+                        },
+                        new:function(num, simbol){
+                            this.simbol = simbol ||'';
+                            return this.formatear(num);
+                        }
+                    }
+                    var total = 0;
+                    var total2;
+                    var total3;
+                    table.column(4).data().each(function(value, index){
+                        total += parseFloat(value);
+                        total2 = total.toFixed(2);
+                        total3 = formatNumber.new(total2, "$");
+                        $("#lblTotal").html("<h1>Total: " + total3 + "</h1>");
+                    });
                 }
-                //fnInitComplete: function(oSettings, json) {
-                //    table.column(4).data().each(function(index, value){
-                //        total = parseFloat(value);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //        console.log( 'Data in index: '+index+' is: '+value );
-                //    });
-                //    var total = 0;
-                //    $('#tabla_codigosegreso tr').find('td:eq(4)').each(function(){
-                //        valor = $(this).html();
-                //        total += parseFloat(valor);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //    });
-                //}
             });
         }else{
             alert("Debe seleccionar una fecha hasta.");
