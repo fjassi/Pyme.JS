@@ -1,0 +1,186 @@
+{% extends 'template.html' %}
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+    <!-- <div class="right floated right aligned six wide column">
+        <div class="ui buttons">
+            <a href="/clientes/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
+            <a href="/clientes/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
+            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
+        </div>
+    </div> -->
+</div>
+<div class="ui two column grid">
+    <div class="ten wide column">
+        <div class="twelve wide field">
+            <table class="ui striped celled table" id="tTituloAsiento" >
+                <thead>
+                    <tr>
+                        <!-- <th><a class="ui ribbon label">Opciones</a></th> -->
+                        <th style="width: 90px !important;">Fecha</th>
+                        <th style="width: 20px !important;">N°</th>
+                        <th>Titulo</th>
+                        <th style="width: 20px !important;">Origen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="six wide column" style="padding-top: 24px !important; text-align: center;">
+        <div class="four wide field">
+            <table style="display: inline-block !important;">
+                <tr>
+                    <td>Periodo:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ui calendar" id="fecha" name="fecha">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="Desde" id="fecha_desde" name="fecha_desde" style="width: 130px !important">
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: center !important;"><span style="margin: 3px;">al</span></td>
+                    <td>
+                        <div class="ui calendar" id="fecha2" name="fecha2">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="Hasta" id="fecha_hasta" name="fecha_hasta" style="width: 130px !important">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <button class="ui primary basic button" style="margin: 3px;"><i class="large undo icon" style="margin: 0;"></i></button>
+                    </td>
+                    <td></td>
+                    <td style="text-align: center;">
+                        <button class="ui orange basic button" id="btnSearch"><i class="large search icon" style="margin: 0;"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="sixteen wide field">
+    <table class="ui striped celled table" id="tContenidoAsientos">
+        <thead>
+            <tr>
+                <th>Tipo</th>   
+                <th>Cuenta</th>
+                <th>Importe</th>
+                <th>Descripcion</th>
+                <th>Nombre de Cuenta</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<!-- <script type="text/javascript" src="/js/semantic.js"></script> -->
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tTituloAsiento').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "bInfo": false
+    });
+
+    $('#tContenidoAsientos').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "bInfo": false
+    });
+
+    $(function(){
+        $('#fecha').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10)
+                        day = "0"+day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10)
+                        month = "0"+month;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+
+        $('#fecha2').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10)
+                        day = "0"+day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10)
+                        month = "0"+month;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+    });
+    
+    $("#btnSearch").on("click", function(){
+        var fecha_desde = $("#fecha_desde").val();
+        var fecha_hasta = $("#fecha_hasta").val();
+
+        if (fecha_desde != '' && fecha_desde.length == 10){
+            if(fecha_hasta != '' && fecha_hasta.length == 10){
+                fecha_desde = encodeURIComponent(changeDate(fecha_desde));
+                fecha_hasta = encodeURIComponent(changeDate(fecha_hasta));
+                $('#tTituloAsiento').DataTable({
+                    ajax: {
+                        url: "/asientos/filtroajax/"+fecha_desde+"/"+fecha_hasta,
+                        dataSrc: "data"
+                    },
+                    columns: [
+                        // { data : null },
+                        { data : "fecha_f" },
+                        { data : "asiento" },
+                        { data : "as_titu" },
+                        { data : "as_origen" }
+                    ],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "bInfo": false,
+                    "scrollY": "20vh"
+                    // ,
+                    // fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+                    //     $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.Numero+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/recibos/eliminar/"+aData.Numero+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
+                    // }
+                });
+            }
+        }
+    });
+    
+</script>
+{% endblock %}
+
