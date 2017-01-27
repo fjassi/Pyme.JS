@@ -5,7 +5,7 @@ var tools = require('../public/js/utils.js');
 
 module.exports = {
 	getConsulta: getConsulta,
-	// getFiltroAjax: getFiltroAjax,
+	getFiltroAjax: getFiltroAjax
 	// getVer: getVer,
 	// getEliminar: getEliminar,
 	// get_rec1: get_rec1,
@@ -29,29 +29,36 @@ function getFiltroAjax(req, res){
 	const params = req.params;
 	var desde = params.desde;
 	var hasta = params.hasta;
-	const cliente = params.cliente;
+	const fecha = params.fecha;
 	const tipo = params.tipo;
+	const cliente = params.cliente;
+	const estado = params.estado;
 
 	var query = "";
 
-	if(tipo == 0){
-		query = "select CONVERT(char, Rec1.r1_fecha, 101) as Fecha, Rec1.r1_talo as Talon, Rec1.r1_nume as Numero, Rec1.r1_clie as cliente, "+
- 				"clientes.Cl_apel as Apellido, rec1.r1_total as Total, Rec1.r1_movi as Movim from rec1 inner join clientes "+
- 				"on rec1.r1_clie = clientes.cl_nume  where rec1.r1_fecha between '"+desde+"' and '"+hasta+"' "
-	}else{
-		query = "select rec2.r2_tipo, CONVERT(char, Rec1.r1_fecha, 101) as Fecha, Rec1.r1_talo as Talon, Rec1.r1_nume as Numero, Rec1.r1_clie as cliente, "+
-				"clientes.Cl_apel as Apellido, rec1.r1_total as Total, Rec1.r1_movi as Movim from rec2 "+
-				"left join rec1 on rec1.r1_talo = rec2.r2_talo and rec1.r1_nume = rec2.r2_nume "+
-				"inner join clientes on rec1.r1_clie = clientes.cl_nume "+
-				"where rec1.r1_fecha between '"+desde+"' and '"+hasta+"' and r2_tipo = "+tipo
-	}	
+	if (fecha == 2){
+		query = "select fa_tipo as let, fa_nume as Numero, CONVERT(char, fa_fecha, 103) as Fecha, "+
+		"tipocv.nombre as T_Com, fa_razon as Cliente, fa_total as Total, fa_topa as Abonado, "+
+		"CONVERT(char, fa_vence, 103) as Vence, fa_subto as Neto, fa_porret as PorRet, fa_Impret as ImpRet, "+
+		"fa_remito as remito, fa_tico from fact "+
+		"left join tipocv on tipocv.tipo = fact.fa_tico where tipocv.tipo = '"+tipo+"' and fa_vence between '"+desde+"' and '"+hasta+"' "
+	} else {
+		query = "select fa_tipo as let, fa_nume as Numero, CONVERT(char, fa_fecha, 103) as Fecha, "+
+		"tipocv.nombre as T_Com, fa_razon as Cliente, fa_total as Total, fa_topa as Abonado, "+
+		"CONVERT(char, fa_vence, 103) as Vence, fa_subto as Neto, fa_porret as PorRet, fa_Impret as ImpRet, "+
+		"fa_remito as remito, fa_tico from fact "+
+		"left join tipocv on tipocv.tipo = fact.fa_tico where tipocv.tipo = '"+tipo+"' and fa_fecha between '"+desde+"' and '"+hasta+"' "
+	}
 
  	if (cliente != 0)
- 		query += "and rec1.r1_clie = "+cliente;
+ 		query += "and fa_clie = " + cliente;
 
-	mRecibos.getFiltro(query, function(recibos){
+ 	if (estado == 2)
+ 		query += "and fa_topa<>fa_total";
 
-		var objData = { "data" : recibos };
+	mComprobantes.getFiltro(query, function(comprobante){
+
+		var objData = { "data" : comprobante };
 
 		res.send(objData)
 	});
