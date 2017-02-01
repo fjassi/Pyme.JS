@@ -1,0 +1,236 @@
+{% extends 'template.html' %}
+
+{% block title %}
+	{{ pagename }}
+{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="left floated left aligned sixteen wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<form class="ui form" id="formalta" method="post" action="/asientos/alta" style="text-align: center !important; margin-top: 15px !important;">
+    <table class="ui celled striped table">
+        <thead>
+            <tr>
+                <th><h1></h1></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>                
+                    <div class="three fields">
+                        <div class="three wide field">
+                            <label>Fecha</label>
+                            <div class="ui calendar" id="datepicker" name="datepicker">    
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" placeholder="Fecha" id="fecha" name="fecha" style="width: 130px !important">
+                                </div>
+                            </div>    
+                        </div>                        
+                        <div class="field">
+                            <label>N° de Asiento</label>
+                            <div class="field">
+                                <input type="text" name="nro_asiento" id="nro_asiento" placeholder="N° Asiento" required maxlength="4" onKeyPress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="field">                          
+                            <label>Titulo</label>
+                            <div class="ui field">
+                                <input type="text" name="titulo" id="titulo" placeholder="Titulo" required>
+                            </div>
+                        </div>
+                    </div>                
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="ui grid" style="padding-top: 0px !important; margin-top: 0px !important;">
+        <div class="ui column">
+            <div class="sixteen wide field">
+                <table class="ui striped celled table" id="tContenidoAsientos">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>   
+                            <th>Cuenta</th>
+                            <th>Importe</th>
+                            <th>Descripcion</th>
+                            <th>Nombre de Cuenta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 70px !important;">
+                                <div class="inline fields">
+                                    <div class="field">
+                                        <button type="button" id="btnDeleteRow" class="ui small red inverted button btnDeleteRow" data-tooltip="Eliminar fila" data-position="bottom center"><i class="large trash icon" style="margin: 0px !important;"></i></button>
+                                    </div>
+                                    <div class="field">
+                                        <select id="tipo" name="tipo" style="width: 50px !important;" class="ui dropdown aTipo">
+                                            <option value="D">Debe</option>
+                                            <option value="H">Haber</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>   
+                            <td style="width: 150px !important;">
+                                <select id="cuenta1" name="cuenta" style="width: auto !important;" class="ui search dropdown cuenta">
+                                    {% for c in cuentas %}
+                                        <option value="{{ c.cuenta }}" data-nombre="{{ c.nombretxt }}" data-num="1">{{ c.cuenta }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <div class="ui input">
+                                    <input type="text" name="importe" id="importe" onKeyPress="return Validate10EntY2Dec(event,this)" placeholder="Importe" class="aImporte">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui input">
+                                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" class="aDescripcion">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui input">
+                                    <input type="text" name="nombre_cuenta" id="nombre_cuenta1" class="nombre_cuenta" placeholder="Nombre de la cuenta" readonly>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="trNewRow">
+                            <td colspan="5" style="text-align: left !important;">
+                                <button type="button" id="btnNewRow" class="ui green inverted button" data-tooltip="Agregar una nueva fila" data-position="bottom center"><i class="large plus icon" style="margin: 0px !important;"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+    </div>
+    <br>
+    <button id="btnAlta" class="ui positive submit button" tabindex="0">Submit</button>
+</form>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+    // $("#cuit").mask("99-99999999-9");
+
+    $(function(){
+        var hoy = generateTodayDateDMY();
+        $("#fecha").val(hoy)
+        $('#datepicker').calendar({
+            type: 'date',
+            monthFirst: false, 
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if(day<10)
+                        day = "0"+day
+                    var month = date.getMonth() + 1;
+                    if(month<10)
+                        month = "0"+month
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+
+        $(".cuenta").on("change", function(){
+            var nombre_cuenta = $(this).find('option:selected').data("nombre");
+            var num = $(this).find('option:selected').data("num");
+            // console.log("as")
+            $("#nombre_cuenta"+num).val(nombre_cuenta);
+        });
+
+        $(document).on("change", ".cuenta", function(){
+            var nombre_cuenta = $(this).find('option:selected').data("nombre");
+            var num = $(this).find('option:selected').data("num");
+            // console.log("as")
+            $("#nombre_cuenta"+num).val(nombre_cuenta);
+        });
+
+        $(document).on("click", ".btnDeleteRow", function(){
+            console.log("in")
+            $(this).closest('tr').remove();
+        });
+    }); 
+
+    var bindElements = function() {
+        // $('.ui.menu .dropdown').dropdown();
+        $('.dropdown').dropdown({
+            allowCategorySelection: true
+        });
+    };
+
+    $("#btnNewRow").on("click", function(){
+        // contar cuantas rows tiene la tabla
+        var rowCount = $('#tContenidoAsientos tr').length;
+        var num = rowCount-1;
+        // crear la row con el length+1 en los id
+        $("<tr style='display: table-row;'><td><div class='inline fields'><div class='field'><button type='button' id='btnDeleteRow' class='ui small red inverted button btnDeleteRow' data-tooltip='Eliminar fila' data-position='bottom center'><i class='large trash icon' style='margin: 0px !important;'></i></button></div><div class='field'><select id='tipo' name='tipo' style='width: 50px !important;' class='ui dropdown aTipo'><option value='D'>Debe</option><option value='H'>Haber</option></select></div></div></td><td><select id='cuenta"+num+"' name='cuenta' style='width: auto !important;' class='ui search dropdown cuenta'>{% for c in cuentas %}<option value='{{ c.cuenta }}' data-nombre='{{ c.nombretxt }}' data-num='"+num+"'>{{ c.cuenta }}</option>{% endfor %}</select></td><td><div class='ui input'><input type='text' name='importe' id='importe' onKeyPress='return Validate10EntY2Dec(event,this)' placeholder='Importe' class='aImporte'></div></td><td><div class='ui input'><input type='text' name='descripcion' id='descripcion' placeholder='Descripcion'></div></td><td><div class='ui input'><input type='text' name='nombre_cuenta' id='nombre_cuenta"+num+"' class='nombre_cuenta' placeholder='Nombre de la cuenta' readonly></div></td></tr>").insertBefore($("#trNewRow"));
+        bindElements();
+    });
+
+    $("#formalta").on("submit", function(){
+        // agarrar todos los "tipo"
+        var aTipo = [];
+        $('.aTipo').each(function(i, e){
+            aTipo.push($(this).find(":selected").val());
+        });
+
+        var aImporte = [];
+        $('.aImporte').each(function(i, e){
+            aImporte.push($(this).val());
+        });
+
+        var aDescripcion = [];
+        $('.aDescripcion').each(function(i, e){
+            aDescripcion.push($(this).val());
+        });
+
+        console.log(aTipo)
+        console.log(aImporte)
+
+        sDebe = 0;
+        sHaber = 0;
+
+        for(var x = 0; x < aTipo.length; x++){
+            if(aTipo[x] == 'D'){
+                sDebe = sDebe + parseFloat(aImporte[x]);
+            }else{
+                sHaber = sHaber + parseFloat(aImporte[x]);
+            }
+        }
+
+        if((sDebe-sHaber) == 0){
+            $("#formalta").submit();
+        }else{
+            
+            console.log("debe menos haber no dan 0");
+            toastr["error"]("Los valores de importes de DEBE y HABER deben dar igual.", "ERROR");
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            // eliminar filas vacias ??
+
+            return false;
+        }
+    });
+</script>
+{% endblock %}

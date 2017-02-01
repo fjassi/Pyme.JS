@@ -97,7 +97,7 @@
             var codigo = $("#codigo").val();
             $.getJSON("/plandecuentas/valcodigo/"+codigo, function(validacion){
                 if(validacion.length > 0){
-                    Command: toastr["error"]("El codigo de Plan de Cuenta ya existe.", "Error");
+                    toastr["error"]("El codigo de Plan de Cuenta ya existe.", "Error");
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,

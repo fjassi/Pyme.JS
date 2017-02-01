@@ -17,7 +17,7 @@ function changeDate2(date){
 	// output: dd/mm/yyyy
 }
 
-function Numy1Punto(e, field) {
+function Numy1Punto(e, field){
 	key = e.keyCode ? e.keyCode : e.which
 	// backspace
 	if (key == 8) return true
@@ -44,7 +44,7 @@ function checkDec(el){
 	}
 }//i cant remember what this does
 
-function validate(evt) {
+function validate(evt){
   var theEvent = evt || window.event;
   var key = theEvent.keyCode || theEvent.which;
   key = String.fromCharCode( key );
@@ -55,7 +55,7 @@ function validate(evt) {
   }
 }// onKeyPress='validate(event)'
 
-function Validate5EntY2Dec(e, field) {
+function Validate5EntY2Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -90,7 +90,7 @@ function Validate5EntY2Dec(e, field) {
     return false
 }//onKeyPress="return Validate5EntY2Dec(event,this)"
 
-function Validate3EntY3Dec(e, field) {
+function Validate3EntY3Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -125,7 +125,7 @@ function Validate3EntY3Dec(e, field) {
     return false
 }//onKeyPress="return Validate3EntY3Dec(event,this)"
 
-function Validate8EntY2Dec(e, field) {
+function Validate8EntY2Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true 
@@ -159,7 +159,7 @@ function Validate8EntY2Dec(e, field) {
     return false
 }//onKeyPress="return Validate8EntY2Dec(event,this)"
 
-function Validate4EntY2Dec(e, field) {
+function Validate4EntY2Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -194,7 +194,7 @@ function Validate4EntY2Dec(e, field) {
     return false
 }//onKeyPress="return Validate4EntY2Dec(event,this)"
 
-function Validate3EntY6Dec(e, field) {
+function Validate3EntY6Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -252,7 +252,7 @@ function validarCuit(cuit) {
     return digito == verif;
 }
 
-function generateTodayDateDMY () {
+function generateTodayDateDMY(){
     var today = new Date();
     var day = today.getDate();
     var month = today.getMonth() + 1;
@@ -264,7 +264,7 @@ function generateTodayDateDMY () {
     return today;
 }
 
-function Validate10EntY2Dec(e, field) {
+function Validate10EntY2Dec(e, field){
     key = e.keyCode ? e.keyCode : e.which
     // backspace
     if (key == 8) return true
@@ -300,7 +300,7 @@ function Validate10EntY2Dec(e, field) {
 }//onKeyPress="return Validate10EntY2Dec(event,this)"
 
 // PARA EL SWIG CUANDO SE USA CON AJAX EN LAS VISTAS
-function parseSwig(input, data) {
+function parseSwig(input, data){
     var output = swig.render(input, { locals: {
         data: data
     }});

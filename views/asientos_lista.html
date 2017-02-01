@@ -4,17 +4,11 @@
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<!-- <link rel="stylesheet" type="text/css" href="/datatable/extensions/KeyTable/css/keyTable.dataTables.min.css"/> -->
 <div class="ui grid">
     <div class="left floated left aligned ten wide column">
         <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
     </div>
-    <!-- <div class="right floated right aligned six wide column">
-        <div class="ui buttons">
-            <a href="/clientes/alta" class="ui green button inverted" data-tooltip="Nuevo" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></a>
-            <a href="/clientes/export" class="ui violet button inverted" data-tooltip="Descargar Excel" data-position="bottom center"><i class="large cloud download icon" style="margin: 0;"></i></a>
-            <div class="ui blue button inverted" data-tooltip="Ayuda" data-position="bottom center"><i class="large idea icon" style="margin: 0;"></i></div>
-        </div>
-    </div> -->
 </div>
 <div class="ui two column grid">
     <div class="ten wide column">
@@ -22,7 +16,6 @@
             <table class="ui striped celled table" id="tTituloAsiento" >
                 <thead>
                     <tr>
-                        <!-- <th><a class="ui ribbon label">Opciones</a></th> -->
                         <th style="width: 90px !important;">Fecha</th>
                         <th style="width: 20px !important;">N°</th>
                         <th>Titulo</th>
@@ -65,36 +58,82 @@
                 </tr>
                 <tr>
                     <td style="text-align: center;">
-                        <button class="ui primary basic button" style="margin: 3px;"><i class="large undo icon" style="margin: 0;"></i></button>
+                        <button class="ui primary basic button" style="margin: 3px;" data-tooltip="Limpiar Pantalla" data-position="bottom center"><i class="large undo icon" style="margin: 0;"></i></button>
                     </td>
                     <td></td>
                     <td style="text-align: center;">
-                        <button class="ui orange basic button" id="btnSearch"><i class="large search icon" style="margin: 0;"></i></button>
+                        <button class="ui orange basic button" id="btnSearch" data-tooltip="Ejecutar la busqueda" data-position="bottom center"><i class="large search icon" style="margin: 0;"></i></button>
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <a href="/asientos/alta"><button class="ui positive basic button" style="margin: 3px;" data-tooltip="Nuevo Registro" data-position="bottom center"><i class="large plus icon" style="margin: 0;"></i></button></a>
+                    </td>
+                    <td></td>
+                    <td style="text-align: center;"></td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
-<div class="sixteen wide field">
-    <table class="ui striped celled table" id="tContenidoAsientos">
-        <thead>
-            <tr>
-                <th>Tipo</th>   
-                <th>Cuenta</th>
-                <th>Importe</th>
-                <th>Descripcion</th>
-                <th>Nombre de Cuenta</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
+<div class="ui grid" style="padding-top: 0px !important; margin-top: 0px !important;">
+    <div class="ui column">
+        <div class="six wide field">
+            <table class="ui striped celled table" id="tContenidoAsientos">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>   
+                        <th>Cuenta</th>
+                        <th>Importe</th>
+                        <th>Descripcion</th>
+                        <th>Nombre de Cuenta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div> 
+    </div>
 </div>
-
+<div class="ui grid" style="padding-top: 0px !important; margin-top: 0px !important;">
+    <div class="four wide column">
+        <div class="field">
+            <div class="ui labeled input">
+                <div class="ui label">Total Debe</div>
+                <input type="text" placeholder="" id="total_debe" name="total_debe">
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="field">
+            <div class="ui labeled input">
+                <div class="ui label">Total Haber</div>
+                <input type="text" placeholder="" id="total_haber" name="total_haber">
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="field">
+            <div class="ui labeled input">
+                <div class="ui label">Diferencia</div>
+                <input type="text" placeholder="" id="diferencia" name="movimientos">
+            </div>
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="field">
+            <div class="ui labeled input">
+                <div class="ui label">Movs.</div>
+                <input type="text" placeholder="" id="movimientos" name="movimientos">
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="/js/jquery.js"></script>
-<!-- <script type="text/javascript" src="/js/semantic.js"></script> -->
 <script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
 <script type="text/javascript">
@@ -104,11 +143,12 @@
         "bInfo": false
     });
 
-    $('#tContenidoAsientos').DataTable({
+    var tablaContenido = $('#tContenidoAsientos').DataTable({
         "bPaginate": false,
         "bFilter": false,
         "bInfo": false
     });
+
 
     $(function(){
         $('#fecha').calendar({
@@ -146,6 +186,11 @@
                 }
             }
         });
+
+        var today = generateTodayDateDMY();
+        var primero = "01"+today.substring(2, 10);
+        $("#fecha_desde").val(primero);
+        $("#fecha_hasta").val(today);
     });
     
     $("#btnSearch").on("click", function(){
@@ -162,20 +207,70 @@
                         dataSrc: "data"
                     },
                     columns: [
-                        // { data : null },
                         { data : "fecha_f" },
                         { data : "asiento" },
                         { data : "as_titu" },
                         { data : "as_origen" }
                     ],
+                    "destroy": true,
                     "bPaginate": false,
                     "bFilter": false,
                     "bInfo": false,
-                    "scrollY": "20vh"
-                    // ,
-                    // fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-                    //     $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.Numero+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/recibos/eliminar/"+aData.Numero+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
-                    // }
+                    "scrollY": "20vh",
+                    "keys": true,
+                    fnInitComplete: function(oSettings) {
+                        $('#tTituloAsiento tbody tr:eq(0)').children().click();
+                    }
+                })
+                .on( 'key-focus', function ( e, datatable, cell ) {
+                    var row = datatable.row( cell.index().row );                    
+                    $(".selected").removeClass("selected");
+                    $( row.node() ).addClass( "selected" );                    
+                    $( cell.node() ).removeClass( "focus" );                    
+                    var fecha = $(row.node()).children('td');                    
+                    var asiento = fecha.next("td");
+                    var fecha = encodeURIComponent(changeDate(fecha.html()));
+                    var total_debe = 0;
+                    var total_haber = 0;
+                    var diferencia = 0;
+                    var movimientos = 0;
+                    $("#total_debe").val("");
+                    $("#total_haber").val("");
+                    $("#diferencia").val("");
+                    $("#movimientos").val("");
+                    $('#tContenidoAsientos').DataTable({
+                        ajax: {
+                            url: "/asientos/contenido/filtroajax/"+fecha+"/"+asiento.html(),
+                            dataSrc: "data"
+                        },
+                        columns: [
+                            { data : "tipo" },
+                            { data : "cuenta" },
+                            { data : "importe" },
+                            { data : "descrip" },
+                            { data : "nombre" }
+                        ],
+                        "destroy": true,
+                        "bPaginate": false,
+                        "bFilter": false,
+                        "bInfo": false,
+                        "rowCallback": function( row, data, index ) {
+                            console.log(data)
+                            if (data.tipo == "H")
+                                total_haber += data.importe;
+
+                            if(data.tipo == "D")
+                                total_debe += data.importe;
+
+                            movimientos = index;
+                        },
+                        "initComplete": function(settings, json) {
+                            $("#total_debe").val(parseFloat(total_debe).toFixed(2));
+                            $("#total_haber").val(parseFloat(total_haber).toFixed(2));
+                            $("#diferencia").val(parseFloat(total_debe).toFixed(2)-parseFloat(total_haber).toFixed(2));
+                            $("#movimientos").val(parseInt(movimientos)+1);
+                        }
+                    });
                 });
             }
         }
@@ -183,4 +278,3 @@
     
 </script>
 {% endblock %}
-

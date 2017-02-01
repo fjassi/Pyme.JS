@@ -168,6 +168,9 @@ module.exports = function(app) {
 	// COMPROBANTES DE VENTAS
 		app.get("/comprobantes/consulta", cComprobantes.getConsulta);	
 	// ASIENTOS
-		app.get("/asientos_lista", cAsientos.getLista);
+		app.get("/asientos/lista", cAsientos.getLista);
 		app.get("/asientos/filtroajax/:desde/:hasta", cAsientos.getFiltroAjax);
+		app.get("/asientos/contenido/filtroajax/:fecha/:asiento", cAsientos.getFiltroContenidoAjax);
+		app.get("/asientos/alta", cAsientos.getAlta);
+		app.post("/asientos/alta", cAsientos.postAlta);
 }

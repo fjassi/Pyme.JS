@@ -58,7 +58,7 @@
             $.getJSON("/bancos/valcodigo/"+codigo, function(validacion){
                 console.log(validacion.length)
                 if(validacion.length > 0){
-                    Command: toastr["error"]("El codigo de Banco ya existe.", "Error");
+                    toastr["error"]("El codigo de Banco ya existe.", "Error");
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,

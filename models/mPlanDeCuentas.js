@@ -55,7 +55,7 @@ function validacionMovimientos(cuenta, cb){
 }
 
 function getAllImputables(cb){
-	conn("SELECT *, "+
+	conn("SELECT *, RTRIM(nombre) as nombretxt, "+
 		"case impu when 'N' then 'No' when 'S' then 'Si' end as imputxt, "+
 		"case ajus when 'N' then 'No' when 'S' then 'Si' end as ajustxt "+
 		"FROM cuen "+
