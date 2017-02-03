@@ -1,0 +1,229 @@
+{% extends 'template.html' %}
+{% block title %}
+    {{ pagename }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
+<div class="ui grid">
+    <div class="left floated left aligned ten wide column">
+        <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
+    </div>
+</div>
+<div class="ui five column grid">
+    <div class="field">
+        <div class="ui calendar" id="fecha" name="fecha">
+            <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="Desde" id="fecha_desde" name="fecha_desde" style="width: 130px !important">
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui calendar" id="fecha2" name="fecha2">
+            <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="Hasta" id="fecha_hasta" name="fecha_hasta" style="width: 130px !important">
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui input">
+            <input type="text" placeholder="Nro. de Caja" id="nro_caja" name="nro_caja" onKeyPress="return soloNumeros(event)" maxlength="4">
+        </div>
+    </div>
+    <div class="field">
+        <select id="moneda" name="moneda" class="ui dropdown">
+            <option value="0">No se usa</option>
+            {% for c in caja %}
+                <option value="{{ c.codigo }}">{{ c.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="field">
+        <button class="ui blue inverted button" id="btnBuscar" name="btnBuscar">
+            <i class="search icon" style="margin: 0px !important;"></i>
+        </button>
+    </div>
+</div>
+<table class="ui blue striped celled table" id="tabla">
+    <thead>
+        <tr>
+            <th>N° Caja</th>
+            <th>Fecha</th>
+            <th><div style="width: 200px !important;">Concepto</div></th>
+            <th>Ingreso</th>
+            <th>Egreso</th>
+            <th>Moneda</th>
+            <th>Cotiza $</th>
+            <th>Son $</th>
+            <th>Saldo $</th>
+            <th>N° Mvto.</th>
+            <th>Origen</th>
+        </tr>
+    </thead>
+    <tbody>
+                
+    </tbody>
+</table>
+<div class="ui five column grid">
+    <div class="column">
+        <div class="ui small labeled input">
+            <div class="ui label">Saldo Anterior:</div>
+            <input type="text" placeholder="" id="txtSaldoAnterior" readonly style="width: 120px !important;">
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui labeled input">
+            <div class="ui label">Ingresos:</div>
+            <input type="text" placeholder="" id="txtIngresos" readonly style="width: 140px !important;">
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui labeled input">
+            <div class="ui label">Egresos:</div>
+            <input type="text" placeholder="" id="txtEgresos" readonly style="width: 140px !important;">
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui labeled input">
+            <div class="ui label">Diferencia:</div>
+            <input type="text" placeholder="" id="txtDiferencia" readonly style="width: 130px !important;">
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui labeled input">
+            <div class="ui label">Saldo:</div>
+            <input type="text" placeholder="" id="txtSaldo" readonly style="width: 140px !important;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
+<script type="text/javascript">
+    $('#tabla').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "bInfo": false
+    });
+
+    $(function(){
+        $('#fecha').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10)
+                        day = "0"+day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10)
+                        month = "0"+month;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+
+        $('#fecha2').calendar({
+            type: 'date',
+            monthFirst: false,
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10)
+                        day = "0"+day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10)
+                        month = "0"+month;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+    });
+
+    $("#btnBuscar").on("click", function(){
+        // filtro de busqueda
+        var fecha_desde = $("#fecha_desde").val();
+        var fecha_hasta = $("#fecha_hasta").val();
+        var nro_caja = $("#nro_caja").val();
+        var moneda = $("#moneda").val();
+
+        fecha_desde = encodeURIComponent(fecha_desde);
+        fecha_hasta = encodeURIComponent(fecha_hasta);
+
+        if(nro_caja == '')
+            nro_caja = 0;
+
+        $.getJSON("/movimientoscaja/getsaldoanterior/"+fecha_desde+"/"+nro_caja+"/"+moneda, function(saldoanterior){
+            var ingresos = 0;
+            var egresos = 0;
+            var saldo_antu = 0;
+            $('#tabla').DataTable({
+                ajax: {
+                    url: "/movimientoscaja/filtroajax/"+fecha_desde+"/"+fecha_hasta+"/"+nro_caja+"/"+moneda,
+                    dataSrc: "data"
+                },
+                columns: [
+                    // { data : null },
+                    { data : "NuCaja" },
+                    { data : "fecha_f" },
+                    { data : "detalle" },//concepto
+                    { data : "Ingreso" },
+                    { data : "Egreso" },
+                    { data : "Moneda" },
+                    { data : "Coti" },//cotiza
+                    { data : "Total" },//son
+                    { data : "Saldo" },
+                    { data : "Numto" },
+                    { data : "Origen" }
+                ],
+                "destroy": true,
+                "bPaginate": false,
+                "bFilter": false,
+                "bInfo": false,
+                // "scrollX": true,
+                "scrollY": "50vh",
+                // "keys": true,
+                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+                    saldo_anterior = 0;
+                    if(iDisplayIndex == 0){
+                        saldo_anterior = saldoanterior[0].saldo_anterior;
+                    }else{
+                        saldo_anterior = saldo_antu;
+                    }
+                    var saldo_t = 0;
+                    var ingreso = $(nRow).find('td:eq(3)').text();
+                    var egreso = $(nRow).find('td:eq(4)').text();
+
+                    if(ingreso == '0'){
+                        saldo_t = parseFloat(saldo_anterior)-parseFloat(egreso);
+                        saldo_antu = parseFloat(saldo_anterior)-parseFloat(egreso);
+                    }else{
+                        saldo_t = parseFloat(saldo_anterior)+parseFloat(ingreso);
+                        saldo_antu = parseFloat(saldo_anterior)+parseFloat(ingreso);
+                    }
+                    
+                    $(nRow).find('td:eq(8)').text(numberWithCommas(parseFloat(saldo_t).toFixed(2)));
+                    ingresos = ingresos + parseFloat(aData.Ingreso);
+                    egresos = egresos + parseFloat(aData.Egreso);
+                },
+                initComplete: function(settings, json) {
+                    $("#txtSaldoAnterior").val("$ "+numberWithCommas(parseFloat(saldoanterior[0].saldo_anterior).toFixed(2)));
+                    $("#txtIngresos").val("$ "+numberWithCommas(parseFloat(ingresos).toFixed(2)));
+                    $("#txtEgresos").val("$ "+numberWithCommas(parseFloat(egresos).toFixed(2)));
+                    var diferencia = ingresos-egresos;
+                    $("#txtDiferencia").val("$ "+numberWithCommas(parseFloat(diferencia).toFixed(2)));
+                    if(diferencia > 0)
+                        $("#txtSaldo").val("$ "+numberWithCommas(parseFloat(saldoanterior[0].saldo_anterior-diferencia).toFixed(2)));
+                    else
+                        $("#txtSaldo").val("$ "+numberWithCommas(parseFloat(saldoanterior[0].saldo_anterior+diferencia).toFixed(2)));
+                }
+            });
+        });        
+    });
+</script>
+{% endblock %}

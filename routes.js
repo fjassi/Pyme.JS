@@ -19,6 +19,8 @@ const cRecibos = require('./controllers/cRecibos');
 const cOrdenes = require('./controllers/cOrdenes');
 const cComprobantes = require('./controllers/cComprobantes');
 const cAsientos = require('./controllers/cAsientos');
+const cReporteCheques = require('./controllers/cReporteCheques');
+const cMovimientosCaja = require('./controllers/cMovimientosCaja');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -173,4 +175,11 @@ module.exports = function(app) {
 		app.get("/asientos/contenido/filtroajax/:fecha/:asiento", cAsientos.getFiltroContenidoAjax);
 		app.get("/asientos/alta", cAsientos.getAlta);
 		app.post("/asientos/alta", cAsientos.postAlta);
+	// REPORTE DE CHEQUES
+		app.get("/reportecheques/lista", cReporteCheques.getLista);
+		app.get("/reportecheques/filtroajax/:fecha_desde/:fecha_hasta/:tipo_estado/:cuenta/:ver_destino/:opago_hasta", cReporteCheques.getFiltroAjax);
+	// REPORTE DE MOVIMIENTOS DE CAJA
+		app.get("/movimientoscaja/lista", cMovimientosCaja.getLista);
+		app.get("/movimientoscaja/filtroajax/:fecha_desde/:fecha_hasta/:nro_caja/:moneda", cMovimientosCaja.getFiltroAjax);
+		app.get("/movimientoscaja/getsaldoanterior/:fecha_desde/:nro_caja/:moneda", cMovimientosCaja.getSaldoAnterior);
 }

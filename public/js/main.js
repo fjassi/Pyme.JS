@@ -307,3 +307,7 @@ function parseSwig(input, data){
 
     return output;
 }
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

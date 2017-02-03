@@ -55,15 +55,6 @@ function getAlta(req, res){
 
 function postAlta(req, res){
 	const params = req.body;
-	console.log(params);
-	// { fecha: '30/01/2017',
-	// nro_asiento: '12312',
-	// titulo: 'qwewqewqewq',
-	// tipo: [ 'D', 'H' ],
-	// cuenta: [ '1110100000', '1110100000' ],
-	// importe: [ '10', '10' ],
-	// descripcion: [ 'primer debe', 'primer haber' ],
-	// nombre_cuenta: [ 'CAJA', 'CAJA' ] }
 	var fecha = params.fecha;
 	var nro_asiento = params.nro_asiento;
 	var titulo = params.titulo;

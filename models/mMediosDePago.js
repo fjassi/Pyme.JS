@@ -6,7 +6,8 @@ module.exports = {
 	Sp_Abm_Mpagos: Sp_Abm_Mpagos,
 	del: del,
 	getNextCodigo: getNextCodigo,
-	validacionMovimientos: validacionMovimientos
+	validacionMovimientos: validacionMovimientos,
+	getMpagos_Caja: getMpagos_Caja
 }
 
 function getAll(cb){
@@ -41,4 +42,8 @@ function validacionMovimientos(codigo, cb){
 		"select top 1(r2_talo) from rec2 where rec2.r2_tipo = "+codigo+" "+
 		"union "+
 		"select top 1(o3_nume) from opa3 where opa3.o3_tipo = "+codigo+"", cb)
+}
+
+function getMpagos_Caja(cb){
+	conn("select * from mpagos where caja = 'S'", cb);
 }
