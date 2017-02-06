@@ -169,6 +169,7 @@ module.exports = function(app) {
 		app.get("/ordenes/getorden3/:numero", cOrdenes.get_orden3);
 	// COMPROBANTES DE VENTAS
 		app.get("/comprobantes/consulta", cComprobantes.getConsulta);	
+		app.get("/comprobantes/filtroajax/:desde/:hasta/:fecha/:cliente/:tipo/:estado", cComprobantes.getFiltroAjax);
 	// ASIENTOS
 		app.get("/asientos/lista", cAsientos.getLista);
 		app.get("/asientos/filtroajax/:desde/:hasta", cAsientos.getFiltroAjax);

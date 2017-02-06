@@ -5,7 +5,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="/datatable/media/css/dataTables.semanticui.min.css"/>
 <div class="ui grid">
-    <div class="left floated left aligned ten wide column">
+    <div class="left floated left aligned eleven wide column">
         <h1 class="ui dividing blue header">{{ pagename|title }}</h1>
     </div>
 </div>
@@ -71,9 +71,20 @@
         </tr>
     </thead>
 </table>
-<div class="ui grid">
-    <label id="lblTotal"></label>
-</div>
+<div class="ui container right aligned" style="margin: 25px;">
+    <div class="ui left action input">
+        <button class="ui huge primary icon button" style="text-align: center;">
+            Comprobantes:
+        </button>
+        <input type="text" readonly id="comprobantes" style="font-weight: bold; font-size: 15px; text-align: center; width: 150px; margin-right: 30px;">
+    </div>
+    <div class="ui left action input">
+        <button class="ui huge primary icon button" style="text-align: center;">
+            Total:
+        </button>
+        <input type="text" readonly id="idtotal" style="font-weight: bold; font-size: 15px; text-align: center; width: 150px;">
+    </div>
+</div>    
 
 <div class="ui fullscreen modal" id="modalVer" style="max-height: 80vh !important; overflow-y: auto;">
     <i class="close icon"></i>
@@ -212,6 +223,7 @@ function FiltroBusqueda(){
             if(proveedor == '') proveedor = 0;
 
             var table = $('#tabla_codigosegreso').DataTable({
+                "destroy": true,
                 ajax: {
                     url: "/ordenes/filtroajax/"+desde+"/"+hasta+"/"+proveedor+"/"+talonario+"/"+tipo,
                     dataSrc: "data"
@@ -231,30 +243,37 @@ function FiltroBusqueda(){
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
                     $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.xnume+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/ordenes/eliminar/"+aData.xnume+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
                 },
-                drawCallback: function() {
-                   var api = this.api();
-
-                   // Total over all pages
-                   var total = api.column(4).data().sum();
-
-                   // Total over this page
-                   var pageTotal = api.column(4, {page:'current'}).data().sum();
-
-                   $(api.column(5).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+                fnInitComplete: function(oSettings, json) {
+                    var formatNumber = {
+                        separador: ".", // separador para los miles
+                        sepDecimal: ',', // separador para los decimales
+                        formatear:function (num){
+                            num +='';
+                            var splitStr = num.split('.');
+                            var splitLeft = splitStr[0];
+                            var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                            var regx = /(\d+)(\d{3})/;
+                            while (regx.test(splitLeft)) {
+                                splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                            }
+                            return this.simbol + splitLeft  +splitRight;
+                        },
+                        new:function(num, simbol){
+                            this.simbol = simbol ||'';
+                            return this.formatear(num);
+                        }
+                    }
+                    var total = 0;
+                    var total2;
+                    var total3;
+                    table.column(4).data().each(function(value, index){
+                        total += parseFloat(value);
+                        total2 = total.toFixed(2);
+                        total3 = formatNumber.new(total2, "$");
+                        $("#idtotal").val(total3);
+                        $("#comprobantes").val(index+1);
+                    });
                 }
-                //fnInitComplete: function(oSettings, json) {
-                //    table.column(4).data().each(function(index, value){
-                //        total = parseFloat(value);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //        console.log( 'Data in index: '+index+' is: '+value );
-                //    });
-                //    var total = 0;
-                //    $('#tabla_codigosegreso tr').find('td:eq(4)').each(function(){
-                //        valor = $(this).html();
-                //        total += parseFloat(valor);
-                //        $("#lblTotal").html("<h1>Total: " + total + "</h1>");
-                //    });
-                //}
             });
         }else{
             alert("Debe seleccionar una fecha hasta.");

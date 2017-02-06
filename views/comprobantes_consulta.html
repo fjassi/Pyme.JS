@@ -11,19 +11,26 @@
 </div>
 
 <div class="ui grid">
-    <div class="three wide field">
-        <select class="ui search dropdown" name="tipo" id="tipo">
+    <div class="four wide field">
+        <select class="ui search dropdown" name="tipo" id="tipo" style="width: 50px !important;">
             <option value="0">Tipo de Comprobante</option>
             {% for t in tipocv %}
                 <option value="{{ t.tipo }}">{{ t.nombre }}</option>
             {% endfor %}
         </select>
     </div>
+    <div class="four wide field">
+        <select class="ui search dropdown" name="fecha" id="fecha" style="width: 50px !important;">
+            <option value="0">Por Fecha De</option>
+            <option value="1">Comprobante</option>
+            <option value="2">Vencimiento</option>
+        </select>
+    </div>
     <div class="two wide field">
         <div class="ui calendar" id="fecha" name="fecha">
             <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="text" placeholder="Fecha Desde" id="fecha_desde" name="fecha_desde" style="width: 140px;">
+                <input type="text" placeholder="Fecha Desde" id="fecha_desde" name="fecha_desde" style="width: 130px;">
             </div>
         </div>
     </div>
@@ -31,7 +38,7 @@
         <div class="ui calendar" id="fecha2" name="fecha2">
             <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="text" placeholder="Fecha Hasta" id="fecha_hasta" name="fecha_hasta" style="width: 140px;">
+                <input type="text" placeholder="Fecha Hasta" id="fecha_hasta" name="fecha_hasta" style="width: 130px;">
             </div>
         </div>
     </div>
@@ -74,126 +81,22 @@
         </tr>
     </thead>
 </table>
-<div class="ui grid">
-    <label id="lblTotal">Total</label>
+<div class="ui container right aligned" style="margin: 25px;">
+    <div class="ui left action input">
+        <button class="ui massive primary icon button" style="text-align: center;">
+            Total:
+        </button>
+        <input type="text" readonly id="idtotal" style="font-weight: bold; font-size: 30px; text-align: center; padding: 0;">
+    </div>
+    <div class="ui left action input">
+        <button class="ui massive primary icon button" style="text-align: center;">
+            Comprobantes:
+        </button>
+        <input type="text" readonly id="comprobantes" style="font-weight: bold; font-size: 30px; text-align: center; padding: 0;">
+    </div>
 </div>
 
-<div class="ui fullscreen modal" id="modalVer" style="max-height: 80vh !important; overflow-y: auto;">
-    <i class="close icon"></i>
-    <div class="header">
-        Orden de Pago
-    </div>
-    <div class="ui container" style="margin-top: 10px !important;">
-        <div class="ui form">
-            <div class="fields">
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Destino</label>
-                <div class="four wide field">
-                    <input type="text" name="destino" id="destino" readonly style="text-align: center !important;">
-                </div>
-                <div class="four wide field"></div>
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Orden Pago N°</label>
-                <div class="field">
-                    <input type="text" name="ordenpago" id="ordenpago" readonly style="width: 80px !important; text-align: center !important;">
-                </div>
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Caja</label>
-                <div class="field">
-                    <input type="text" name="nro_caja" id="nro_caja" readonly style="width: 50px !important; text-align: center !important;">
-                </div>
-                <label style="font-weight: bold !important; margin-top: 10px !important;">Fecha</label>
-                <div class="field">
-                    <input type="text" name="fecha_orden" id="fecha_orden" readonly style="width: 110px !important; text-align: center !important;">
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <div class="ui grid">
-                <div class="ten wide field">
-                    <label style="margin-top: 10px !important;">Comprobantes a Abonar</label>
-                    <table class="ui table" style="width: 100% !important; overflow-x: scroll; display: block !important;">
-                        <thead>
-                            <tr>
-                                <th>N° Comprob.</th>
-                                <th>Letra</th>
-                                <th>Total $</th>
-                                <th>Abona $</th>
-                                <th>Detalle</th>
-                                <th>Fecha</th>
-                                <th>Tip.Comp.</th>
-                                <th>Alíc. IVA %</th>
-                            </tr>
-                        </thead>
-                        <tbody id="op2_table_content">
-                            <!-- <tr></tr> -->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="six wide field">
-                    <label style="margin-top: 10px !important;">Otros Conceptos</label>
-                    <table class="ui table">
-                        <thead>
-                            <tr>
-                                <th>Detalle</th>
-                                <th>Importe $</th>
-                            </tr>
-                        </thead>
-                        <tbody id="op2_table2_content">
-                            <!-- <tr></tr> -->
-                        </tbody>
-                    </table>
-                    <div class="ui grid" style="float: right !important; margin-top: 1px !important;">
-                        <label style="margin-top: 10px !important;">Total</label>
-                        <div class="field">
-                            <input type="text" name="total" id="total" readonly style="width: 120px !important; text-align: center !important;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <div class="ui grid">
-                <div class="ten wide field">
-                    <label style="margin-top: 10px !important;">Medios de Pago</label>
-                    <table class="ui table" style="width: 100% !important; overflow-x: scroll; display: block !important;">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center !important;">M.P.</th>
-                                <th style="text-align: center !important;">Denominacion</th>
-                                <th style="text-align: center !important;"><div style="width: 85px !important;">Importe $</div></th>
-                                <th style="text-align: center !important;">Impor Origi</th>
-                                <th style="text-align: center !important;"><div style="width: 80px !important;">Cotiza $</div></th>
-                                <th style="text-align: center !important;"><div style="width: 95px !important;">Bco - Suc - CP</div></th>
-                                <th style="text-align: center !important;"><div style="width: 90px !important;">Cheque N°</div></th>
-                                <th style="text-align: center !important;">Cuenta Bco.</th>
-                                <th style="text-align: center !important;">Banco</th>
-                                <th style="text-align: center !important;">Fecha Valor</th>
-                                <th style="text-align: center !important;">Mueve Caja</th>
-                            </tr>
-                        </thead>
-                        <tbody id="op3_table_content"">
-                            <!-- <tr></tr> -->
-                        </tbody>
-                    </table>
-                    <div class="fields" style="float: right !important;">
-                        <label style="margin-top: 10px !important;">Total $</label>
-                        <div class="field">
-                            <input type="text" name="total2" id="total2" readonly style="width: 120px !important; text-align: center !important;">
-                        </div>
-                        <label style="margin-top: 10px !important;">Diferencia $</label>
-                        <div class="field">
-                            <input type="text" name="dif2" id="dif2" readonly style="width: 120px !important; text-align: center !important;">
-                        </div>
-                    </div>
-                </div>
-                <div class="six wide field">
-                    <label style="margin-top: 10px !important;">Nota</label>
-                    <table class="ui table">
-                        <tr><td><label id="det1"></label></td></tr>
-                        <tr><td><label id="det2"></label></td></tr>
-                        <tr><td><label id="det3"></label></td></tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/datatable/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/datatable/media/js/dataTables.semanticui.min.js"></script>
@@ -206,38 +109,68 @@ function FiltroBusqueda(){
 
     if(desde.length > 0){
         if(hasta.length > 0){
-            var proveedor = $("#proveedor").val();
-            var talonario = $("#talonario").val();
+            var fecha = $("#fecha").val();
+            var cliente = $("#cliente").val();
             var tipo = $("#tipo").val();
+            var estado = $("#estado").val();
 
             desde = encodeURIComponent(changeDate(desde));
             hasta = encodeURIComponent(changeDate(hasta));
-            if(proveedor == '') proveedor = 0;
 
             var table = $('#tabla_codigosegreso').DataTable({
+                "destroy": true,
                 ajax: {
-                    url: "/ordenes/filtroajax/"+desde+"/"+hasta+"/"+proveedor+"/"+talonario+"/"+tipo,
+                    url: "/comprobantes/filtroajax/"+desde+"/"+hasta+"/"+fecha+"/"+cliente+"/"+tipo+"/"+estado,
                     dataSrc: "data"
                 },
                 columns: [
                     { data : null },
-                    { data : "xfecha" },
-                    { data : "xnume" },
-                    { data : "xdesti" },
-                    { data : "xtotal" },
-                    { data : "xsucu" },
-                    { data : "xnumovi" },
-                    { data : "xcosto" },
-                    { data : "xaplica" },
-                    { data : "xcaja" }
+                    { data : "let" },
+                    { data : "Numero" },
+                    { data : "Fecha" },
+                    { data : "T_Com" },
+                    { data : "Cliente" },
+                    { data : "Total" },
+                    { data : "Abonado" },
+                    { data : "Vence" },
+                    { data : "Neto" },
+                    { data : "PorRet" },
+                    { data : "ImpRet" },
+                    { data : "remito" }
                 ],
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-                    $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.xnume+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/ordenes/eliminar/"+aData.xnume+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
+                    $(nRow).children(":first").html("<div class='ui icon buttons'><a class='mini ui blue icon button inverted ver' data-numero='"+aData.Numero+"' data-tooltip='Ver Recibo'><i class='search icon'></i></a><a href='/comprobantes/eliminar/"+aData.Numero+"' class='mini ui red icon button inverted' data-tooltip='Eliminar' onclick='if (!confirm('¿Seguro desea eliminar?')) return false;'><i class='trash icon'></i></a></div>");
                 },
                 fnInitComplete: function(oSettings, json) {
-                  $.getJSON("/ordenes/filtroajax/"+desde+"/"+hasta+"/"+proveedor+"/"+talonario+"/"+tipo, function(total){
-                    $("#lblTotal").val("<h1>Total: " + total[0].xtotal + "</h1>");
-                  });
+                    var formatNumber = {
+                        separador: ".", // separador para los miles
+                        sepDecimal: ',', // separador para los decimales
+                        formatear:function (num){
+                            num +='';
+                            var splitStr = num.split('.');
+                            var splitLeft = splitStr[0];
+                            var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                            var regx = /(\d+)(\d{3})/;
+                            while (regx.test(splitLeft)) {
+                                splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                            }
+                            return this.simbol + splitLeft  +splitRight;
+                        },
+                        new:function(num, simbol){
+                            this.simbol = simbol ||'';
+                            return this.formatear(num);
+                        }
+                    }
+                    var total = 0;
+                    var total2;
+                    var total3;
+                    table.column(6).data().each(function(value, index){
+                        total += parseFloat(value);
+                        total2 = total.toFixed(2);
+                        total3 = formatNumber.new(total2, "$");
+                        $("#idtotal").val(total3);
+                        $("#comprobantes").val(index+1);
+                    });
                 }
             });
         }else{
