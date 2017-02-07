@@ -184,8 +184,15 @@ module.exports = function(app) {
 		app.get("/movimientoscaja/lista", cMovimientosCaja.getLista);
 		app.get("/movimientoscaja/filtroajax/:fecha_desde/:fecha_hasta/:nro_caja/:moneda", cMovimientosCaja.getFiltroAjax);
 		app.get("/movimientoscaja/getsaldoanterior/:fecha_desde/:nro_caja/:moneda", cMovimientosCaja.getSaldoAnterior);
+<<<<<<< HEAD
 	// caja mayores 
 		app.get("/mayoresingresos", cMayores.getIngreso);
 		app.get("/mayoresingresos/getingresoajax/:fecha_desde/:fecha_hasta/:nro_caja", cMayores.getIngresosAjax);
 
+=======
+	// MAYORES INGRESOS/EGRESOS
+		// app.get("/mayoresingresos", cMayores.getIngresos);
+		app.get("/mayoresegresos", cMayores.getEgresos);
+		app.get("/mayoresegresos/getegresosajax/:fecha_desde/:fecha_hasta/:nro_caja", cMayores.getEgresosAjax)
+>>>>>>> 4407652282d6a594bfb2dec46f3fc66822e51edf
 }

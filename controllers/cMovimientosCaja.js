@@ -47,7 +47,7 @@ function getFiltroAjax(req, res){
 
 	mMovimientosCaja.getFiltro(query, function(movimientos){
 		var objData = { "data" : movimientos };
-		res.send(objData);	
+		res.send(objData);
 	});
 }
 
