@@ -21,6 +21,7 @@ const cComprobantes = require('./controllers/cComprobantes');
 const cAsientos = require('./controllers/cAsientos');
 const cReporteCheques = require('./controllers/cReporteCheques');
 const cMovimientosCaja = require('./controllers/cMovimientosCaja');
+const cMayores = require('./controllers/cMayores');
 
 module.exports = function(app) {
 	app.get('/', cIndex.getInicio);
@@ -183,4 +184,8 @@ module.exports = function(app) {
 		app.get("/movimientoscaja/lista", cMovimientosCaja.getLista);
 		app.get("/movimientoscaja/filtroajax/:fecha_desde/:fecha_hasta/:nro_caja/:moneda", cMovimientosCaja.getFiltroAjax);
 		app.get("/movimientoscaja/getsaldoanterior/:fecha_desde/:nro_caja/:moneda", cMovimientosCaja.getSaldoAnterior);
+	// caja mayores 
+		app.get("/mayoresingresos", cMayores.getIngreso);
+		app.get("/mayoresingresos/getingresoajax/:fecha_desde/:fecha_hasta/:nro_caja", cMayores.getIngresosAjax);
+
 }
