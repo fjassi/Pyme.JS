@@ -3,12 +3,15 @@ var sql = require('mssql');
 function conn(query, cb){
     var config = {
         user: 'sa',
-        password: 'ironman',
-        server: '138.97.200.246',
+        password: 'ironman', // SERVER CASPORT
+        server: '138.97.200.246', // SERVER CASPORT
+        // password: 'algofacil',
+        // server: '10.0.0.22',
         port: 1433,
         database: 'GESTIONJS',
         options: {
-            tdsVersion: '7_1'
+            tdsVersion: '7_1' // SERVER CASPORT
+            // tdsVersion: '7_2'
         }
     }
    
